@@ -1,0 +1,50 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font: 15px Helvetica, Arial, sans-serif;
+	color: #002200;
+	background: #CCEECC
+}
+
+ul {
+	margin: 10px 35px;
+}
+
+a {
+	color: #CC1111;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #EE3333;
+}
+
+#page_header {
+	margin: 0px 0px 20px 0px;
+	padding: 20px 0px;
+	text-align: center;
+	font-size: 1.8em;
+	color: #FFFFFF;
+	background: #008822;
+}
+
+#game_description {
+	width: 888px;
+	margin: 0px auto 20px auto;
+	padding: 6px;
+	background: #88BB88;
+}
+
+#game_description p {
+	margin: 0px 0px 8px 0px;
+}
+
+#game {
+	height: 500px;
+	width: 900px;
+	margin: 0px auto 40px auto;
+	background: #888888;
+}
