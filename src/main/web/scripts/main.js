@@ -13,7 +13,5 @@ $(document).ready(function() {
 		// Do stuff here...
 	};
 	
-	setInterval(function() {
-		tick();
-	}, 1000 / m3.config.fps);
+	setInterval(tick, 1000 / m3.config.fps);
 });
