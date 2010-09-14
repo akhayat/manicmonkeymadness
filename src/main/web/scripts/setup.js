@@ -1,15 +1,18 @@
 var m3 = {};
 
-m3.game = function() {
-	return {
-		canvas:  $("#game_canvas"),
-		
-		time: 0,
-	}
-}();
+$(document).ready(function() {
+	m3.game = function() {
+		return {
+			canvas:  document.getElementById("game_canvas"),
+			context: document.getElementById("game_canvas").getContext("2d"),
 
-m3.config = function() {
-	return {
-		fps: 45,
-	}
-}();
+			time: 0,
+		};
+	}();
+	
+	m3.config = function() {
+		return {
+			fps: 45,
+		};
+	}();
+});

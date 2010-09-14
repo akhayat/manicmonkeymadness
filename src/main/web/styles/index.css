@@ -48,3 +48,24 @@ a:hover {
 	margin: 0px auto 40px auto;
 	background: #888888;
 }
+
+#console {
+	width: 900px;
+	margin: 0px auto 20px auto;
+	background: #EEFFEE;
+}
+
+#console h2 {
+	padding: 3px 0px;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#console p {
+	padding: 2px 8px;
+}
+
+#console_items {
+	height: 300px;
+	overflow-y: scroll;
+}
