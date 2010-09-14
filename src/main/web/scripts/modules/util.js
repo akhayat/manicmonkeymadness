@@ -1,3 +1,10 @@
+/**
+ * util.js
+ * 
+ * This module contains utility functions, such as a function to log text to a console.
+ * 
+ */
+
 $(document).ready(function() {
 	m3.util = function() {
 		var log_count = 0;

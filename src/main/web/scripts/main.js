@@ -1,17 +1,27 @@
+/**
+ * main.js
+ * 
+ * This file contains the main game loop and actually starts up the game.
+ * 
+ */
+
 $(document).ready(function() {
 	/**
-	 * Main game loop.
+	 * Main game loop. The loop shouldn't really contain much game logic itself,
+	 * it should mostly just call out to the various modules.
 	 */
 	var tick = function() {
-		// Clear canvas
+		// Clear the canvas every frame.
 		m3.game.context.clearRect(0, 0, 900, 500);
 		
-		// Basic example of drawing something
-		m3.game.context.fillStyle = "rgba(200, 0, 0, 0.9)";  
-		m3.game.context.fillRect(100, 50, 500, 300);
-		
-		// Do stuff here...
+		// Update the game state. The actual game logic goes into the update
+		// functions of the various game states inside scripts/states.
+		m3.game.state.update();
 	};
 	
+	/**
+	 * Initialize.
+	 */
+	m3.game.init();
 	setInterval(tick, 1000 / m3.config.fps);
 });
