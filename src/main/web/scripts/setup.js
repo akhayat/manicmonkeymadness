@@ -18,6 +18,10 @@ $(function() {
             canvas:  document.getElementById("game_canvas"),
             context: document.getElementById("game_canvas").getContext("2d"),
             
+            // Dimensions of the game.
+            height: $("#game").height(),
+			width:  $("#game").width(),
+            
             // The time elapsed since the last frame.
             elapsed: 0,
             
@@ -32,7 +36,9 @@ $(function() {
     m3.game.init = function() {
         m3.game.state = new m3.game.states.MainMenuState();
         
-        document.onkeydown = m3.input.processKeyDown;
-        document.onkeyup   = m3.input.processKeyUp;
+        document.onkeydown   = m3.input.processKeyDown;
+        document.onkeyup     = m3.input.processKeyUp;
+        document.onmousedown = m3.input.processMouseDown;
+        document.onmouseup   = m3.input.processMouseUp;
     };
 });

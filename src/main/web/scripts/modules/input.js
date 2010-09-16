@@ -2,8 +2,8 @@
  * input.js
  * 
  * This file contains the architecture for mouse and keyboard input. It has
- * a big ol' enum for essentialy all of the keys on the keyboard, and keeps
- * track of whether any of those keys are held down or not.
+ * a big ol' dictonary for essentially all of the keys on the keyboard, and
+ * keeps track of whether any of those keys are held down or not.
  *
  * It will call out to the current state's keyHandler and mouseHandler objects
  * based on which key was pressed.
@@ -84,30 +84,34 @@ $(document).ready(function() {
     m3.input.processKeyDown = function(event) {
         // event.preventDefault();
         
-        if (!m3.game.state.keyHandlers)
-            return;
-        
         var key = m3.input[event.which];
         
         if (!m3.input.keys[key]) {
-            if (m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].down)
-                m3.game.state.keyHandlers[key].down();
-            
             m3.input.keys[key] = true;
+            
+            if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].down)
+                m3.game.state.keyHandlers[key].down();
         }
     };
     
     m3.input.processKeyUp = function(event) {
         // event.preventDefault();
         
-        if (!m3.game.state.keyHandlers)
-            return;
-        
         var key = m3.input[event.which];
         
-        if (m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].up)
-            m3.game.state.keyHandlers[key].up();
-        
         m3.input.keys[key] = false;
+        
+        if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].up)
+            m3.game.state.keyHandlers[key].up();
+    };
+    
+    m3.input.processMouseDown = function(event) {
+        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.down)
+            m3.game.state.mouseHandlers.down(event);
+    };
+    
+    m3.input.processMouseUp = function(event) {
+        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.up)
+            m3.game.state.mouseHandlers.up(event);
     };
 });

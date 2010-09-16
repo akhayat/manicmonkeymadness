@@ -10,9 +10,6 @@ $(function() {
 	m3.config = function() {
 		return {
 			fps: 45,
-			
-			height: $("#game").height(),
-			width:  $("#game").width(),
 		};
 	}();
 });

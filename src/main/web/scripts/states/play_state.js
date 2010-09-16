@@ -7,12 +7,14 @@
  */
 
 $(function() {
-    var x = 150;
-    var y = 150;
-    var dx = 2;
-    var dy = 4;
-    
-    m3.game.states.PlayState = function() {};
+    m3.game.states.PlayState = function() {
+        this.ball = {
+            x: 150,
+            y: 150,
+            dx: 2,
+            dy: 4,
+        };
+    };
     
     m3.game.states.PlayState.prototype.keyHandlers = {
         A: {
@@ -26,30 +28,38 @@ $(function() {
         },
     };
     
-    m3.game.states.PlayState.prototype.update = function() {
-        var canvas = document.getElementById("game_canvas"); 
-        m3.launcher.launch(canvas);
+    m3.game.states.PlayState.prototype.mouseHandlers = {
+        down: function(event) {
+            m3.launcher.prepareLaunch(event);
+        },
         
+        up: function(event) {
+            m3.launcher.launch(event);
+        },
+    };
+    
+    m3.game.states.PlayState.prototype.update = function() {
         //define the ball
-        var projectile = m3.game.context,
-        halfWidth = m3.config.width / 2,
-        halfHeight = m3.config.height / 2;
+        var ball       = this.ball,
+            context    = m3.game.context,
+            halfWidth  = m3.game.width / 2,
+            halfHeight = m3.game.height / 2;
         
         //draw a circle
-        projectile.beginPath();
-        projectile.arc(x, y, 10, 0, Math.PI*2, true);
-        projectile.closePath();
-        projectile.fill();
+        context.beginPath();
+        context.arc(ball.x, ball.y, 10, 0, Math.PI*2, true);
+        context.closePath();
+        context.fill();
         
         //make it bounce
-        if (x + dx > m3.config.width || x + dx < 0)
-            dx = -dx;
-        if (y + dy > m3.config.height || y + dy < 0)
-            dy = -dy;
+        if (ball.x + ball.dx > m3.game.width || ball.x + ball.dx < 0)
+            ball.dx = -ball.dx;
+        if (ball.y + ball.dy > m3.game.height || ball.y + ball.dy < 0)
+            ball.dy = -ball.dy;
         
         //update location
-        x += dx;
-        y += dy;
+        ball.x += ball.dx;
+        ball.y += ball.dy;
         
     };
 });
