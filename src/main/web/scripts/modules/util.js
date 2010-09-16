@@ -12,7 +12,7 @@ $(document).ready(function() {
 		
 		return {
 			log: function(text) {
-				$("#console_items").append("<p>" + text + "</p>");
+				$("#console_items").prepend("<p>" + text + "</p>");
 				log_count++;
 				
 				if (log_count > max_log_count) {

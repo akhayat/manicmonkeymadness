@@ -30,6 +30,6 @@ $(document).ready(function() {
 	 * Initialize the game.
 	 */
 	m3.game.init = function() {
-		m3.game.state = new m3.game.states.MainMenuState();
+		m3.game.state = new m3.game.states.PlayState();
 	};
 });
