@@ -17,7 +17,7 @@ $(function() {
 	
 	m3.game.states.PlayState.prototype.update = function() {
 		var canvas = document.getElementById("game_canvas"); 
-		m3.launcher(canvas);
+		m3.launcher.launch(canvas);
 		
 		//define the ball
 	    var projectile = m3.game.context,
