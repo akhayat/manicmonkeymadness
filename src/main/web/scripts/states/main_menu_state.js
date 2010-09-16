@@ -9,6 +9,8 @@ $(function() {
     m3.game.states.MainMenuState = function() {};
 
     m3.game.states.MainMenuState.prototype.update = function () {
+		var canvas = document.getElementById("game_canvas"); 
+		m3.launcher.launch(canvas);
         var context = m3.game.context,
             halfWidth = m3.config.width / 2,
             halfHeight = m3.config.height / 2;
