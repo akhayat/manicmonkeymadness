@@ -6,7 +6,7 @@
  * 
  */
 
-$(document).ready(function() {
+$(function() {
 	
 	var x = 150;
 	var y = 150;

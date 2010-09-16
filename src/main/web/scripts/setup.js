@@ -8,7 +8,7 @@
 
 var m3 = {};
 
-$(document).ready(function() {
+$(function() {
 	/**
 	 * The game object contains common objects such as the canvas.
 	 */

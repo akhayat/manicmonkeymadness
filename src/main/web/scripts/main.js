@@ -5,7 +5,7 @@
  * 
  */
 
-$(document).ready(function() {
+$(function() {
 	/**
 	 * Main game loop. The loop shouldn't really contain much game logic itself,
 	 * it should mostly just call out to the various modules.

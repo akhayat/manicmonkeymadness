@@ -6,7 +6,7 @@
  * 
  */
 
-$(document).ready(function() {
+$(function() {
 	m3.config = function() {
 		return {
 			fps: 45,

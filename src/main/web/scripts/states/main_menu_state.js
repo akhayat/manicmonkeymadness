@@ -5,7 +5,7 @@
  *
  */
 
-$(document).ready(function() {
+$(function() {
     m3.game.states.MainMenuState = function() {};
 
     m3.game.states.MainMenuState.prototype.update = function () {

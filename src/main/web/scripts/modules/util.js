@@ -5,7 +5,7 @@
  * 
  */
 
-$(document).ready(function() {
+$(function() {
 	m3.util = function() {
 		var log_count = 0;
 		var max_log_count = 1000;
