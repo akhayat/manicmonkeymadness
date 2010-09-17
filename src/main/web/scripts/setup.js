@@ -13,6 +13,8 @@ $(function() {
      * The game object contains common objects such as the canvas.
      */
     m3.game = function() {
+        var lastTime = new Date().getTime();
+        
         return {
             // Canvas element and context.
             canvas:  document.getElementById("game_canvas"),
@@ -20,25 +22,34 @@ $(function() {
             
             // Dimensions of the game.
             height: $("#game").height(),
-			width:  $("#game").width(),
+            width:  $("#game").width(),
             
-            // The time elapsed since the last frame.
-            elapsed: 0,
+            // The time in seconds elapsed since the last frame.
+            elapsed: 0.0,
             
             // Contains the constructors for all the states in the game.
             states: {},
+            
+            /**
+             * Update the game timer.
+             */
+            updateTime: function() {
+                var thisTime = new Date().getTime();
+                this.elapsed  = (thisTime - lastTime) / 1000.0;
+                lastTime = thisTime;
+            },
+            
+            /**
+             * Initialize the game.
+             */
+            init: function() {
+                m3.game.state = new m3.game.states.MainMenuState();
+
+                document.onkeydown   = m3.input.processKeyDown;
+                document.onkeyup     = m3.input.processKeyUp;
+                document.onmousedown = m3.input.processMouseDown;
+                document.onmouseup   = m3.input.processMouseUp;
+            },
         };
     }();
-    
-    /**
-     * Initialize the game.
-     */
-    m3.game.init = function() {
-        m3.game.state = new m3.game.states.MainMenuState();
-        
-        document.onkeydown   = m3.input.processKeyDown;
-        document.onkeyup     = m3.input.processKeyUp;
-        document.onmousedown = m3.input.processMouseDown;
-        document.onmouseup   = m3.input.processMouseUp;
-    };
 });
