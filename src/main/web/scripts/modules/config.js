@@ -14,10 +14,10 @@ $(function() {
 			
 			// Dimensions of the level itself (not the window).
 			level_height: 450,
-			level_width:  2000,
+			level_width:  900,
 			
 			// Camera's scroll speed in pixels per second.
-			camera_scroll_speed: 1200,
+			camera_scroll_speed: 1200
 		};
 	}();
 });

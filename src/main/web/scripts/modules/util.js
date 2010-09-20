@@ -18,7 +18,7 @@ $(function() {
                 if (log_count > max_log_count) {
                     $("#console_items").children("p").first().remove();
                 }
-            },
+            }
         };
     }();
 });

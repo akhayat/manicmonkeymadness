@@ -12,7 +12,7 @@ $(function() {
         ENTER: {
             down: function() {
                 m3.game.state = new m3.game.states.PlayState();
-            },
+            }
         },
         
         SPACE: {
@@ -22,8 +22,8 @@ $(function() {
             
             up: function() {
                 m3.util.log("Released space!");
-            },
-        },
+            }
+        }
     };
     
     m3.game.states.MainMenuState.prototype.update = function () {

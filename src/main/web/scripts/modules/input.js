@@ -77,7 +77,7 @@ $(document).ready(function() {
             221: "RIGHT_BRACKET",
             222: "QUOTE",
             
-            keys: {},
+            keys: {}
         };
     }();
     

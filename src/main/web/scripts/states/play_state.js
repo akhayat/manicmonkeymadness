@@ -10,14 +10,14 @@ $(function() {
     m3.game.states.PlayState = function() {
         this.camera = {
             x: 0,
-            y: 0,
+            y: 0
         };
         
         this.ball = {
             x: 150,
             y: 150,
             dx: 2,
-            dy: 4,
+            dy: 4
         };
     };
     
@@ -25,8 +25,8 @@ $(function() {
         ENTER: {
             down: function() {
                 m3.camera.slideTo(m3.config.level_width - m3.game.width, 0);
-            },
-        },
+            }
+        }
     };
     
     m3.game.states.PlayState.prototype.mouseHandlers = {
@@ -36,7 +36,7 @@ $(function() {
         
         up: function(event) {
             m3.launcher.launch(event);
-        },
+        }
     };
     
     m3.game.states.PlayState.prototype.update = function() {
@@ -58,13 +58,16 @@ $(function() {
         // Update the camera.
         m3.camera.update();
         
+
+        
+        
         // Draw a level background.
         var gradient = context.createLinearGradient(0, 0, m3.config.level_width, 0);
         gradient.addColorStop(0, "#000000");
         gradient.addColorStop(1, "#FFFFFF");
         context.fillStyle = gradient;
         context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
-        
+ 
         // Draw a circle.
         context.fillStyle = "#EE3333";
         context.beginPath();
@@ -81,5 +84,9 @@ $(function() {
         // Update location.
         ball.x += ball.dx;
         ball.y += ball.dy;
+    
+        // Update the physics world
+        m3.world.update();
     };
+    
 });

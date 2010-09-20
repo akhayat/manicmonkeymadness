@@ -74,7 +74,7 @@ $(function() {
                 }
                 
                 m3.game.context.translate(-this.position.x, -this.position.y);
-            },
+            }
         };
     }();
 });

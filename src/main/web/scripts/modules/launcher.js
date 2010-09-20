@@ -32,7 +32,7 @@ $(function() {
                   */
                  var angle = Math.atan(-1 * (mousePosition.y - mousePosition.oldY) / (mousePosition.x - mousePosition.oldX)) * (180 / Math.PI);
                  m3.util.log("fire!!!  Angle = " + angle);
-            },
+            }
         };
     }();
 });
