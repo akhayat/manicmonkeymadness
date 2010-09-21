@@ -47,10 +47,13 @@ $(function() {
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;
                        
+        var cannonSprite = {x: 0, y: m3.game.height * (3/4), image: new Image()};
+        
         var left = new Image(),
         up = new Image(),
         right = new Image();
         
+        cannonSprite.image.src = "images/sprites/cannon.png";
         left.src = 'images/sprites/monkeyleft.png';
         up.src = 'images/sprites/monkeyup.png';
         right.src = 'images/sprites/monkeyright.png';
@@ -82,6 +85,7 @@ $(function() {
 //        default: alert("fail"); break;
 //        }        
         
+        context.drawImage(cannonSprite.image, cannonSprite.x, cannonSprite.y, cannonSprite.image.width / 2, cannonSprite.image.height / 2);
         context.drawImage(up, image.x, image.y);
         
         // Make it bounce.
