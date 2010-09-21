@@ -17,7 +17,10 @@ $(function() {
 			level_width:  900,
 			
 			// Camera's scroll speed in pixels per second.
-			camera_scroll_speed: 1200
+			camera_scroll_speed: 1200,
+			
+			// Gravity vector for Box2d
+			gravity: 1
 		};
 	}();
 });

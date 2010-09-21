@@ -17,7 +17,7 @@ $(function() {
             x: 150,
             y: 150,
             dx: 1,
-            dy: 2,
+            dy: 2
         };
     };
     
@@ -84,7 +84,7 @@ $(function() {
 //        default: alert("fail"); break;
 //        }        
         
-        context.drawImage(up, image.x, image.y);
+        //context.drawImage(up, image.x, image.y);
         
         // Make it bounce.
         if (image.x + image.dx > m3.game.width || image.x + image.dx < 0)
