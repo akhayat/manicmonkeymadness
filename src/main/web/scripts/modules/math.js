@@ -1,8 +1,7 @@
 /**
  * math.js
  * 
- * This module contains some math-related utility functions and
- * object constructors.
+ * This module contains some math-related utility functions.
  * 
  */
 
@@ -20,27 +19,6 @@ $(function() {
                 
                 return x;
             },
-            
-            /**
-             * Very useful generic vector object.
-             */
-            Vector: function(x, y) {
-                this.x = x || 0.0;
-                this.y = y || 0.0;
-            }
         };
     }();
-    
-    m3.math.Vector.prototype.length = function() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    };
-    
-    m3.math.Vector.prototype.normalize = function() {
-        var length = this.length();
-        
-        if (length != 0) {
-            this.x /= length;
-            this.y /= length;
-        }
-    };
 });

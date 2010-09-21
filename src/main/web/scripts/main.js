@@ -15,7 +15,7 @@ $(function() {
         m3.game.updateTime();
         
         // Clear the canvas every frame.
-        m3.game.context.clearRect(0, 0, 900, 500);
+        m3.game.context.clearRect(0, 0, m3.game.width, m3.game.height);
         
         // Update the game state. The actual game logic goes into the update
         // functions of the various game states inside scripts/states.

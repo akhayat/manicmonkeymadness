@@ -7,20 +7,20 @@
  */
 
 $(function() {
-	m3.config = function() {
-		return {
-		    // Frames per second.
-			fps: 45,
-			
-			// Dimensions of the level itself (not the window).
-			level_height: 450,
-			level_width:  2000,
-			
-			// Camera's scroll speed in pixels per second.
-			camera_scroll_speed: 1200,
-			
-			// Gravity vector for Box2d
-			gravity: 1
-		};
-	}();
+    m3.config = function() {
+        return {
+            // Frames per second.
+            fps: 45,
+            
+            // Dimensions of the level itself (not the window).
+            level_height: 450,
+            level_width:  2000,
+            
+            // Camera's scroll speed in pixels per second.
+            camera_scroll_speed: 1200,
+            
+            // Gravity vector for Box2d
+            gravity: 1
+        };
+    }();
 });

@@ -9,7 +9,7 @@
 $(function() {
     m3.camera = function() {
         var sliding = false,
-            goal    = new m3.math.Vector(0, 0),
+            goal    = new m3.types.Vector(0, 0),
             speed   = m3.config.camera_scroll_speed;
         
         var clampPosition = function () {
@@ -18,9 +18,9 @@ $(function() {
         };
         
         return {
-            position: new m3.math.Vector(0, 0),
-            minBound: new m3.math.Vector(0, 0),
-            maxBound: new m3.math.Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
+            position: new m3.types.Vector(0, 0),
+            minBound: new m3.types.Vector(0, 0),
+            maxBound: new m3.types.Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
             
             /**
              * Moves the camera by the specified speed in pixels per second.

@@ -6,12 +6,12 @@
  */
 
 $(function() {
-    m3.game.states.MainMenuState = function() {};
+    m3.states.MainMenuState = function() {};
     
-    m3.game.states.MainMenuState.prototype.keyHandlers = {
+    m3.states.MainMenuState.prototype.keyHandlers = {
         ENTER: {
             down: function() {
-                m3.game.state = new m3.game.states.PlayState();
+                m3.game.state = new m3.states.PlayState();
             }
         },
         
@@ -26,7 +26,7 @@ $(function() {
         }
     };
     
-    m3.game.states.MainMenuState.prototype.update = function () {
+    m3.states.MainMenuState.prototype.update = function () {
         var context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;

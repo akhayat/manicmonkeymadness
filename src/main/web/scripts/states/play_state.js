@@ -7,12 +7,7 @@
  */
 
 $(function() {
-    m3.game.states.PlayState = function() {
-        this.camera = {
-            x: 0,
-            y: 0
-        };
-        
+    m3.states.PlayState = function() {
         this.image = {
             x: 150,
             y: 150,
@@ -21,7 +16,7 @@ $(function() {
         };
     };
     
-    m3.game.states.PlayState.prototype.keyHandlers = {
+    m3.states.PlayState.prototype.keyHandlers = {
         ENTER: {
             down: function() {
                 m3.camera.slideTo(m3.config.level_width - m3.game.width, 0);
@@ -29,7 +24,7 @@ $(function() {
         }
     };
     
-    m3.game.states.PlayState.prototype.mouseHandlers = {
+    m3.states.PlayState.prototype.mouseHandlers = {
         down: function(event) {
             m3.launcher.prepareLaunch(event);
         },
@@ -39,9 +34,8 @@ $(function() {
         }
     };
     
-    m3.game.states.PlayState.prototype.update = function() {
+    m3.states.PlayState.prototype.update = function() {
         var image      = this.image,
-            camera     = this.camera,
             monkey     = new Image(),
             context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
