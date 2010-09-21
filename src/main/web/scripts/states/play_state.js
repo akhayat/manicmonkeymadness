@@ -13,11 +13,11 @@ $(function() {
             y: 0
         };
         
-        this.ball = {
+        this.image = {
             x: 150,
             y: 150,
-            dx: 2,
-            dy: 4
+            dx: 1,
+            dy: 2,
         };
     };
     
@@ -40,11 +40,22 @@ $(function() {
     };
     
     m3.game.states.PlayState.prototype.update = function() {
-        var ball       = this.ball,
+        var image      = this.image,
             camera     = this.camera,
+            monkey     = new Image(),
             context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;
+        
+        monkey.src = 'sgtpwn.png';
+               
+        var left = new Image(),
+        up = new Image(),
+        right = new Image();
+        
+        left.src = 'monkeyleft.png';
+        up.src = 'monkeyup.png';
+        right.src = 'monkeyright.png';
         
         // Move the camera with the arrow keys.
         if (m3.input.keys.RIGHT) {
@@ -57,34 +68,34 @@ $(function() {
         
         // Update the camera.
         m3.camera.update();
-        
-
-        
-        
+       
         // Draw a level background.
         var gradient = context.createLinearGradient(0, 0, m3.config.level_width, 0);
         gradient.addColorStop(0, "#000000");
         gradient.addColorStop(1, "#FFFFFF");
         context.fillStyle = gradient;
-        context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
- 
-        // Draw a circle.
-        context.fillStyle = "#EE3333";
-        context.beginPath();
-        context.arc(ball.x, ball.y, 10, 0, Math.PI*2, true);
-        context.closePath();
-        context.fill();
+        context.fillRect(0, 0, m3.config.level_width, m3.config.level_height); 
+                
+        //DO NOT REMOVE YET, temporary for changing images.
+//        switch(image.count%3) {
+//        case 0: context.drawImage(left, image.x, image.y); break;
+//        case 1: context.drawImage(up, image.x, image.y); break;
+//        case 2: context.drawImage(right, image.x, image.y); break;
+//        default: alert("fail"); break;
+//        }        
+        
+        context.drawImage(up, image.x, image.y);
         
         // Make it bounce.
-        if (ball.x + ball.dx > m3.game.width || ball.x + ball.dx < 0)
-            ball.dx = -ball.dx;
-        if (ball.y + ball.dy > m3.game.height || ball.y + ball.dy < 0)
-            ball.dy = -ball.dy;
+        if (image.x + image.dx > m3.game.width || image.x + image.dx < 0)
+            image.dx = -image.dx;
+        if (image.y + image.dy > m3.game.height || image.y + image.dy < 0)
+            image.dy = -image.dy;
         
         // Update location.
-        ball.x += ball.dx;
-        ball.y += ball.dy;
-    
+        image.x += image.dx;
+        image.y += image.dy;
+        
         // Update the physics world
         m3.world.update();
     };
