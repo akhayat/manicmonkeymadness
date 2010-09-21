@@ -46,16 +46,14 @@ $(function() {
             context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;
-        
-        monkey.src = 'sgtpwn.png';
-               
+                       
         var left = new Image(),
         up = new Image(),
         right = new Image();
         
-        left.src = 'monkeyleft.png';
-        up.src = 'monkeyup.png';
-        right.src = 'monkeyright.png';
+        left.src = 'images/sprites/monkeyleft.png';
+        up.src = 'images/sprites/monkeyup.png';
+        right.src = 'images/sprites/monkeyright.png';
         
         // Move the camera with the arrow keys.
         if (m3.input.keys.RIGHT) {
