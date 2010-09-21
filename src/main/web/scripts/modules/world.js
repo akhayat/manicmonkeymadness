@@ -25,39 +25,45 @@ $(function() {
 		groundBody.position.Set(450, 440);
 		world.CreateBody(groundBody);				
 
+		//create walls
+        createBox(5, 225, 10, 450, 1.0);
+        createBox(895, 225, 10, 450, 1.0);
+        
 		//create some bodies
-        createBox(400, 345, 10, 80);
-        createBox(500, 345, 10, 80);
-        createBox(450, 255, 80, 10);       
-        createBall(450, 0, 10);
-			
-		function createBox(x, y, width, height) {			
+        createBox(450, 340, 10, 80);
+        createBox(500, 340, 10, 80);
+        createBox(450, 250, 80, 10);       
+        createBall(368, 5, 15);
+
+        
+		function createBox(x, y, width, height, density) {			
 			var boxSd = new b2BoxDef();
 			boxSd.extents.Set(width, height);
 			var boxBd = new b2BodyDef();
-			boxBd.density = 10.0;
-			//boxBd.restitution = 0.2;
+			boxBd.density = density || 1.0;
 			boxBd.AddShape(boxSd);
 			boxBd.position.Set(x, y);
 			return world.CreateBody(boxBd);			
 		};
 		
-		function createBall(x, y, rad, fixed) {
+		function createBall(x, y, radius, density) {
 			var ballSd = new b2CircleDef();
-			if (!fixed) ballSd.density = 1.0;
-			ballSd.radius = rad || 10;
-			ballSd.restitution = 0.2;
+			ballSd.density = density || 1.0;
+			ballSd.radius = radius || 10;
+			ballSd.restitution = 1.0;
 			var ballBd = new b2BodyDef();
 			ballBd.AddShape(ballSd);
 			ballBd.position.Set(x,y);
 			return world.CreateBody(ballBd);
 		};
 
-		return {			
+		return {
 			update: function() {
-				world.Step(60 / 60.0, 1);
+				world.Step(m3.config.fps / 60.0, 1);
 				m3.graphics.drawWorld(world, m3.game.context);
-			}		
+			},
+			createBox: createBox,
+			createBall: createBall
 		};
 	}();
 });

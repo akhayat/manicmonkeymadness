@@ -87,7 +87,8 @@ $(function() {
         
         context.drawImage(cannonSprite.image, cannonSprite.x, cannonSprite.y, cannonSprite.image.width / 2, cannonSprite.image.height / 2);
         context.drawImage(up, image.x, image.y);
-        
+
+/*      //        
         // Make it bounce.
         if (image.x + image.dx > m3.game.width || image.x + image.dx < 0)
             image.dx = -image.dx;
@@ -97,7 +98,7 @@ $(function() {
         // Update location.
         image.x += image.dx;
         image.y += image.dy;
-        
+*/        
         // Update the physics world
         m3.world.update();
     };
