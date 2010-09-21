@@ -87,18 +87,17 @@ $(function() {
         
         context.drawImage(cannonSprite.image, cannonSprite.x, cannonSprite.y, cannonSprite.image.width / 2, cannonSprite.image.height / 2);
         context.drawImage(up, image.x, image.y);
-
-/*      //        
+        
         // Make it bounce.
-        if (image.x + image.dx > m3.game.width || image.x + image.dx < 0)
+        if (image.x + image.dx > m3.game.width || image.x + image.dx < 0 || image.x + image.dx + up.width > m3.game.width)
             image.dx = -image.dx;
-        if (image.y + image.dy > m3.game.height || image.y + image.dy < 0)
+        if (image.y + image.dy > m3.game.height || image.y + image.dy < 0 || image.y + image.dy + up.height > m3.game.height)
             image.dy = -image.dy;
         
         // Update location.
         image.x += image.dx;
         image.y += image.dy;
-*/        
+        
         // Update the physics world
         m3.world.update();
     };
