@@ -8,27 +8,33 @@
 
 $(function() {
     m3.launcher = function() {
-        var coords = {};
+    	//keeps track of the coordinates and whether the mouse click is up or down
+        var coords = {down: false};
         
         return {
+        	cannonSprite: {angle: 0, x: 20, y: 720, image: new Image()},        
             prepareLaunch: function(event) {
-                // Saves the coordinates where the mouse is first pressed down.
-                coords.oldX = event.pageX;
-                coords.oldY = event.pageY;
+                // The angle is going to be from the wheel on the cannon to the mouse
+                coords.oldX = this.cannonSprite.x;
+                coords.oldY = this.cannonSprite.y;
+                coords.down = !coords.down;
+            },
+            
+            aim: function(event) {
+            	if(coords.down) {
+                    coords.x = event.pageX;
+                    coords.y = event.pageY;
+                
+                    // Calculates the angle using the cannon
+                    // and the mouse location. Good ole trig.
+                    this.cannonSprite.angle = Math.atan((coords.y - coords.oldY) / (coords.x - coords.oldX));
+            	}
             },
             
             launch: function(event) {
-                 coords.x = event.pageX;
-                 coords.y = event.pageY;
-                 
-                 if (coords.x == coords.oldX && coords.y == coords.oldY)
-                     return;
-                 
-                 // Calculates the angle using the point where the mouse was first clicked
-                 // and the place where it is let up. Good ole trig.
-                 var angle = Math.atan(-1 * (coords.y - coords.oldY) / (coords.x - coords.oldX)) * (180 / Math.PI);
-                 m3.util.log("fire!!!  Angle = " + angle);
-            }
+                coords.down = !coords.down
+                m3.util.log("fire!!!  Angle = " + -1 * this.cannonSprite.angle * (180 / Math.PI));
+            },          
         };
     }();
 });

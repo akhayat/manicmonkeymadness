@@ -114,4 +114,9 @@ $(document).ready(function() {
         if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.up)
             m3.game.state.mouseHandlers.up(event);
     };
+    
+    m3.input.processMouseMove = function(event) {
+        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.move)
+            m3.game.state.mouseHandlers.move(event);
+    };
 });

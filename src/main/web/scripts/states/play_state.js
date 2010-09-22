@@ -31,6 +31,10 @@ $(function() {
         
         up: function(event) {
             m3.launcher.launch(event);
+        },
+        
+        move: function(event) {
+        	m3.launcher.aim(event);
         }
     };
     
@@ -40,14 +44,14 @@ $(function() {
             context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;
-                       
-        var cannonSprite = {x: 0, y: m3.game.height * (3/4), image: new Image()};
+        	cannonOffset = {x: 56, y: 88};
+                      
         
         var left = new Image(),
         up = new Image(),
         right = new Image();
         
-        cannonSprite.image.src = "images/sprites/cannon.png";
+        m3.launcher.cannonSprite.image.src = "images/sprites/cannon.png";
         left.src = 'images/sprites/monkeyleft.png';
         up.src = 'images/sprites/monkeyup.png';
         right.src = 'images/sprites/monkeyright.png';
@@ -79,7 +83,20 @@ $(function() {
 //        default: alert("fail"); break;
 //        }        
         
-        context.drawImage(cannonSprite.image, cannonSprite.x, cannonSprite.y, cannonSprite.image.width / 2, cannonSprite.image.height / 2);
+        //draws the cannon at the appropriate angle
+        context.save();
+        context.scale(.5, .5);
+        
+        /* 
+         * this translate and rotate ensures the rotation is around the wheel of the cannon
+         * instead of the origin
+         */
+        context.translate(m3.launcher.cannonSprite.x + cannonOffset.x, m3.launcher.cannonSprite.y + cannonOffset.y);
+        context.rotate(m3.launcher.cannonSprite.angle);
+        
+        context.drawImage(m3.launcher.cannonSprite.image, -56, -88);
+        context.restore();
+        
         context.drawImage(up, image.x, image.y);
         
         // Make it bounce.
