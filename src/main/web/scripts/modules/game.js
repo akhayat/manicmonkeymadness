@@ -44,6 +44,7 @@ $(function() {
                 document.onkeyup     = m3.input.processKeyUp;
                 document.onmousedown = m3.input.processMouseDown;
                 document.onmouseup   = m3.input.processMouseUp;
+                document.onmousemove = m3.input.processMouseMove;
             }
         };
     }();

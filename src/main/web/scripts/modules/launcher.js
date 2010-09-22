@@ -8,11 +8,13 @@
 
 $(function() {
     m3.launcher = function() {
-    	//keeps track of the coordinates and whether the mouse click is up or down
-        var coords = {down: false};
+        //keeps track of the coordinates and whether the mouse click is up or down
+        var coords = { down: false };
         
         return {
-        	cannonSprite: {angle: 0, x: 20, y: 720, image: new Image()},        
+            cannonSprite: {angle: 0, x: 20, y: 720, image: new Image()},
+            cannonOffset: new m3.types.Vector(56, 88),
+            
             prepareLaunch: function(event) {
                 // The angle is going to be from the wheel on the cannon to the mouse
                 coords.oldX = this.cannonSprite.x;
@@ -21,20 +23,44 @@ $(function() {
             },
             
             aim: function(event) {
-            	if(coords.down) {
+                if (coords.down) {
                     coords.x = event.pageX;
                     coords.y = event.pageY;
-                
+                    
                     // Calculates the angle using the cannon
                     // and the mouse location. Good ole trig.
                     this.cannonSprite.angle = Math.atan((coords.y - coords.oldY) / (coords.x - coords.oldX));
-            	}
+                }
             },
             
             launch: function(event) {
                 coords.down = !coords.down
                 m3.util.log("fire!!!  Angle = " + -1 * this.cannonSprite.angle * (180 / Math.PI));
-            },          
+            },
+            
+            init: function() {
+                this.cannonSprite.image.src = "images/sprites/cannon.png";
+            },
+            
+            update: function() {
+                var context      = m3.game.context,
+                    cannonSprite = this.cannonSprite,
+                    cannonOffset = this.cannonOffset;
+                
+                //draws the cannon at the appropriate angle
+                context.save();
+                context.scale(.5, .5);
+                
+                /* 
+                 * this translate and rotate ensures the rotation is around the wheel of the cannon
+                 * instead of the origin
+                 */
+                context.translate(cannonSprite.x + cannonOffset.x, cannonSprite.y + cannonOffset.y);
+                context.rotate(cannonSprite.angle);
+                
+                context.drawImage(cannonSprite.image, -56, -88);
+                context.restore();
+            },
         };
     }();
 });
