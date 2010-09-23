@@ -41,31 +41,24 @@ $(function() {
     };
     
     m3.states.PlayState.prototype.update = function() {
-        var image        = this.image,
+        var sprites      = m3.assets.images.sprites,
+            image        = this.image,
             monkey       = new Image(),
             level        = this.level,
             context      = m3.game.context,
             halfWidth    = m3.game.width / 2,
             halfHeight   = m3.game.height / 2;
         
-        var left = new Image(),
-        up = new Image(),
-        right = new Image();
-        
-        left.src = 'images/sprites/monkeyleft.png';
-        up.src = 'images/sprites/monkeyup.png';
-        right.src = 'images/sprites/monkeyright.png';
-        
         // Update modules.
         m3.camera.update();
         level.update();
         m3.launcher.update();
-        
-        context.save();
-        context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
-        context.lineWidth = 0.1;
         m3.world.update();
-        context.restore();
+        
+        // The bouncing monkey stuff should probably be moved out of this function soon...
+        var left  = sprites.monkey_left,
+            up    = sprites.monkey_up,
+            right = sprites.monkey_right;
         
         //DO NOT REMOVE YET, temporary for changing images.
 //        switch(image.count%3) {
@@ -86,7 +79,6 @@ $(function() {
         // Update location.
         image.x += image.dx;
         image.y += image.dy;
-
     };
     
 });

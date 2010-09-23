@@ -76,8 +76,14 @@ $(function() {
         
         return {
             update: function() {
+                var context = m3.game.context;
+                
+                context.save();
+                context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
+                context.lineWidth = 0.1;
                 world.Step(m3.config.fps / 60.0, 1);
                 m3.graphics.drawWorld(world, m3.game.context);
+                context.restore();
             },
             createBox: createBox,
             createBall: createBall

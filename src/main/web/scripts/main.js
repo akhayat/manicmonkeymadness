@@ -25,8 +25,10 @@ $(function() {
     };
     
     /**
-     * Initialize.
+     * Initialize after we've loaded all of our assets.
      */
-    m3.game.init();
-    setInterval(tick, 1000 / m3.config.fps);
+    $(window).load(function() {
+        m3.game.init();
+        setInterval(tick, 1000 / m3.config.fps);
+    });
 });

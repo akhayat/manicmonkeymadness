@@ -8,23 +8,20 @@
 
 $(function() {
     m3.types.Level = function() {
-        /**
-         * Private variables.
-         */
         var background = {
             layers: [],
-            num_layers: 3,
+            num_layers: 3
         };
         
         // Load the background images.
+        var temp_background = m3.assets.images.backgrounds.temp;
+        
         for (var i = 0, n = background.num_layers; i < n; i++) {
             background.layers.push({
-                image: new Image(),
+                image: temp_background["layer_" + i],
                 scroll_factor: 1.0,
                 offset: 0
             });
-            
-            background.layers[i].image.src = "images/backgrounds/layer_" + i + ".png";
         }
         
         // Configure each layer's scroll factor and offset.
@@ -33,9 +30,6 @@ $(function() {
         background.layers[1].scroll_factor = 0.5;
         background.layers[1].offset = 60;
         
-        /**
-         * Constructor.
-         */
         return function() {
             this.background = background;
         };
@@ -67,6 +61,7 @@ $(function() {
             var x = m3.camera.position.x * (1.0 - background.layers[i].scroll_factor);
             var y = m3.game.height - image.height - background.layers[i].offset;
             
+            // m3.util.log(image.width +", "+ image.height +", "+ image.src);
             context.drawImage(image, x, y - ground_height);
         }
     };

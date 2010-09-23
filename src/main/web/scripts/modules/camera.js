@@ -55,6 +55,9 @@ $(function() {
              * Type can be either "linear" or "smooth".
              */
             slideTo: function(x, y, t, s) {
+                if (sliding)
+                    return;
+                
                 x = m3.math.clamp(x, this.minBound.x, this.maxBound.x);
                 y = m3.math.clamp(y, this.minBound.y, this.maxBound.y);
                 
