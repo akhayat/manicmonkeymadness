@@ -17,7 +17,7 @@ $(function() {
         };
         
         // Load the background images.
-        for (var i = 0; i < background.num_layers; i++) {
+        for (var i = 0, n = background.num_layers; i < n; i++) {
             background.layers.push({
                 image: new Image(),
                 scroll_factor: 1.0,
@@ -40,7 +40,7 @@ $(function() {
             this.background = background;
         };
     }();
-        
+    
     /**
      * Draws a background consisting of multiple layers with parallax scrolling.
      */
@@ -62,7 +62,7 @@ $(function() {
         context.fillRect(0, m3.config.level_height - ground_height, m3.config.level_width, m3.config.level_height);
         
         // Draw the layers of the background itself.
-        for (var i in background.layers) {
+        for (var i = 0, n = background.layers.length; i < n; i++) {
             var image = background.layers[i].image;
             var x = m3.camera.position.x * (1.0 - background.layers[i].scroll_factor);
             var y = m3.game.height - image.height - background.layers[i].offset;

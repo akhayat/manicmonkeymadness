@@ -8,21 +8,25 @@
 
 $(function() {
     m3.camera = function() {
-        var sliding           = false,
+        var Vector            = m3.types.Vector,
+            sliding           = false,
             slide_type        = "linear",
-            goal              = new m3.types.Vector(0, 0),
-            original_distance = new m3.types.Vector(0, 0);
+            goal              = new Vector(0, 0),
+            original_distance = new Vector(0, 0);
             speed             = m3.config.camera_scroll_speed;
         
-        var clampPosition = function () {
-            m3.camera.position.x = m3.math.clamp(m3.camera.position.x, m3.camera.minBound.x, m3.camera.maxBound.x);
-            m3.camera.position.y = m3.math.clamp(m3.camera.position.y, m3.camera.minBound.y, m3.camera.maxBound.y);
+        var clampPosition = function() {
+            var camera = m3.camera,
+                math   = m3.math;
+            
+            camera.position.x = math.clamp(camera.position.x, camera.minBound.x, camera.maxBound.x);
+            camera.position.y = math.clamp(camera.position.y, camera.minBound.y, camera.maxBound.y);
         };
         
         return {
-            position: new m3.types.Vector(0, 0),
-            minBound: new m3.types.Vector(0, 0),
-            maxBound: new m3.types.Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
+            position: new Vector(0, 0),
+            minBound: new Vector(0, 0),
+            maxBound: new Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
             
             /**
              * Moves the camera by the specified speed in pixels per second.
@@ -68,15 +72,15 @@ $(function() {
              */
             update: function() {
                 if (sliding) {
-                    var direction = new m3.types.Vector(goal.x - this.position.x, goal.y - this.position.y);
-                    var distance  = new m3.types.Vector(Math.abs(direction.x), Math.abs(direction.y));
+                    var scale     = new Vector(speed, speed),
+                        direction = new Vector(goal.x - this.position.x, goal.y - this.position.y),
+                        distance  = new Vector(Math.abs(direction.x), Math.abs(direction.y));
+                    
                     direction.normalize();
                     
-                    var scale = new m3.types.Vector(speed, speed);
-                    
                     if (slide_type == "smooth") {
-                        scale.x = original_distance.x == 0 ? scale.x : scale.x * 3 * (distance.x / original_distance.x + 0.075);
-                        scale.y = original_distance.y == 0 ? scale.y : scale.y * 3 * (distance.y / original_distance.y + 0.075);
+                        scale.x = original_distance.x == 0 ? scale.x : scale.x * 3 * (distance.x / original_distance.x + 0.05);
+                        scale.y = original_distance.y == 0 ? scale.y : scale.y * 3 * (distance.y / original_distance.y + 0.05);
                     }
                     
                     this.move(direction.x * scale.x, direction.y * scale.y);
@@ -88,12 +92,14 @@ $(function() {
                 }
                 else {
                     // Move the camera with the arrow keys.
-                    if (m3.input.keys.RIGHT) {
-                        m3.camera.move(m3.config.camera_scroll_speed, 0);
+                    var keys = m3.input.keys;
+                    
+                    if (keys.RIGHT) {
+                        this.move(m3.config.camera_scroll_speed, 0);
                     }
                     
-                    if (m3.input.keys.LEFT) {
-                        m3.camera.move(-m3.config.camera_scroll_speed, 0);
+                    if (keys.LEFT) {
+                        this.move(-m3.config.camera_scroll_speed, 0);
                     }
                 }
                 
