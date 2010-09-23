@@ -7,6 +7,7 @@
  */
 
 $(function() {
+
     m3.config = function() {
         return {
             // Frames per second.
