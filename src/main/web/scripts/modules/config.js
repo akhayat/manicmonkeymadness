@@ -19,8 +19,8 @@ $(function() {
             // Camera's scroll speed in pixels per second.
             camera_scroll_speed: 1200,
             
-            // Gravity vector for Box2d
-            gravity: 1
+            // scaling factor (pixels per meter)
+            scaling_factor: 20
         };
     }();
 });

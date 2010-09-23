@@ -60,7 +60,12 @@ $(function() {
         m3.camera.update();
         level.update();
         m3.launcher.update();
+        
+        context.save();
+        context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
+        context.lineWidth = 0.1;
         m3.world.update();
+        context.restore();
         
         //DO NOT REMOVE YET, temporary for changing images.
 //        switch(image.count%3) {
@@ -81,6 +86,7 @@ $(function() {
         // Update location.
         image.x += image.dx;
         image.y += image.dy;
+
     };
     
 });

@@ -7,13 +7,13 @@
 $(function() {
 	m3.graphics = function() {
 		
-		var drawCircle = function(shape, context) {
-			context.strokeStyle = '#EE3333';
+		var drawBall = function(shape, context) {
+			context.fillStyle = '#EE3333';
 			context.beginPath();
 		   	var circle = shape;
 			var pos = circle.m_position;
 			var r = circle.m_radius;
-			var segments = 16.0;
+			var segments = 50.0;
 			var theta = 0.0;
 			var dtheta = 2.0 * Math.PI / segments;
 			// draw circle
@@ -31,7 +31,7 @@ $(function() {
 			var ax = circle.m_R.col1;
 			var pos2 = new b2Vec2(pos.x + r * ax.x, pos.y + r * ax.y);
 			context.lineTo(pos2.x, pos2.y);
-			context.stroke();
+			context.fill();
 		};
 		
 		var drawPoly = function(shape, context) {
@@ -49,7 +49,7 @@ $(function() {
 		};		
 		
 		return {					
-			drawCircle: drawCircle,
+			drawBall: drawBall,
 			
 			drawPoly: drawPoly,
 			
@@ -57,7 +57,7 @@ $(function() {
 				for (var b = world.m_bodyList; b; b = b.m_next) {
 					for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
 						if (s.m_type == b2Shape.e_circleShape) {
-							drawCircle(s, context);
+							drawBall(s, context);
 						} else {
 							drawPoly(s, context);
 						}
