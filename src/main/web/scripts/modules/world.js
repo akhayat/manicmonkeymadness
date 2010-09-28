@@ -20,6 +20,9 @@ $(function() {
     	var world = new b2World(worldAABB, gravity, true);
     	window.world = world;
 
+    	// reference of the world's objects
+    	var objects = [];
+    	
     	// create the ground
     	var groundBodyDef = new b2BodyDef();
     	groundBodyDef.position.Set((m3.config.level_width / 2) / m3.config.scaling_factor, 21.6);
@@ -31,11 +34,9 @@ $(function() {
     	groundBody.w = m3.config.level_width / m3.config.scaling_factor;
     	groundBody.h = 0.5;
     	groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
-    	groundBody.CreateShape(groundShapeDef);
+    	var groundShape = groundBody.CreateShape(groundShapeDef);
     	groundBody.SynchronizeShapes();
-
-    	// reference of the world's bodies
-    	var bodies = [groundBody];
+    	objects.push({body: groundBody, shape: groundShape});
     	
         //create walls
         createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
@@ -50,7 +51,7 @@ $(function() {
     	createBox(12, 20, 0.5, 3, false, 1);
     	createBox(14, 15, 3, 0.1, false, 1);
     	
-        //var ball1 = createBall(5, 1, 0.5);
+        createBall(10, 1, 0.5, false);
 
         function createBox(x, y, width, height, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
@@ -63,30 +64,38 @@ $(function() {
             body.w = width;
             body.h = height;
             shapeDef.SetAsBox(body.w, body.h);
-            body.CreateShape(shapeDef);
+            var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
-            bodies.push(body);
-            return body;
+            objects.push({body: body, shape: shape});
+            return { 
+            	body: body,
+            	shape: shape 
+            };
         };
         
-        function createBall(x, y, radius, density) {
+        function createBall(x, y, radius, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
-            shapeDef.restitution = 0.6;
+            shapeDef.restitution = restitution || 0.6;
             shapeDef.density = density || 2.0;
-            shapeDef.friction = 0.9;
+            shapeDef.friction = friction || 0.9;
             body.w = radius * 2.0;
             body.h = radius * 2.0;
-            body.CreateShape(shapeDef);
-            body.SetMassFromShapes();
-            bodies.push(body);
+            var shape = body.CreateShape(shapeDef);
+            if(!fixed) body.SetMassFromShapes();
+            objects.push({body: body, shape: shape});
+            return { 
+            	body: body,
+            	shape: shape 
+            };
         };
             
         return {
-        	bodies: bodies,
+        	universe: world,
+        	objects: objects,
             createBox: createBox,
             createBall: createBall,
             update: function() {
@@ -94,7 +103,7 @@ $(function() {
                 context.save();
                 context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
                 world.Step(1 / m3.config.fps, 100);
-                m3.graphics.drawWorld(bodies, context);
+                m3.graphics.drawWorld(objects, context);
                 context.restore();
             }
         };
