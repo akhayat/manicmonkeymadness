@@ -28,7 +28,7 @@ $(function() {
     	groundShapeDef.restitution = 0.2;
     	groundShapeDef.friction = 0.9;
     	groundShapeDef.density = 1.0;
-    	groundBody.w = (m3.config.level_width / 2) / m3.config.scaling_factor;
+    	groundBody.w = m3.config.level_width / m3.config.scaling_factor;
     	groundBody.h = 0.5;
     	groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
     	groundBody.CreateShape(groundShapeDef);
@@ -38,16 +38,16 @@ $(function() {
     	var bodies = [groundBody];
     	
         //create walls
-        var wall1 = createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
-        var wall2 = createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
+        createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
+        createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         
         //create some bodies  	
     	createBox(10, 1, 1, 0.5, false, 1);
     	createBox(13, 1, 1, 1, false, 1);
     	createBox(15, 3, 0.5, 1, false, 1);
 
-    	createBox(9, 20, 1, 3, false, 1);
-    	createBox(12, 20, 1, 3, false, 1);
+    	createBox(9, 20, 0.5, 3, false, 1);
+    	createBox(12, 20, 0.5, 3, false, 1);
     	createBox(14, 15, 3, 0.1, false, 1);
     	
         //var ball1 = createBall(5, 1, 0.5);
@@ -62,7 +62,7 @@ $(function() {
             shapeDef.friction = friction || 0.9;
             body.w = width;
             body.h = height;
-            shapeDef.SetAsBox(width / 2, height / 2);
+            shapeDef.SetAsBox(body.w, body.h);
             body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
             bodies.push(body);
@@ -78,8 +78,8 @@ $(function() {
             shapeDef.restitution = 0.6;
             shapeDef.density = density || 2.0;
             shapeDef.friction = 0.9;
-            body.w = 1.0;
-            body.h = 1.0;
+            body.w = radius * 2.0;
+            body.h = radius * 2.0;
             body.CreateShape(shapeDef);
             body.SetMassFromShapes();
             bodies.push(body);
