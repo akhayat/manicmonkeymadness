@@ -24,29 +24,21 @@ $(function() {
             /**
              * Images.
              */
-            images: {
-                backgrounds: {
-                    temp: {
-                        layer_0: imageFromSource("backgrounds/layer_0.png"),
-                        layer_1: imageFromSource("backgrounds/layer_1.png"),
-                        layer_2: imageFromSource("backgrounds/layer_2.png")
-                    }
-                },
-                
-                sprites: {
-                    cannon:       imageFromSource("sprites/cannon.png"),
-                    monkey_up:    imageFromSource("sprites/monkeyup.png"),
-                    monkey_right: imageFromSource("sprites/monkeyright.png"),
-                    monkey_left:  imageFromSource("sprites/monkeyleft.png"),
-                },
+            backgrounds: {
+                temp: {
+                    layer_0: imageFromSource("backgrounds/layer_0.png"),
+                    layer_1: imageFromSource("backgrounds/layer_1.png"),
+                    layer_2: imageFromSource("backgrounds/layer_2.png")
+                }
             },
             
-            /**
-             * Sounds.
-             */
-            sounds: {
-                
-            }
+            sprites: {
+                demo:         imageFromSource("sprites/demo_monkey.png"),
+                cannon:       imageFromSource("sprites/cannon.png"),
+                monkey_up:    imageFromSource("sprites/monkeyup.png"),
+                monkey_right: imageFromSource("sprites/monkeyright.png"),
+                monkey_left:  imageFromSource("sprites/monkeyleft.png")
+            },
         };
     }();
 });

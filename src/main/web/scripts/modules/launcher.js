@@ -12,7 +12,7 @@ $(function() {
         var coords = { down: false };
         
         return {
-            cannonSprite: { angle: 0, x: 20, y: 720, image: m3.assets.images.sprites.cannon },
+            cannonSprite: { angle: 0, x: 20, y: 720, image: m3.assets.sprites.cannon },
             cannonOffset: new m3.types.Vector(56, 88),
             
             prepareLaunch: function(event) {

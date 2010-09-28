@@ -14,7 +14,7 @@ $(function() {
         };
         
         // Load the background images.
-        var temp_background = m3.assets.images.backgrounds.temp;
+        var temp_background = m3.assets.backgrounds.temp;
         
         for (var i = 0, n = background.num_layers; i < n; i++) {
             background.layers.push({
@@ -32,6 +32,11 @@ $(function() {
         
         return function() {
             this.background = background;
+            
+            // Set up a sprite for demo purposes.
+            this.demo_sprite = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 600, 400);
+            this.demo_sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+            this.demo_sprite.play("idle");
         };
     }();
     
@@ -71,5 +76,6 @@ $(function() {
      */
     m3.types.Level.prototype.update = function() {
         this.drawBackground();
+        this.demo_sprite.update();
     };
 });

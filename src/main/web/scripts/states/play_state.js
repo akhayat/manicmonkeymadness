@@ -1,8 +1,7 @@
 /**
  * play_state.js
  * 
- * This is the main state of the game in which the game is actually
- * being played.
+ * This is the main state of the game in which the game is actually being played.
  * 
  */
 

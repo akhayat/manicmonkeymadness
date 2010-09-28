@@ -21,7 +21,7 @@ $(function() {
             
             update: function() {
                 // For now we just have one UI module.
-                m3.ui.score.update();
+                this.score.update();
             },
         };
     }();
