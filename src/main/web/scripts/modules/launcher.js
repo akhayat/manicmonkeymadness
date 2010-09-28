@@ -34,9 +34,13 @@ $(function() {
             },
             
             launch: function(event) {
+            	var theta = this.cannonSprite.angle;
                 coords.down = !coords.down
-                m3.util.log("fire!!!  Angle = " + -1 * this.cannonSprite.angle * (180 / Math.PI));
-                m3.world.createBox(4, 19, 1, 0.5, false, 1).ApplyImpulse(new b2Vec2(20, -20), new b2Vec2(0, 1));
+                m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
+                
+                var magnitude = 50;
+                m3.world.createBox(4, 19, 1, 0.5, false, 1, 0.05).body.ApplyImpulse(new b2Vec2(magnitude * Math.cos(theta), magnitude * Math.sin(theta)), new b2Vec2(.05, 0.25));
+                //m3.world.createBox(4, 19, 1, 0.5, false, 1).body.ApplyImpulse((1, 1), new b2Vec2(1, 1));
             },
             
             init: function() {
@@ -59,7 +63,7 @@ $(function() {
                 context.translate(cannonSprite.x + cannonOffset.x, cannonSprite.y + cannonOffset.y);
                 context.rotate(cannonSprite.angle);
                 
-                context.drawImage(cannonSprite.image, -56, -88);
+                context.drawImage(cannonSprite.image, -cannonOffset.x, -cannonOffset.y);
                 context.restore();
             },
         };
