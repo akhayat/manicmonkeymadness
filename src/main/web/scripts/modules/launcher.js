@@ -36,6 +36,7 @@ $(function() {
             launch: function(event) {
                 coords.down = !coords.down
                 m3.util.log("fire!!!  Angle = " + -1 * this.cannonSprite.angle * (180 / Math.PI));
+                m3.world.createBox(4, 19, 1, 0.5, false, 1).ApplyImpulse(new b2Vec2(20, -20), new b2Vec2(0, 1));
             },
             
             init: function() {
