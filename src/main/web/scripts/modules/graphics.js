@@ -10,7 +10,7 @@ $(function() {
 		return {	
 
 			drawWorld: function(objects, context) {
-			    for(var i = 0; i < objects.length; i++){
+			    for (var i = 0, n = objects.length; i < n; i++) {
 			        var body = objects[i].body;
 			        var shape = objects[i].shape;
 			        var t = body.m_xf;
@@ -19,7 +19,7 @@ $(function() {
 			        
 					if (shape.m_type == b2Shape.e_circleShape) {
 				        context.beginPath();
-						context.arc(0, 0, 0.1, 0, Math.PI*2, true);
+						context.arc(0, 0, shape.m_radius, 0, Math.PI*2, true);
 						context.closePath();
 						context.fill();
 					} else {

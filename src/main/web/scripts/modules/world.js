@@ -51,7 +51,7 @@ $(function() {
     	createBox(12, 20, 0.5, 3, false, 1);
     	createBox(14, 15, 3, 0.1, false, 1);
     	
-        createBall(10, 1, 0.5, false);
+        createBall(10, 1, 1, false);
 
         function createBox(x, y, width, height, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
@@ -76,14 +76,15 @@ $(function() {
         function createBall(x, y, radius, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
+            bodyDef.isBullet = true;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
             shapeDef.restitution = restitution || 0.6;
             shapeDef.density = density || 2.0;
             shapeDef.friction = friction || 0.9;
-            body.w = radius * 2.0;
-            body.h = radius * 2.0;
+            body.w = 1.0;
+            body.h = 1.0;
             var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
             objects.push({body: body, shape: shape});
