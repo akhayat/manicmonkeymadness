@@ -17,7 +17,7 @@ $(function() {
             index             = 0,
             frame             = 0,
             time              = 0.0,
-            looping           = false,
+            looping           = true,
             grid_size         = new Vector(),
             offset            = new Vector();
         
@@ -65,10 +65,14 @@ $(function() {
         
         /**
          * Stops the animation of the sprite. The sprite will be suspended
-         * in the frame of animation that it was playing when this is called.
+         * in the frame of animation that it was playing when this is called
+         * unless you pass in a frame number for it to stay on.
          */
-        var stop = function() {
+        var stop = function(new_frame) {
             animation = null;
+            
+            if (typeof(new_frame) !== undefined)
+                frame = new_frame;
         };
         
         /**
