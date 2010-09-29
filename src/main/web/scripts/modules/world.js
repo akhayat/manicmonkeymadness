@@ -9,47 +9,51 @@
 
 $(function() {
     m3.world = function() {
-    	
-    	// create the world
-    	var worldAABB = new b2AABB();
-    	worldAABB.lowerBound.Set(-10000.0, -10000.0);
-    	worldAABB.upperBound.Set(10000.0, 10000.0);
-    	var gravity = new b2Vec2(0.0, 9.8);
-    	var world = new b2World(worldAABB, gravity, true);
-    	window.world = world;
-
-    	// reference of the world's objects
-    	var objects = [];
-    	
-    	// create the ground
-    	var groundBodyDef = new b2BodyDef();
-    	groundBodyDef.position.Set((m3.config.level_width / 2) / m3.config.scaling_factor, 21.6);
-    	var groundBody = world.CreateBody(groundBodyDef);
-    	var groundShapeDef = new b2PolygonDef();
-    	groundShapeDef.restitution = 0.2;
-    	groundShapeDef.friction = 0.9;
-    	groundBody.w = m3.config.level_width / m3.config.scaling_factor;
-    	groundBody.h = 0.5;
-    	groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
-    	var groundShape = groundBody.CreateShape(groundShapeDef);
-    	groundBody.SynchronizeShapes();
-    	objects.push({body: groundBody, shape: groundShape});
-    	
+        
+        // create the world
+        var worldAABB = new b2AABB();
+        worldAABB.lowerBound.Set(-10000.0, -10000.0);
+        worldAABB.upperBound.Set(10000.0, 10000.0);
+        
+        var gravity = new b2Vec2(0.0, 9.8);
+        var world = new b2World(worldAABB, gravity, true);
+        window.world = world;
+        
+        // reference of the world's objects
+        var objects = [];
+        
+        // create the ground
+        var groundBodyDef = new b2BodyDef();
+        var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
+        var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
+        groundBodyDef.position.Set(ground_x, ground_y);
+        var groundBody = world.CreateBody(groundBodyDef);
+        var groundShapeDef = new b2PolygonDef();
+        groundShapeDef.restitution = 0.2;
+        groundShapeDef.friction = 0.9;
+        groundShapeDef.density = 1.0;
+        groundBody.w = m3.config.level_width / m3.config.scaling_factor;
+        groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
+        groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
+        var groundShape = groundBody.CreateShape(groundShapeDef);
+        groundBody.SynchronizeShapes();
+        objects.push({body: groundBody, shape: groundShape});
+        
         // create walls
         createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         
         // create some demo bodies  	
-    	createBox(10, 1, 1, 0.5, false, 1);
-    	createBox(13, 1, 1, 1, false, 1);
-    	createBox(15, 3, 0.5, 1, false, 1);
-
-    	createBox(9, 20, 0.5, 3, false, 1);
-    	createBox(12, 20, 0.5, 3, false, 1);
-    	createBox(14, 15, 3, 0.1, false, 1);
-    	
+        createBox(10, 1, 1, 0.5, false, 1);
+        createBox(13, 1, 1, 1, false, 1);
+        createBox(15, 3, 0.5, 1, false, 1);
+        
+        createBox(9, 20, 0.5, 3, false, 1);
+        createBox(12, 20, 0.5, 3, false, 1);
+        createBox(14, 15, 3, 0.1, false, 1);
+        
         createBall(10, 1, 1, false);
-
+        
         function createBox(x, y, width, height, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
@@ -65,8 +69,8 @@ $(function() {
             if(!fixed) body.SetMassFromShapes();
             objects.push({body: body, shape: shape});
             return { 
-            	body: body,
-            	shape: shape 
+                body: body,
+                shape: shape 
             };
         };
         
@@ -87,14 +91,14 @@ $(function() {
             if(!fixed) body.SetMassFromShapes();
             objects.push({body: body, shape: shape});
             return { 
-            	body: body,
-            	shape: shape 
+                body: body,
+                shape: shape 
             };
         };
             
         return {
-        	universe: world,
-        	objects: objects,
+            universe: world,
+            objects: objects,
             createBox: createBox,
             createBall: createBall,
             update: function() {

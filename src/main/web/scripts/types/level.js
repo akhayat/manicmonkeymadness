@@ -54,20 +54,13 @@ $(function() {
         context.fillStyle = gradient;
         context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
         
-        // Draw a small platform at the bottom as the ground. Eventually this
-        // should become an actual physics object that other objects collide with.
-        var ground_height = 30;
-        context.fillStyle = "#332211";
-        context.fillRect(0, m3.config.level_height - ground_height, m3.config.level_width, m3.config.level_height);
-        
         // Draw the layers of the background itself.
         for (var i = 0, n = background.layers.length; i < n; i++) {
             var image = background.layers[i].image;
             var x = m3.camera.position.x * (1.0 - background.layers[i].scroll_factor);
             var y = m3.game.height - image.height - background.layers[i].offset;
             
-            // m3.util.log(image.width +", "+ image.height +", "+ image.src);
-            context.drawImage(image, x, y - ground_height);
+            context.drawImage(image, x, y - m3.config.ground_height);
         }
     };
     

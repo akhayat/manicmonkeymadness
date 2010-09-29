@@ -1,15 +1,13 @@
 /**
  * camera.js 
  * 
- * This module provides support for moving the viewport around via some
- * convenience functions.
+ * This module provides support for moving the viewport around via some convenience functions.
  * 
  */
 
 $(function() {
     m3.camera = function() {
         var Vector            = m3.types.Vector,
-            sliding           = false,
             slide_type        = "linear",
             goal              = new Vector(0, 0),
             original_distance = new Vector(0, 0);
@@ -24,6 +22,7 @@ $(function() {
         };
         
         return {
+            sliding:  false,
             position: new Vector(0, 0),
             minBound: new Vector(0, 0),
             maxBound: new Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
@@ -49,32 +48,30 @@ $(function() {
             },
             
             /**
-             * Sets the camera to slide to a specified location over
-             * time. Speed is measured in pixels per second.
+             * Sets the camera to slide to a specified location over time. Speed is measured in pixels per second.
              *
              * Type can be either "linear" or "smooth".
              */
             slideTo: function(x, y, t, s) {
-                if (sliding)
+                if (this.sliding)
                     return;
                 
                 x = m3.math.clamp(x, this.minBound.x, this.maxBound.x);
                 y = m3.math.clamp(y, this.minBound.y, this.maxBound.y);
                 
-                speed      = s || m3.config.camera_scroll_speed;
-                slide_type = t || "linear";
-                sliding    = true;
+                speed        = s || m3.config.camera_scroll_speed;
+                slide_type   = t || "linear";
+                this.sliding = true;
                 
                 goal.set(x, y);
                 original_distance.set(Math.abs(goal.x - this.position.x), Math.abs(goal.y - this.position.y));
             },
             
             /**
-             * The update function performs sliding and actually does
-             * the matrix transforms.
+             * The update function performs sliding and actually does the matrix transforms.
              */
             update: function() {
-                if (sliding) {
+                if (this.sliding) {
                     var scale     = new Vector(speed, speed),
                         direction = new Vector(goal.x - this.position.x, goal.y - this.position.y),
                         distance  = new Vector(Math.abs(direction.x), Math.abs(direction.y));
@@ -90,7 +87,7 @@ $(function() {
                     
                     if (distance.x <= (speed / 1000) && distance.y <= (speed / 1000)) {
                         this.warp(goal.x, goal.y);
-                        sliding = false;
+                        this.sliding = false;
                     }
                 }
                 else {

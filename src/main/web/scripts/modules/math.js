@@ -9,7 +9,7 @@ $(function() {
     m3.math = function() {
         return {
             /**
-             * Utility function to clamp a number within a certain range.
+             * Utility function to clamp a number within a certain range (inclusive).
              */
             clamp: function(x, min, max) {
                 if (x < min)
@@ -19,6 +19,13 @@ $(function() {
                 
                 return x;
             },
+            
+            /**
+             * Function to return a random integer within the given range (inclusive).
+             */
+            randomInteger: function(min, max) {
+                return Math.floor(Math.random() * (max + 1)) + min;
+            }
         };
     }();
 });

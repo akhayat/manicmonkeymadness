@@ -16,6 +16,9 @@ $(function() {
             level_height: 450,
             level_width:  2000,
             
+            // How high in pixels the base ground is from the bottom of the screen.
+            ground_height: 30,
+            
             // Camera's scroll speed in pixels per second.
             camera_scroll_speed: 1200,
             
