@@ -14,8 +14,6 @@ $(function() {
     	var worldAABB = new b2AABB();
     	worldAABB.lowerBound.Set(-10000.0, -10000.0);
     	worldAABB.upperBound.Set(10000.0, 10000.0);
-        //worldAABB.lowerBound.Set(-m3.config.level_width / m3.config.scaling_factor, -m3.config.level_height / m3.config.scaling_factor);
-        //worldAABB.upperBound.Set(m3.config.level_width / m3.config.scaling_factor, m3.config.level_height / m3.config.scaling_factor);
     	var gravity = new b2Vec2(0.0, 9.8);
     	var world = new b2World(worldAABB, gravity, true);
     	window.world = world;
@@ -30,7 +28,6 @@ $(function() {
     	var groundShapeDef = new b2PolygonDef();
     	groundShapeDef.restitution = 0.2;
     	groundShapeDef.friction = 0.9;
-    	groundShapeDef.density = 1.0;
     	groundBody.w = m3.config.level_width / m3.config.scaling_factor;
     	groundBody.h = 0.5;
     	groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
@@ -38,11 +35,11 @@ $(function() {
     	groundBody.SynchronizeShapes();
     	objects.push({body: groundBody, shape: groundShape});
     	
-        //create walls
+        // create walls
         createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         
-        //create some bodies  	
+        // create some demo bodies  	
     	createBox(10, 1, 1, 0.5, false, 1);
     	createBox(13, 1, 1, 1, false, 1);
     	createBox(15, 3, 0.5, 1, false, 1);
@@ -58,7 +55,7 @@ $(function() {
             bodyDef.position.Set(x, y);
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2PolygonDef();
-            shapeDef.restitution = restitution || 0.4;
+            shapeDef.restitution = restitution || 0.2;
             shapeDef.density = density || 0.0;
             shapeDef.friction = friction || 0.9;
             body.w = width;
@@ -76,7 +73,8 @@ $(function() {
         function createBall(x, y, radius, fixed, density, restitution, friction) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
-            bodyDef.isBullet = true;
+            if(!fixed) bodyDef.isBullet = true;
+            bodyDef.angularDamping = 0.1;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
