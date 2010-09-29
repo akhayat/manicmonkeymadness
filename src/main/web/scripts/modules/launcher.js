@@ -38,9 +38,8 @@ $(function() {
                 coords.down = !coords.down
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
                 
-                var magnitude = 50;
-                m3.world.createBox(4, 19, 1, 0.5, false, 1, 0.05).body.ApplyImpulse(new b2Vec2(magnitude * Math.cos(theta), magnitude * Math.sin(theta)), new b2Vec2(.05, 0.25));
-                //m3.world.createBox(4, 19, 1, 0.5, false, 1).body.ApplyImpulse((1, 1), new b2Vec2(1, 1));
+                var magnitude = 100;
+                m3.world.createBall(4, 19, 1, false, 2, .5, .9).body.ApplyImpulse(new b2Vec2(magnitude * Math.cos(theta), magnitude * Math.sin(theta)), new b2Vec2(1, 1));
             },
             
             init: function() {
