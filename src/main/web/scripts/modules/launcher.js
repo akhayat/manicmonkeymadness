@@ -66,7 +66,6 @@ $(function() {
                     impulse.y = -impulse.y;
                 }
                 
-                m3.util.log(ball_x + ", " + ball_y);
                 var ball = m3.world.createBall(ball_x, ball_y, 1, false, 2, .1, 1).body
                 ball.ApplyImpulse(new b2Vec2(impulse.x, impulse.y), new b2Vec2(ball.m_xf.position.x, ball.m_xf.position.y));
             },

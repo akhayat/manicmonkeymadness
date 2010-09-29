@@ -21,6 +21,7 @@ $(function() {
             
             update: function() {
                 // For now we just have one UI module.
+                this.turn.update();
                 this.score.update();
             },
         };
