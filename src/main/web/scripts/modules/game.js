@@ -22,6 +22,10 @@ $(function() {
             height: $("#game").height(),
             width:  $("#game").width(),
             
+            // 
+            x: $("#game").offset().left,
+            y: $("#game").offset().top,
+            
             // The time in seconds elapsed since the last frame.
             elapsed: 0.0,
             
