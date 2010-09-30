@@ -13,16 +13,6 @@ $(function () {
             down: function() {
                 m3.game.state = new m3.states.PlayState();
             }
-        },
-
-        SPACE: {
-            down: function() {
-                m3.util.log("Pressed space!");
-            },
-
-            up: function() {
-                m3.util.log("Released space!");
-            }
         }
     };
 

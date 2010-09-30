@@ -3,6 +3,13 @@
 	padding: 0px;
 }
 
+html {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 body {
 	font: 15px Helvetica, Arial, sans-serif;
 	color: #002200;
@@ -29,6 +36,10 @@ a:hover {
 	font-size: 1.8em;
 	color: #FFFFFF;
 	background: #008822;
+	-moz-user-select: text;
+	-khtml-user-select: text;
+	-webkit-user-select: text;
+	user-select: text;
 }
 
 #game_description {
@@ -36,6 +47,10 @@ a:hover {
 	margin: 0px auto 20px auto;
 	padding: 6px;
 	background: #88BB88;
+	-moz-user-select: text;
+	-khtml-user-select: text;
+	-webkit-user-select: text;
+	user-select: text;
 }
 
 #game_description p {
@@ -53,6 +68,10 @@ a:hover {
 	width: 900px;
 	margin: 0px auto 20px auto;
 	background: #EEFFEE;
+	-moz-user-select: text;
+	-khtml-user-select: text;
+	-webkit-user-select: text;
+	user-select: text;
 }
 
 #console h2 {
