@@ -22,7 +22,7 @@ $(function() {
             height: $("#game").height(),
             width:  $("#game").width(),
             
-            // 
+            // Offsets of the canvas element.
             x: $("#game").offset().left,
             y: $("#game").offset().top,
             
