@@ -10,25 +10,17 @@ $(function() {
         /**
          * Private members.
          */
-        var Vector            = m3.types.Vector,
-            context           = m3.game.context,
-            animations        = {},
-            current_animation = null,
-            index             = 0,
-            frame             = 0,
-            time              = 0.0,
-            looping           = true,
-            grid_size         = new Vector(),
-            offset            = new Vector();
+        var Vector  = m3.types.Vector,
+            context = m3.game.context;
         
         /**
          * Private helper function to update the current frame based on the current
          * animation and index.
          */
         var updateFrame = function(height, width) {
-            frame    = current_animation.frames[index];
-            offset.x = (frame % grid_size.x) * width;
-            offset.y = parseInt(frame / grid_size.x) * height;
+            this.frame    = this.current_animation.frames[this.index];
+            this.offset.x = (this.frame % this.grid_size.x) * this.width;
+            this.offset.y = parseInt(this.frame / this.grid_size.x) * this.height;
         };
         
         /**
@@ -38,25 +30,19 @@ $(function() {
          * See the wiki for examples and further documentation.
          */
         var addAnimation = function(id, frames, time) {
-            animations[id] = { frames: frames, time: time };
+            this.animations[id] = { frames: frames, time: time };
         };
         
         /**
-         * Plays the animation with the given id. Can set it to loop or not loop.
-         * Defaults to true.
+         * Plays the animation with the given id.
          */
-        var play = function(id, loop) {
-            current_animation = animations[id];
+        var play = function(id) {
+            this.current_animation = this.animations[id];
             
-            if (typeof(current_animation) !== undefined) {
-                index = 0;
-                time  = 0.0;
-                updateFrame(this.height, this.width);
-                
-                if (typeof(loop) === undefined)
-                    loop = true;
-                
-                looping = loop;
+            if (typeof(this.current_animation) !== undefined) {
+                this.index = 0;
+                this.time  = 0.0;
+                this.updateFrame(this.height, this.width);
             }
             else {
                 m3.util.log("Tried to play an animation with id " + id + ", but the animation doesn't exist!");
@@ -69,30 +55,33 @@ $(function() {
          * unless you pass in a frame number for it to stay on.
          */
         var stop = function(new_frame) {
-            animation = null;
+            this.current_animation = null;
             
             if (typeof(new_frame) !== undefined)
-                frame = new_frame;
+                this.frame = new_frame;
         };
         
         /**
          * Update function for the sprite animates and renders the sprite.
          */
         var update = function() {
-            var sheet  = this.sheet,
-                height = this.height,
-                width  = this.width,
-                x      = this.x,
-                y      = this.y;
+            var sheet     = this.sheet,
+                animation = this.current_animation,
+                index     = this.index,
+                height    = this.height,
+                width     = this.width,
+                x         = this.x,
+                y         = this.y
+                offset    = this.offset;
             
             // If we're animating, update the current frame if necessary.
-            if (current_animation) {
-                time += m3.game.elapsed;
+            if (animation) {
+                this.time += m3.game.elapsed;
                 
-                while (time >= current_animation.time) {
-                    time -= current_animation.time;
-                    index = (index + 1) % current_animation.frames.length;
-                    updateFrame(height, width);
+                while (this.time >= animation.time) {
+                    this.time -= animation.time;
+                    this.index = (this.index + 1) % animation.frames.length;
+                    this.updateFrame(height, width);
                 }
             }
             
@@ -106,22 +95,28 @@ $(function() {
          * of the sprite cells, not the sprite sheet itself.
          */
         return function(sheet, height, width, x, y) {
-            this.sheet  = sheet;
-            this.height = height;
-            this.width  = width;
-            this.x      = x || 0.0;
-            this.y      = y || 0.0;
-            this.zoom   = 1;
+            this.sheet             = sheet;
+            this.height            = height;
+            this.width             = width;
+            this.x                 = x || 0.0;
+            this.y                 = y || 0.0;
+            this.zoom              = 1;
+            this.animations        = {};
+            this.current_animation = null;
+            this.index             = 0;
+            this.frame             = 0;
+            this.time              = 0.0;
+            this.grid_size         = new Vector(this.sheet.width / this.width, this.sheet.height / this.height);
+            this.offset            = new Vector();
             
-            grid_size.x = this.sheet.width / this.width;
-            grid_size.y = this.sheet.height / this.height;
-            
+            m3.types.Sprite.prototype.updateFrame  = updateFrame;
             m3.types.Sprite.prototype.addAnimation = addAnimation;
             m3.types.Sprite.prototype.play         = play;
             m3.types.Sprite.prototype.stop         = stop;
             m3.types.Sprite.prototype.update       = update;
             
             // Warn if we receive invalid dimensions.
+            var grid_size = this.grid_size;
             if (grid_size.x !== parseInt(grid_size.x) || grid_size.y !== parseInt(grid_size.y)) {
                 m3.util.log("Sprite " + sheet.src + " was created with invalid dimensions!");
             }

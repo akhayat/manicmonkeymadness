@@ -37,7 +37,7 @@ $(function() {
         groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
         var groundShape = groundBody.CreateShape(groundShapeDef);
         groundBody.SynchronizeShapes();
-        objects.push({body: groundBody, shape: groundShape});
+        objects.push({body: groundBody, shape: groundShape, draw: true});
         
         // create walls
         createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
@@ -54,7 +54,11 @@ $(function() {
         
         createBall(10, 1, 1, false);
         
-        function createBox(x, y, width, height, fixed, density, restitution, friction) {
+        function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
+            if (draw === undefined) {
+                draw = true;
+            }
+            
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             var body = world.CreateBody(bodyDef);
@@ -67,14 +71,16 @@ $(function() {
             shapeDef.SetAsBox(body.w, body.h);
             var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
-            objects.push({body: body, shape: shape});
-            return { 
-                body: body,
-                shape: shape 
-            };
+            var object = { body: body, shape: shape, draw: draw };
+            objects.push(object);
+            return object;
         };
         
-        function createBall(x, y, radius, fixed, density, restitution, friction) {
+        function createBall(x, y, radius, fixed, density, restitution, friction, draw) {
+            if (draw === undefined) {
+                draw = true;
+            }
+            
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
@@ -89,11 +95,9 @@ $(function() {
             body.h = 1.0;
             var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
-            objects.push({body: body, shape: shape});
-            return {
-                body: body,
-                shape: shape 
-            };
+            var object = { body: body, shape: shape, draw: draw };
+            objects.push(object);
+            return object;
         };
         
         var removeObject = function(object) {

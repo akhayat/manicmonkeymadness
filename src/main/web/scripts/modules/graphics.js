@@ -13,6 +13,10 @@ $(function() {
                 m3.game.context.fillStyle = "#332200";
                 
                 for (var i = 0, n = objects.length; i < n; i++) {
+                    if (!objects[i].draw) {
+                        continue;
+                    }
+                    
                     var body = objects[i].body;
                     var shape = objects[i].shape;
                     var t = body.m_xf;

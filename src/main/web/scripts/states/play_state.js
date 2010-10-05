@@ -138,6 +138,11 @@ $(function() {
         this.level.update();
         m3.world.update();
         m3.launcher.update();
+        
+        if (this.active_projectile) {
+            this.active_projectile.update();
+        }
+        
         m3.ui.update();
     };
 });
