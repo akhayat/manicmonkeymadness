@@ -33,6 +33,7 @@ $(function() {
                         context.fillRect(-body.w, -body.h, body.w*2, body.h*2);
                         context.rotate(-body.GetAngle());                    	
                     } else {
+                    	context.rotate(body.GetAngle());
                     	context.beginPath();
             			context.moveTo(shape.m_vertices[0].x, shape.m_vertices[0].y);
             			for (var i = 1, n = shape.m_vertexCount; i < n; i++) {
@@ -41,6 +42,7 @@ $(function() {
             			context.lineTo(shape.m_vertices[0].x, shape.m_vertices[0].y);
                         context.closePath();
                         context.fill();
+                        context.rotate(-body.GetAngle());
                     }
                     
                     context.translate(-t.position.x, -t.position.y);
