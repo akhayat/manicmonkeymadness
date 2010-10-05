@@ -34,9 +34,13 @@ $(function() {
             this.background = background;
             
             // Set up a sprite for demo purposes.
-            this.demo_sprite = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 600, 400);
+            this.demo_sprite = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 100, 400);
             this.demo_sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
             this.demo_sprite.play("idle");
+            
+            this.demo_sprite2 = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 1900, 400);
+            this.demo_sprite2.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+            this.demo_sprite2.play("idle");
         };
     }();
     
@@ -70,5 +74,6 @@ $(function() {
     m3.types.Level.prototype.update = function() {
         this.drawBackground();
         this.demo_sprite.update();
+        this.demo_sprite2.update();
     };
 });

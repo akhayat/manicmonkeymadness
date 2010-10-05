@@ -43,16 +43,22 @@ $(function() {
         createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
         
-        // create some demo bodies  	
-        createBox(10, 1, 1, 0.5, false, 1);
-        createBox(13, 1, 1, 1, false, 1);
-        createBox(15, 3, 0.5, 1, false, 1);
+        // left player fortress
+    	createBox(2, 20, 0.5, 3, false, 1);
+    	createBox(8, 20, 0.5, 3, false, 1);
+    	createBox(4, 15, 5, 0.1, false, 1);
+    	
+        // right player fortress
+    	createBox(92, 20, 0.5, 3, false, 1);
+    	createBox(98, 20, 0.5, 3, false, 1);
+    	createBox(94, 15, 5, 0.1, false, 1);
         
-        createBox(9, 20, 0.5, 3, false, 1);
-        createBox(12, 20, 0.5, 3, false, 1);
-        createBox(14, 15, 3, 0.1, false, 1);
-        
-        createBall(10, 1, 1, false);
+        // some demo bodies  	
+    	createBox(35, 10, 1, 0.5, false, 1);
+    	createBox(33, 1, 1, 1, false, 1);
+    	createBox(30, 3, 0.5, 1, false, 1);
+    	createBall(32, 5, 1, false);
+    	createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
         
         function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
             if (draw === undefined) {
@@ -64,7 +70,7 @@ $(function() {
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2PolygonDef();
             shapeDef.restitution = restitution || 0.2;
-            shapeDef.density = density || 0.0;
+            if(!fixed) shapeDef.density = density || 1.0;
             shapeDef.friction = friction || 0.9;
             body.w = width;
             body.h = height;
@@ -89,7 +95,7 @@ $(function() {
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
             shapeDef.restitution = restitution || 0.6;
-            shapeDef.density = density || 2.0;
+            if(!fixed) shapeDef.density = density || 1.0;
             shapeDef.friction = friction || 0.9;
             body.w = 1.0;
             body.h = 1.0;
@@ -99,8 +105,32 @@ $(function() {
             objects.push(object);
             return object;
         };
+       
+        function createPoly(x, y, points, fixed, density, restitution, friction, draw) {
+            if (draw === undefined) {
+                draw = true;
+            }
+            var bodyDef = new b2BodyDef();
+            bodyDef.position.Set(x, y);
+            var body = world.CreateBody(bodyDef);
+            var shapeDef = new b2PolygonDef();
+            shapeDef.restitution = restitution || 0.2;
+            if(!fixed) shapeDef.density = density || 1.0;
+            shapeDef.friction = friction || 0.9;
+            shapeDef.vertexCount = points.length;
+        	for (var i = 0, n = points.length; i < n; i++) {
+        		shapeDef.vertices[i].Set(points[i][0], points[i][1]);
+        	}
+            body.w = 1.0;
+            body.h = 1.0;
+            var shape = body.CreateShape(shapeDef);
+            if(!fixed) body.SetMassFromShapes();
+            var object = { body: body, shape: shape, draw: draw };
+            objects.push(object);
+            return object;
+        }
         
-        var removeObject = function(object) {
+        function removeObject(object) {
             for (var i = 0, n = objects.length; i < n; i++) {
                 if (object === objects[i].body) {
                     objects.splice(i, 1);
@@ -109,7 +139,7 @@ $(function() {
                 }
             }
         };
-        
+
         return {
             universe: world,
             objects: objects,

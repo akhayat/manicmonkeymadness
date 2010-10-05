@@ -10,7 +10,7 @@
  * 
  */
 
-$(document).ready(function() {
+$(function() {
     m3.input = function() {
         return {
             8:  "BACKSPACE",

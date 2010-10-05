@@ -23,7 +23,7 @@ $(function() {
         };
         
         return {
-            cannons: [new Cannon(10, 325, 56, 88, "right"), new Cannon(m3.config.level_width - 200, 325, 135, 88, "left")],
+            cannons: [new Cannon(150, 325, 56, 88, "right"), new Cannon(m3.config.level_width - 350, 325, 135, 88, "left")],
             
             // Returns the current cannon based on whose turn it is.
             currentCannon: function() {
