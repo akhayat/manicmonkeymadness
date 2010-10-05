@@ -38,7 +38,8 @@ $(function() {
                 monkey_up:    imageFromSource("sprites/monkeyup.png"),
                 monkey_right: imageFromSource("sprites/monkeyright.png"),
                 monkey_left:  imageFromSource("sprites/monkeyleft.png"),
-                rock:         imageFromSource("sprites/rock.png")
+                rock:         imageFromSource("sprites/rock.png"),
+                banana:		  imageFromSource("sprites/banana.png"),
             },
         };
     }();
