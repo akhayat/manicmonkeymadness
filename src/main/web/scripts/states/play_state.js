@@ -10,14 +10,16 @@ $(function() {
         this.level = new m3.types.Level();
         
         // The state determines what we're doing right now. It can be one of:
-        //
+        //   
+        //   - starting:      The game just loaded, and we're waiting a moment to actually
+        //                    start the game.
         //   - waiting:       It's a player's turn, and we're waiting for them to launch
         //                    a projectile.
         //   - attacking:     The player has launched a projectile, and we're letting the
         //                    physics system do its work.
         //   - transitioning: After the attacking state is finished, we're transitioning
         //                    back to the other player.
-        this.game_state = "waiting";
+        this.game_state = "starting";
         
         // This keeps track of how long we've been in the current state.
         this.state_time = 0.0;
@@ -84,6 +86,15 @@ $(function() {
     };
     
     /**
+     * This is the update function for the starting state.
+     */
+    m3.states.PlayState.prototype.updateStarting = function() {
+        if (this.state_time >= 0.5) {
+            this.setState("waiting");
+        }
+    };
+    
+    /**
      * This is the update function for the waiting state.
      */
     m3.states.PlayState.prototype.updateWaiting = function() {
@@ -123,6 +134,8 @@ $(function() {
         
         // Update the state itself.
         switch (this.game_state) {
+            case ("starting"):
+                this.updateStarting(); break;
             case ("waiting"):
                 this.updateWaiting(); break;
             case ("attacking"):
