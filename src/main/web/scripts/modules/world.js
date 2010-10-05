@@ -90,19 +90,30 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
             objects.push({body: body, shape: shape});
-            return { 
+            return {
                 body: body,
                 shape: shape 
             };
         };
-            
+        
+        var removeObject = function(object) {
+            for (var i = 0, n = objects.length; i < n; i++) {
+                if (object === objects[i].body) {
+                    objects.splice(i, 1);
+                    world.DestroyBody(object);
+                    break;
+                }
+            }
+        };
+        
         return {
             universe: world,
             objects: objects,
             createBox: createBox,
             createBall: createBall,
+            removeObject: removeObject,
             update: function() {
-                var context = m3.game.context;                
+                var context = m3.game.context;
                 context.save();
                 context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
                 world.Step(1 / m3.config.fps, 100);

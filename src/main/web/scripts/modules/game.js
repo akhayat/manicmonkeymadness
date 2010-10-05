@@ -42,11 +42,13 @@ $(function() {
              * Initialize the game.
              */
             init: function() {
+                var canvas = m3.game.canvas;
+                
                 m3.game.state = new m3.states.MainMenuState();
                 
                 document.onkeydown   = m3.input.processKeyDown;
                 document.onkeyup     = m3.input.processKeyUp;
-                document.onmousedown = m3.input.processMouseDown;
+                canvas.onmousedown   = m3.input.processMouseDown;
                 document.onmouseup   = m3.input.processMouseUp;
                 document.onmousemove = m3.input.processMouseMove;
                 

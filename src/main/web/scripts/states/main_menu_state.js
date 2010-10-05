@@ -7,7 +7,7 @@
 $(function () {
 
     m3.states.MainMenuState = function () {};
-
+    
     m3.states.MainMenuState.prototype.keyHandlers = {
         ENTER: {
             down: function() {
@@ -15,28 +15,28 @@ $(function () {
             }
         }
     };
-
+    
     m3.states.MainMenuState.prototype.mouseHandlers = {
        down: function(event) {
            m3.game.state = new m3.states.PlayState();
-        }
+       }
     };
-
+    
     m3.states.MainMenuState.prototype.update = function () {
         var context    = m3.game.context,
             halfWidth  = m3.game.width / 2,
             halfHeight = m3.game.height / 2;
-
+        
         // Draw the background.
         context.fillStyle = "rgb(200, 220, 250)";
         context.fillRect(0, 0, m3.game.width, m3.game.height);
-
+        
         // Draw the text.
         context.fillStyle = "rgba(0, 0, 0, 0.8)";
         context.font      = "bold 48px sans-serif";
         context.textAlign = "center";
         context.fillText("Manic Monkey Madness!!!", halfWidth, halfHeight);
-
+        
         context.font = "bold 30px sans-serif";
         context.fillText("PLAY", halfWidth, halfHeight + 80);
     };

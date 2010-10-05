@@ -8,9 +8,10 @@
 $(function() {
     m3.camera = function() {
         var Vector            = m3.types.Vector,
+            following         = null;
             slide_type        = "linear",
             goal              = new Vector(0, 0),
-            original_distance = new Vector(0, 0);
+            original_distance = new Vector(0, 0),
             speed             = m3.config.camera_scroll_speed;
         
         var clampPosition = function() {
@@ -22,7 +23,7 @@ $(function() {
         };
         
         return {
-            sliding:  false,
+            state:    "idle",
             position: new Vector(0, 0),
             minBound: new Vector(0, 0),
             maxBound: new Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
@@ -53,25 +54,48 @@ $(function() {
              * Type can be either "linear" or "smooth".
              */
             slideTo: function(x, y, t, s) {
-                if (this.sliding)
+                if (this.state !== "idle")
                     return;
                 
                 x = m3.math.clamp(x, this.minBound.x, this.maxBound.x);
                 y = m3.math.clamp(y, this.minBound.y, this.maxBound.y);
                 
-                speed        = s || m3.config.camera_scroll_speed;
-                slide_type   = t || "linear";
-                this.sliding = true;
+                speed      = s || m3.config.camera_scroll_speed;
+                slide_type = t || "linear";
+                this.state = "sliding";
                 
                 goal.set(x, y);
                 original_distance.set(Math.abs(goal.x - this.position.x), Math.abs(goal.y - this.position.y));
             },
             
             /**
+             * Sets the camera to follow a specified object. The only requirement of the object is that it has
+             * readable x and y properties.
+             */
+            follow: function(object) {
+                if (this.state !== "idle")
+                    return;
+                
+                this.state = "following";
+                following  = object;
+            },
+            
+            /**
+             * Stops the camera from following and returns to an idle state.
+             */
+            stopFollowing: function() {
+                if (this.state === "idle")
+                    return;
+                
+                this.state = "idle";
+                following = null;
+            },
+            
+            /**
              * The update function performs sliding and actually does the matrix transforms.
              */
             update: function() {
-                if (this.sliding) {
+                if (this.state === "sliding") {
                     var scale     = new Vector(speed, speed),
                         direction = new Vector(goal.x - this.position.x, goal.y - this.position.y),
                         distance  = new Vector(Math.abs(direction.x), Math.abs(direction.y));
@@ -87,8 +111,11 @@ $(function() {
                     
                     if (distance.x <= (speed / 1000) && distance.y <= (speed / 1000)) {
                         this.warp(goal.x, goal.y);
-                        this.sliding = false;
+                        this.state = "idle";
                     }
+                }
+                else if (this.state === "following" && following) {
+                    this.warp(following.x - m3.game.width / 2, following.y - m3.game.height / 2);
                 }
                 else {
                     // Move the camera with the arrow keys.

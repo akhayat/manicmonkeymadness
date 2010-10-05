@@ -25,6 +25,9 @@ $(function() {
         // This determines whose turn it is. The player who starts is chosen randomly.
         this.active_player = m3.math.randomInteger(0, 1);
         
+        // This is a reference to the projectile most recently launched.
+        this.active_projectile = null;
+        
         // If the second player is starting, we need to warp the camera to their side.
         if (this.active_player === 1) {
             m3.camera.warp(m3.config.level_width - m3.game.width, 0);
@@ -96,8 +99,11 @@ $(function() {
         // like angry birds does.
         if (this.state_time >= 5.0) {
             var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+            m3.camera.stopFollowing();
             m3.camera.slideTo(camera_position, 0, "smooth");
             this.active_player = (this.active_player + 1) % 2;
+            this.active_projectile.destroy();
+            this.active_projectile = null;
             this.setState("transitioning");
         }
     };

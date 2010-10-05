@@ -9,7 +9,8 @@
 $(function() {
     m3.launcher = function() {
         //keeps track of the coordinates and whether the mouse click is up or down
-        var coords = { down: false };
+        var aiming       = false,
+            mouse_coords = new m3.types.Vector();
         
         // Simple private object to represent both players' cannons.
         var Cannon = function(x, y, x_offset, y_offset, facing) {
@@ -30,19 +31,18 @@ $(function() {
             },
             
             prepareLaunch: function(event) {
-                coords.down = !coords.down;
+                aiming = true;
             },
             
             aim: function(event) {
-                if (coords.down) {
+                if (aiming === true) {
                     var cannon = this.currentCannon();
                     
-                    coords.x = event.pageX;
-                    coords.y = event.pageY;
+                    mouse_coords.x = event.pageX;
+                    mouse_coords.y = event.pageY;
                     
-                    // Calculates the angle using the cannon
-                    // and the mouse location. Good ole trig.
-                    cannon.angle = Math.atan((coords.y - cannon.y) / (coords.x - cannon.x));
+                    // Calculates the angle using the cannon and the mouse location. Good ole trig.
+                    cannon.angle = Math.atan((mouse_coords.y - cannon.y) / (mouse_coords.x - cannon.x));
                 }
             },
             
@@ -50,24 +50,23 @@ $(function() {
                 var cannon = this.currentCannon(),
                     theta  = cannon.angle;
                 
-                coords.down = !coords.down
+                aiming = false;
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
                 
                 var magnitude = 200;
-                var ball_x = cannon.x / m3.config.scaling_factor;
-                var ball_y = cannon.y / m3.config.scaling_factor + 2.0;
+                var ball_pos = new m3.types.Vector(cannon.x / m3.config.scaling_factor, cannon.y / m3.config.scaling_factor + 2.0);
                 var impulse = new m3.types.Vector(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
                 
                 if (cannon.facing === "right") {
-                    ball_x += 5.5;
+                    ball_pos.x += 5.5;
                 }
                 else {
                     impulse.x = -impulse.x;
                     impulse.y = -impulse.y;
                 }
                 
-                var ball = m3.world.createBall(ball_x, ball_y, 1, false, 2, .1, 1).body
-                ball.ApplyImpulse(new b2Vec2(impulse.x, impulse.y), new b2Vec2(ball.m_xf.position.x, ball.m_xf.position.y));
+                m3.game.state.active_projectile = new m3.types.Projectile(ball_pos.x, ball_pos.y, impulse.x, impulse.y);
+                m3.camera.follow(m3.game.state.active_projectile);
             },
             
             init: function() {
