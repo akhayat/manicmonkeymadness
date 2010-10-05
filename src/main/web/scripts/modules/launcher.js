@@ -38,11 +38,19 @@ $(function() {
                 if (aiming === true) {
                     var cannon = this.currentCannon();
                     
-                    mouse_coords.x = event.pageX;
-                    mouse_coords.y = event.pageY;
+                    mouse_coords.x = event.pageX - m3.game.x;
+                    mouse_coords.y = event.pageY - m3.game.y;
+                    
+                    /* Since there is a difference between the width of the actual level, and the 
+                     * width of the canvas, I had to include thisi so that the rotation of the cannon
+                     * would be smooth
+                     */
+                    var right = cannon.facing == "right" 
+                    var x = ( right ? cannon.x : m3.game.width - cannon.offset.x);
+                    var y = (right ? cannon.y : m3.game.height - cannon.offset.y);
                     
                     // Calculates the angle using the cannon and the mouse location. Good ole trig.
-                    cannon.angle = Math.atan((mouse_coords.y - cannon.y) / (mouse_coords.x - cannon.x));
+                    cannon.angle = Math.atan((mouse_coords.y - y) / (mouse_coords.x - x));
                 }
             },
             
@@ -53,6 +61,7 @@ $(function() {
                 aiming = false;
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
                 
+                //Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;
                 var ball_pos = new m3.types.Vector(cannon.x / m3.config.scaling_factor, cannon.y / m3.config.scaling_factor + 2.0);
                 var impulse = new m3.types.Vector(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
