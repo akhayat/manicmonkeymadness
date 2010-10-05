@@ -34,6 +34,7 @@ $(function() {
         if (this.active_player === 1) {
             m3.camera.warp(m3.config.level_width - m3.game.width, 0);
         }
+        
     };
     
     m3.states.PlayState.prototype.keyHandlers = {
@@ -46,6 +47,12 @@ $(function() {
         S: {
             down: function() {
                 m3.score.player_scores[1] += 5.0;
+            }
+        },
+        
+        W: {
+            down: function() {
+                m3.launcher.changeWeapon();
             }
         }
     };

@@ -20,6 +20,8 @@ $(function() {
             this.image  = m3.assets.sprites.cannon;
             this.offset = new m3.types.Vector(x_offset, y_offset);
             this.facing = facing;
+            
+            this.weapon = 0;
         };
         
         return {
@@ -71,7 +73,8 @@ $(function() {
             
             launch: function(event) {
                 var cannon = this.currentCannon(),
-                    theta  = cannon.angle;
+                    theta  = cannon.angle,
+                	weapon = cannon.weapon;
                 
                 aiming = false;
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
@@ -89,8 +92,20 @@ $(function() {
                     impulse.y = -impulse.y;
                 }
                 
-                m3.game.state.active_projectile = new m3.types.Projectile(ball_pos.x, ball_pos.y, impulse.x, impulse.y);
+                m3.game.state.active_projectile = new m3.types.Projectile(ball_pos.x, ball_pos.y, impulse.x, impulse.y, weapon);
                 m3.camera.follow(m3.game.state.active_projectile);
+            },
+            
+            changeWeapon: function() {
+            	var cannon = this.currentCannon(),
+            		weapon = cannon.weapon;
+            	
+            	if (weapon < 1) {
+            		cannon.weapon += 1;
+            	}
+            	else {
+            		cannon.weapon = 0;
+            	}
             },
             
             init: function() {

@@ -10,15 +10,23 @@ $(function() {
         /**
          * Constructor.
          */
-        return function(x, y, impulse_x, impulse_y) {
+        return function(x, y, impulse_x, impulse_y, weapon) {
             var projectile = m3.world.createBall(x, y, 1, false, 2, .1, 1, false);
             this.body  = projectile.body;
             this.shape = projectile.shape;
-            this.sprite = new m3.types.Sprite(m3.assets.sprites.rock, 40, 40);
+            
+            //This will be changed to a switch statement once we develop more weapon types.
+            if (weapon === 0) { 
+            	this.sprite = new m3.types.Sprite(m3.assets.sprites.rock, 40, 40); 
+            }
+            else {
+            	this.sprite = new m3.types.Sprite(m3.assets.sprites.banana, 40, 30);
+            }            
             
             if (typeof(impulse_x) !== undefined && typeof(impulse_y) !== undefined) {
                 this.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(this.x_in_meters, this.y_in_meters));
             }
+  
         };
     }();
     
@@ -78,5 +86,5 @@ $(function() {
         context.translate(-this.radius, -this.radius);
         this.sprite.update();
         context.restore();
-    };
+    };    
 });
