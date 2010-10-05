@@ -51,6 +51,21 @@ $(function() {
                     
                     // Calculates the angle using the cannon and the mouse location. Good ole trig.
                     cannon.angle = Math.atan((mouse_coords.y - y) / (mouse_coords.x - x));
+                    
+                    //caps the angle at 90 or 0
+                    if(right) {
+                        if(cannon.angle > 0 && cannon.angle < Math.PI / 4) {
+                    	    cannon.angle = 0;
+                        } else if (cannon.angle > Math.PI / 4) {
+                    	    cannon.angle = -1 * Math.PI / 2;
+                        }
+                    } else {
+                        if(cannon.angle < 0 && cannon.angle > -1 * Math.PI / 4) {
+                    	    cannon.angle = 0;
+                        } else if (cannon.angle < -1 * Math.PI / 4) {
+                    	    cannon.angle = Math.PI / 2;
+                        }
+                    }
                 }
             },
             
