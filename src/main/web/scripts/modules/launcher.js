@@ -44,30 +44,32 @@ $(function() {
                     mouse_coords.y = event.pageY - m3.game.y;
                     
                     /* Since there is a difference between the width of the actual level, and the 
-                     * width of the canvas, I had to include thisi so that the rotation of the cannon
+                     * width of the canvas, I had to include this so that the rotation of the cannon
                      * would be smooth
                      */
                     var right = cannon.facing == "right" 
                     var x = ( right ? cannon.x : m3.game.width - cannon.offset.x);
                     var y = (right ? cannon.y : m3.game.height - cannon.offset.y);
                     
-                    // Calculates the angle using the cannon and the mouse location. Good ole trig.
-                    cannon.angle = Math.atan((mouse_coords.y - y) / (mouse_coords.x - x));
                     
                     //caps the angle at 90 or 0
                     if(right) {
-                        if(cannon.angle > 0 && cannon.angle < Math.PI / 4) {
+                        // Calculates the angle using the cannon and the mouse location. Good ole trig.
+                        cannon.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
+                        if(cannon.angle > 0 && cannon.angle <= Math.PI) {
                     	    cannon.angle = 0;
-                        } else if (cannon.angle > Math.PI / 4) {
+                        } else if (cannon.angle < -1 * Math.PI / 2) {
                     	    cannon.angle = -1 * Math.PI / 2;
                         }
                     } else {
-                        if(cannon.angle < 0 && cannon.angle > -1 * Math.PI / 4) {
+                    	// I have to negate the x and y values so if fires in the correct direction
+                        cannon.angle = Math.atan2((y - mouse_coords.y),(x - mouse_coords.x));
+                        if(cannon.angle < 0) {
                     	    cannon.angle = 0;
-                        } else if (cannon.angle < -1 * Math.PI / 4) {
+                        } else if (cannon.angle > Math.PI / 2) {
                     	    cannon.angle = Math.PI / 2;
                         }
-                    }
+                    } 
                 }
             },
             
