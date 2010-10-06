@@ -15,7 +15,7 @@ $(function() {
         return {
             update: function() {
                 var active_player   = m3.game.state.active_player,
-                    circle_position = new m3.types.Vector(0, 0);
+                    circle_position = m3.types.Vector.create(0, 0);
                 
                 if (active_player === 1) {
                     circle_position.x = m3.game.width;

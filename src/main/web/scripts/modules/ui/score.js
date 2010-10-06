@@ -12,7 +12,7 @@ $(function() {
             camera        = m3.camera.position,
             scores        = m3.score.player_scores,
             width         = m3.game.width,
-            padding       = new m3.types.Vector(6, 18),
+            padding       = m3.types.Vector.create(6, 18),
             score_spacing = 28;
         
         return {

@@ -14,3 +14,12 @@ var m3 = {
     // Holds the constructors for our state objects.
     states: {}
 };
+
+// Implement Object.create if the browser didn't.
+if (typeof Object.create !== "function") {
+    Object.create = function(o) {
+        var f = function() {};
+        f.prototype = o;
+        return new f();
+    };
+}

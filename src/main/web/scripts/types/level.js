@@ -34,11 +34,11 @@ $(function() {
             this.background = background;
             
             // Set up a sprite for demo purposes.
-            this.demo_sprite = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 100, 400);
+            this.demo_sprite = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 100, 400);
             this.demo_sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
             this.demo_sprite.play("idle");
             
-            this.demo_sprite2 = new m3.types.Sprite(m3.assets.sprites.demo, 23, 25, 1900, 400);
+            this.demo_sprite2 = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 1900, 400);
             this.demo_sprite2.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
             this.demo_sprite2.play("idle");
         };

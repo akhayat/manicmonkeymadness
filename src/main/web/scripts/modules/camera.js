@@ -10,8 +10,8 @@ $(function() {
         var Vector            = m3.types.Vector,
             following         = null;
             slide_type        = "linear",
-            goal              = new Vector(0, 0),
-            original_distance = new Vector(0, 0),
+            goal              = Vector.create(0, 0),
+            original_distance = Vector.create(0, 0),
             speed             = m3.config.camera_scroll_speed;
         
         var clampPosition = function() {
@@ -24,9 +24,9 @@ $(function() {
         
         return {
             state:    "idle",
-            position: new Vector(0, 0),
-            minBound: new Vector(0, 0),
-            maxBound: new Vector(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
+            position: Vector.create(0, 0),
+            minBound: Vector.create(0, 0),
+            maxBound: Vector.create(m3.config.level_width - m3.game.width, m3.config.level_height - m3.game.height),
             
             /**
              * Moves the camera by the specified speed in pixels per second.
@@ -96,9 +96,9 @@ $(function() {
              */
             update: function() {
                 if (this.state === "sliding") {
-                    var scale     = new Vector(speed, speed),
-                        direction = new Vector(goal.x - this.position.x, goal.y - this.position.y),
-                        distance  = new Vector(Math.abs(direction.x), Math.abs(direction.y));
+                    var scale     = Vector.create(speed, speed),
+                        direction = Vector.create(goal.x - this.position.x, goal.y - this.position.y),
+                        distance  = Vector.create(Math.abs(direction.x), Math.abs(direction.y));
                     
                     direction.normalize();
                     

@@ -1,16 +1,15 @@
 /**
  * launcher.js 
  * 
- * This module is supposed to determine a launch angle using click and drag.  The original
+ * This module is supposed to determine a launch angle using click and drag. The original
  * click location is supposed to be origin and the angle is determined by where the user 
- * lets go.   Similar to crush the castle
+ * lets go. Similar to crush the castle
  */
 
 $(function() {
     m3.launcher = function() {
-        //keeps track of the coordinates and whether the mouse click is up or down
         var aiming       = false,
-            mouse_coords = new m3.types.Vector();
+            mouse_coords = m3.types.Vector.create();
         
         // Simple private object to represent both players' cannons.
         var Cannon = function(x, y, x_offset, y_offset, facing) {
@@ -18,7 +17,7 @@ $(function() {
             this.y      = y;
             this.angle  = 0;
             this.image  = m3.assets.sprites.cannon;
-            this.offset = new m3.types.Vector(x_offset, y_offset);
+            this.offset = m3.types.Vector.create(x_offset, y_offset);
             this.facing = facing;
             
             this.weapon = 0;
@@ -43,48 +42,49 @@ $(function() {
                     mouse_coords.x = event.pageX - m3.game.x;
                     mouse_coords.y = event.pageY - m3.game.y;
                     
-                    /* Since there is a difference between the width of the actual level, and the 
-                     * width of the canvas, I had to include this so that the rotation of the cannon
-                     * would be smooth
-                     */
+                    // Since there is a difference between the width of the actual level, and the 
+                    // width of the canvas, I had to include this so that the rotation of the cannon
+                    // would be smooth.
                     var right = cannon.facing == "right" 
                     var x = ( right ? cannon.x : m3.game.width - cannon.offset.x);
                     var y = (right ? cannon.y : m3.game.height - cannon.offset.y);
                     
-                    
-                    //caps the angle at 90 or 0
-                    if(right) {
+                    // Caps the angle at 90 or 0.
+                    if (right) {
                         // Calculates the angle using the cannon and the mouse location. Good ole trig.
                         cannon.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
-                        if(cannon.angle > 0 && cannon.angle <= Math.PI) {
-                    	    cannon.angle = 0;
-                        } else if (cannon.angle < -1 * Math.PI / 2) {
-                    	    cannon.angle = -1 * Math.PI / 2;
+                        if (cannon.angle > 0 && cannon.angle <= Math.PI) {
+                            cannon.angle = 0;
                         }
-                    } else {
-                    	// I have to negate the x and y values so if fires in the correct direction
+                        else if (cannon.angle < -1 * Math.PI / 2) {
+                            cannon.angle = -1 * Math.PI / 2;
+                        }
+                    }
+                    else {
+                        // I have to negate the x and y values so it fires in the correct direction.
                         cannon.angle = Math.atan2((y - mouse_coords.y),(x - mouse_coords.x));
-                        if(cannon.angle < 0) {
-                    	    cannon.angle = 0;
-                        } else if (cannon.angle > Math.PI / 2) {
-                    	    cannon.angle = Math.PI / 2;
+                        if (cannon.angle < 0) {
+                            cannon.angle = 0;
                         }
-                    } 
+                        else if (cannon.angle > Math.PI / 2) {
+                            cannon.angle = Math.PI / 2;
+                        }
+                    }
                 }
             },
             
             launch: function(event) {
                 var cannon = this.currentCannon(),
                     theta  = cannon.angle,
-                	weapon = cannon.weapon;
+                    weapon = cannon.weapon;
                 
                 aiming = false;
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
                 
-                //Apply an impulse to give the projectile velocity in the x and y directions
+                // Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;
-                var ball_pos = new m3.types.Vector(cannon.x / m3.config.scaling_factor, cannon.y / m3.config.scaling_factor + 2.0);
-                var impulse = new m3.types.Vector(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
+                var ball_pos = m3.types.Vector.create(cannon.x / m3.config.scaling_factor, cannon.y / m3.config.scaling_factor + 2.0);
+                var impulse = m3.types.Vector.create(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
                 
                 if (cannon.facing === "right") {
                     ball_pos.x += 5.5;
@@ -94,20 +94,20 @@ $(function() {
                     impulse.y = -impulse.y;
                 }
                 
-                m3.game.state.active_projectile = new m3.types.Projectile(ball_pos.x, ball_pos.y, impulse.x, impulse.y, weapon);
+                m3.game.state.active_projectile = m3.types.Projectile.create(ball_pos.x, ball_pos.y, impulse.x, impulse.y, weapon);
                 m3.camera.follow(m3.game.state.active_projectile);
             },
             
             changeWeapon: function() {
-            	var cannon = this.currentCannon(),
-            		weapon = cannon.weapon;
-            	
-            	if (weapon < 1) {
-            		cannon.weapon += 1;
-            	}
-            	else {
-            		cannon.weapon = 0;
-            	}
+                var cannon = this.currentCannon(),
+                    weapon = cannon.weapon;
+                
+                if (weapon < 1) {
+                    cannon.weapon += 1;
+                }
+                else {
+                    cannon.weapon = 0;
+                }
             },
             
             init: function() {
