@@ -44,7 +44,7 @@ $(function() {
             init: function() {
                 var canvas = m3.game.canvas;
                 
-                m3.game.state = new m3.states.MainMenuState();
+                m3.game.state = m3.states.MainMenuState.create();
                 
                 document.onkeydown   = m3.input.processKeyDown;
                 document.onkeyup     = m3.input.processKeyUp;
