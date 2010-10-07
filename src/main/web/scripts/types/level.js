@@ -9,6 +9,7 @@
 $(function() {
     m3.types.Level = function() {
         return {
+            fortresses: null,
             background: null,
             
             // Draws a background consisting of multiple layers with parallax scrolling.
@@ -35,9 +36,15 @@ $(function() {
             
             // Update function for the level.
             update: function() {
+                var fortresses = this.fortresses;
+                
                 this.drawBackground();
                 this.demo_sprite.update();
                 this.demo_sprite2.update();
+                
+                for (var i = 0, n = fortresses.length; i < n; i++) {
+                    fortresses[i].update();
+                }
             },
             
             // "Constructor".
@@ -69,14 +76,32 @@ $(function() {
                 
                 level.background = background;
                 
-                // Set up a sprite for demo purposes.
-                level.demo_sprite = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 100, 400);
+                // Set up sprites for demo purposes.
+                level.demo_sprite = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 55, 400);
                 level.demo_sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
                 level.demo_sprite.play("idle");
                 
-                level.demo_sprite2 = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 1900, 400);
+                level.demo_sprite2 = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 1925, 400);
                 level.demo_sprite2.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
                 level.demo_sprite2.play("idle");
+                
+                // Set up fortresses.
+                level.fortresses = [m3.types.Fortress.create(40), m3.types.Fortress.create(1860)];
+                
+                for (var i = 0; i < 2; i++) {
+                    var fort = level.fortresses[i];
+                    fort.addPiece("box", "long",  "wood", 0,   370, 0);
+                    fort.addPiece("box", "long",  "wood", 50,  370, 0);
+                    fort.addPiece("box", "long",  "wood", 100, 370, 0);
+                    fort.addPiece("box", "long",  "wood", 0,   270, 0);
+                    fort.addPiece("box", "long",  "wood", 50,  270, 0);
+                    fort.addPiece("box", "long",  "wood", 100, 270, 0);
+                    fort.addPiece("box", "long",  "wood", 50,  215, Math.PI / 2);
+                    fort.addPiece("box", "short", "wood", 10,  185, 0);
+                    fort.addPiece("box", "short", "wood", 50,  185, 0);
+                    fort.addPiece("box", "short", "wood", 90,  185, 0);
+                    fort.addPiece("box", "long",  "wood", 50,  155, Math.PI / 2);
+                }
                 
                 return level;
             },

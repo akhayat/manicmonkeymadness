@@ -39,7 +39,12 @@ $(function() {
                 monkey_right: imageFromSource("sprites/monkeyright.png"),
                 monkey_left:  imageFromSource("sprites/monkeyleft.png"),
                 rock:         imageFromSource("sprites/rock.png"),
-                banana:		  imageFromSource("sprites/banana.png"),
+                banana:       imageFromSource("sprites/banana.png"),
+                
+                fort_pieces: {
+                    box_long_wood:  imageFromSource("sprites/box_long_wood.png"),
+                    box_short_wood: imageFromSource("sprites/box_short_wood.png")
+                }
             },
         };
     }();

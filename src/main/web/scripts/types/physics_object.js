@@ -27,12 +27,17 @@ $(function() {
             
             // Update function draws the sprite onto the object.
             update: function() {
-                var radius = this.radius;
+                var offset = m3.types.Vector.create(0, 0);
+                
+                switch (this.shape.GetType()) {
+                    case 0: offset.set(-this.radius, -this.radius); break; // Circle
+                    case 1: offset.set(-this.width,  -this.height); break; // Box
+                }
                 
                 context.save();
                 context.translate(this.x, this.y);
                 context.rotate(this.angle);
-                context.translate(-radius, -radius);
+                context.translate(offset.x, offset.y);
                 this.sprite.update();
                 context.restore();
             },
@@ -60,6 +65,23 @@ $(function() {
             return this.body.GetPosition().y;
         });
         
+        // Getters for height and width (in pixels and meters).
+        proto.__defineGetter__("height", function() {
+            return this.height_in_meters * m3.config.scaling_factor;
+        });
+        
+        proto.__defineGetter__("width", function() {
+            return this.width_in_meters * m3.config.scaling_factor;
+        });
+        
+        proto.__defineGetter__("height_in_meters", function() {
+            return this.body.h;
+        });
+        
+        proto.__defineGetter__("width_in_meters", function() {
+            return this.body.w;
+        });
+        
         // Getters for radius (in pixels and meters).
         proto.__defineGetter__("radius", function() {
             return this.radius_in_meters * m3.config.scaling_factor;
@@ -69,9 +91,14 @@ $(function() {
             return this.shape.GetRadius();
         });
         
-        // Getter for angle (in radians).
+        // Getter and setter for angle (in radians).
         proto.__defineGetter__("angle", function() {
             return this.body.GetAngle();
+        });
+        
+        proto.__defineSetter__("angle", function(angle) {
+            var body = this.body;
+            body.SetXForm(body.GetPosition(), angle);
         });
         
         return proto;

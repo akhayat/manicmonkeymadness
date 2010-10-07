@@ -39,26 +39,26 @@ $(function() {
         groundBody.SynchronizeShapes();
         objects.push({body: groundBody, shape: groundShape, draw: true});
         
-        // create walls
-        createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
-        createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.1, 15, true);
-        
-        // left player fortress
-    	createBox(2, 20, 0.5, 3, false, 1);
-    	createBox(8, 20, 0.5, 3, false, 1);
-    	createBox(4, 15, 5, 0.1, false, 1);
-    	
-        // right player fortress
-    	createBox(92, 20, 0.5, 3, false, 1);
-    	createBox(98, 20, 0.5, 3, false, 1);
-    	createBox(94, 15, 5, 0.1, false, 1);
-        
-        // some demo bodies  	
-    	createBox(35, 10, 1, 0.5, false, 1);
-    	createBox(33, 1, 1, 1, false, 1);
-    	createBox(30, 3, 0.5, 1, false, 1);
-    	createBall(32, 5, 1, false);
-    	createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
+        // // create walls
+        // createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
+        // createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
+        // 
+        // // left player fortress
+        // createBox(2, 20, 1, 6, false, 1);
+        // createBox(8, 20, 1, 6, false, 1);
+        // createBox(4, 15, 10, 0.2, false, 1);
+        // 
+        // // right player fortress
+        // createBox(92, 20, 1, 6, false, 1);
+        // createBox(98, 20, 1, 6, false, 1);
+        // createBox(94, 15, 10, 0.2, false, 1);
+        // 
+        // // some demo bodies
+        // createBox(35, 10, 2, 1, false, 1);
+        // createBox(33, 1, 2, 2, false, 1);
+        // createBox(30, 3, 1, 2, false, 1);
+        // createBall(32, 5, 1, false);
+        // createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
         
         function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
             if (draw === undefined) {
@@ -72,8 +72,8 @@ $(function() {
             shapeDef.restitution = restitution || 0.2;
             if(!fixed) shapeDef.density = density || 1.0;
             shapeDef.friction = friction || 0.9;
-            body.w = width;
-            body.h = height;
+            body.w = width / 2;
+            body.h = height / 2;
             shapeDef.SetAsBox(body.w, body.h);
             var shape = body.CreateShape(shapeDef);
             if(!fixed) body.SetMassFromShapes();
@@ -110,6 +110,7 @@ $(function() {
             if (draw === undefined) {
                 draw = true;
             }
+            
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             var body = world.CreateBody(bodyDef);
@@ -118,9 +119,9 @@ $(function() {
             if(!fixed) shapeDef.density = density || 1.0;
             shapeDef.friction = friction || 0.9;
             shapeDef.vertexCount = points.length;
-        	for (var i = 0, n = points.length; i < n; i++) {
-        		shapeDef.vertices[i].Set(points[i][0], points[i][1]);
-        	}
+            for (var i = 0, n = points.length; i < n; i++) {
+                shapeDef.vertices[i].Set(points[i][0], points[i][1]);
+            }
             body.w = 1.0;
             body.h = 1.0;
             var shape = body.CreateShape(shapeDef);
@@ -139,7 +140,7 @@ $(function() {
                 }
             }
         };
-
+        
         return {
             universe: world,
             objects: objects,
