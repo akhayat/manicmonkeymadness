@@ -50,6 +50,12 @@ $(function() {
                     down: function() {
                         m3.launcher.changeWeapon();
                     }
+                },
+                
+                ESCAPE: {
+                	down: function() {
+                	    m3.launcher.aiming = false;
+                    }
                 }
             },
             
@@ -66,7 +72,7 @@ $(function() {
                 up: function(event) {
                     var state = m3.game.state;
                     
-                    if (state.game_state === "waiting") {
+                    if (state.game_state === "waiting" && m3.launcher.aiming) {
                         state.setState("attacking");
                         m3.launcher.launch(event);
                     }
@@ -104,7 +110,7 @@ $(function() {
                 // For now, after the player shoots their cannon, we switch to the other player after 5 seconds.
                 // Eventually we should instead have some way of detecting when the physics have "settled down",
                 // like angry birds does.
-                if (this.state_time >= 5.0) {
+                if (this.state_time >= 8.0) {
                     var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                     m3.camera.stopFollowing();
                     m3.camera.slideTo(camera_position, 0, "smooth");
