@@ -8,7 +8,6 @@
 
 $(function() {
     m3.launcher = function() {
-        //var aiming       = false,
         var mouse_coords = m3.types.Vector.create();
         
         // Simple private object to represent both players' cannons.
@@ -24,9 +23,7 @@ $(function() {
         };
         
         return {
-        	
-        	aiming: false,
-        	
+            aiming:  false,
             cannons: [new Cannon(150, 325, 56, 88, "right"), new Cannon(m3.config.level_width - 350, 325, 135, 88, "left")],
             
             // Returns the current cannon based on whose turn it is.

@@ -117,7 +117,7 @@ $(function() {
                 else if (this.state === "following" && following) {
                     this.warp(following.x - m3.game.width / 2, following.y - m3.game.height / 2);
                 }
-                else if(!m3.launcher.aiming){
+                else if (!m3.launcher.aiming) {
                     // Move the camera with the arrow keys.
                     var keys = m3.input.keys;
                     

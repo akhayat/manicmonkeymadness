@@ -34,12 +34,6 @@ $(function() {
             
             // Keyboard input handlers for the play state.
             keyHandlers: {
-                ENTER: {
-                    down: function() {
-                        m3.camera.slideTo(m3.config.level_width - m3.game.width, 0, "smooth");
-                    }
-                },
-                
                 S: {
                     down: function() {
                         m3.score.player_scores[1] += 5.0;
@@ -107,7 +101,7 @@ $(function() {
             
             // This is the update function for the attacking state.
             updateAttacking: function() {
-                // For now, after the player shoots their cannon, we switch to the other player after 5 seconds.
+                // For now, after the player shoots their cannon, we switch to the other player after 8 seconds.
                 // Eventually we should instead have some way of detecting when the physics have "settled down",
                 // like angry birds does.
                 if (this.state_time >= 8.0) {

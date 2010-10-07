@@ -22,7 +22,7 @@ $(function() {
         };
         
         var materials = {
-            wood: { density: 1.25, restitution: 0.25, friction: 0.85 }
+            wood: { density: 1.5, restitution: 0.25, friction: 0.85 }
         };
         
         return {
