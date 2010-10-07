@@ -8,8 +8,8 @@
 
 $(function() {
     m3.launcher = function() {
-        var aiming       = false,
-            mouse_coords = m3.types.Vector.create();
+        //var aiming       = false,
+        var mouse_coords = m3.types.Vector.create();
         
         // Simple private object to represent both players' cannons.
         var Cannon = function(x, y, x_offset, y_offset, facing) {
@@ -24,6 +24,9 @@ $(function() {
         };
         
         return {
+        	
+        	aiming: false,
+        	
             cannons: [new Cannon(150, 325, 56, 88, "right"), new Cannon(m3.config.level_width - 350, 325, 135, 88, "left")],
             
             // Returns the current cannon based on whose turn it is.
@@ -32,11 +35,11 @@ $(function() {
             },
             
             prepareLaunch: function(event) {
-                aiming = true;
+                this.aiming = true;
             },
             
             aim: function(event) {
-                if (aiming === true) {
+                if (this.aiming) {
                     var cannon = this.currentCannon();
                     
                     mouse_coords.x = event.pageX - m3.game.x;
@@ -78,7 +81,7 @@ $(function() {
                     theta  = cannon.angle,
                     weapon = cannon.weapon;
                 
-                aiming = false;
+                this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
