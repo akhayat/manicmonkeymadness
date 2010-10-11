@@ -19,11 +19,13 @@ $(function() {
             body:   null,
             shape:  null,
             sprite: null,
+            type: null,
             
             // Removes an object from the world.
             destroy: function() {
                 m3.world.removeObject(this.body);
             },
+            
             
             // Update function draws the sprite onto the object.
             update: function() {

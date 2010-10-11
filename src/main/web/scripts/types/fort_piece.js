@@ -22,7 +22,7 @@ $(function() {
         };
         
         var materials = {
-            wood: { density: 1.5, restitution: 0.25, friction: 0.85 }
+            wood: { density: 1.5, restitution: 0.25, friction: 0.85, splitThreshold: 2, destroyThreshold: 4 }
         };
         
         return {
@@ -35,13 +35,21 @@ $(function() {
                     piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale,
                                                false, m.density, m.restitution, m.friction, false);
                 
+                piece.body.SetUserData(object);
                 object.body   = piece.body;
                 object.shape  = piece.shape;
                 object.sprite = Sprite.create(t.s, t.h, t.w);
                 object.angle  = angle;
+                object.type = 'fort_piece';
+                object.damage = 0;
                 
                 return object;
             },
+            
+            update: function() {
+            	
+            	m3.util.log('piece update called');
+            }
         };
     }();
 });

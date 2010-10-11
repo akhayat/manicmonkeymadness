@@ -21,31 +21,24 @@ $(function() {
                     var shape = objects[i].shape;
                     var t = body.m_xf;
                     
+                    context.save();
                     context.translate(t.position.x, t.position.y);
+                    context.rotate(body.GetAngle());
+                    context.beginPath();
                     
-                    if (shape.m_type == b2Shape.e_circleShape) {
-                    	context.beginPath();
+                    if (shape.m_type == b2Shape.e_circleShape) {                    	
                         context.arc(0, 0, shape.m_radius, 0, Math.PI*2, true);
-                        context.closePath();
-                        context.fill();
-                    } else if (shape.m_vertexCount == 4) {
-                    	context.rotate(body.GetAngle());
-                        context.fillRect(-body.w, -body.h, body.w*2, body.h*2);
-                        context.rotate(-body.GetAngle());                    	
                     } else {
-                    	context.rotate(body.GetAngle());
-                    	context.beginPath();
             			context.moveTo(shape.m_vertices[0].x, shape.m_vertices[0].y);
             			for (var i = 1, n = shape.m_vertexCount; i < n; i++) {
             				context.lineTo(shape.m_vertices[i].x, shape.m_vertices[i].y);
             			}
             			context.lineTo(shape.m_vertices[0].x, shape.m_vertices[0].y);
-                        context.closePath();
-                        context.fill();
-                        context.rotate(-body.GetAngle());
                     }
                     
-                    context.translate(-t.position.x, -t.position.y);
+                    context.closePath();
+                    context.fill();
+                    context.restore();
                 }
             }          
         };

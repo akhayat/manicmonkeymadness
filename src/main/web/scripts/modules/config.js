@@ -23,7 +23,10 @@ $(function() {
             camera_scroll_speed: 1200,
             
             // scaling factor (pixels per meter)
-            scaling_factor: 20
+            scaling_factor: 20,
+            
+            // physics world iterations per step
+            iterations: 10
         };
     }();
 });

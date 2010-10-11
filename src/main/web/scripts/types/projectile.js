@@ -15,8 +15,11 @@ $(function() {
                 var p          = Object.create(m3.types.PhysicsObject.create(x, y)),
                     projectile = m3.world.createBall(x, y, 1, false, 2, .1, 1, false);
                 
+                projectile.body.SetUserData(p);
+                p.type = 'projectile';
                 p.body  = projectile.body;
                 p.shape = projectile.shape;
+                               
                 
                 // This will be changed to a switch statement once we develop more weapon types.
                 if (type === 0) {
@@ -34,7 +37,7 @@ $(function() {
                 }
                 
                 return p;
-            },
+            }
         };
     }();
 });
