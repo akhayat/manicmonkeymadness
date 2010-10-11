@@ -13,38 +13,74 @@ $(function() {
 			Add: function(point) {
 				//m3.util.log('add');
 			
-				var userData1 = point.shape1.GetBody().GetUserData(),
-				    type1 = userData1.type,				    
-				    userData2 = point.shape2.GetBody().GetUserData(),
-				    type2 = userData2.type;
+				var object1 = point.shape1.GetBody().GetUserData(),
+				    object2 = point.shape2.GetBody().GetUserData(),
+				    velocity = point.velocity.Length();
 
-				if (type1 == 'fort_piece') {
-					if (type2 == 'fort_piece') {
-						m3.util.log('fort piece hit fort piece');
-						//userData1.damage++;
-						//userData2.damage++;
-					} else if (type2 == 'ground') {
-						m3.util.log('fort piece hit ground');
-						//userData1.damage++;
-					} else if (type2 == 'projectile') {
-						m3.util.log('projectile hit fort piece');
-						userData1.damage += 5;
+				if (object1.type === 'fort_piece') {
+					if (object2.type === 'fort_piece') {
+						if (velocity > object1.minImpactVelocity) {
+							m3.util.log('fort piece hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
+							
+							object1.damage += (velocity * object2.mass) / m3.config.damage_factor;
+							object2.damage += (velocity * object1.mass) / m3.config.damage_factor;
+							
+							m3.util.log('fort piece damage: ' + object1.damage.toFixed(2));
+							m3.util.log('fort piece damage: ' + object2.damage.toFixed(2));
+						}
+						
+                        if (object1.damage > object1.destroyThreshold) {
+                        	object1.alive = false;
+                        	m3.util.log('fort piece destoryed');
+                        }
+                        if (object2.damage > object2.destroyThreshold) {
+                        	object2.alive = false;
+                        	m3.util.log('fort piece destoryed');
+                        }
+					} else if (object2.type === 'ground') {
+						//m3.util.log('fort piece hit ground');
+					} else if (object2.type === 'projectile') {
+						if (velocity > object1.minImpactVelocity) {
+							m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + ' m/s');
+
+							object1.damage += (velocity * object2.mass) / m3.config.damage_factor;
+						
+							m3.util.log('fort piece damage: ' + object1.damage.toFixed(2))
+						}
+						
+                        if (object1.damage > object1.destroyThreshold) {
+                        	object1.alive = false;
+                        	m3.util.log('fort piece destoryed');
+                        }	
 					}	
-				} else if (type1 == 'projectile') {
-					
-					if (type2 == 'fort_piece') {
-						m3.util.log('fort piece hit ground');						
-						userData2.damage +=5;
-					} else if (type2 == 'ground') {
-						m3.util.log('projectile hit ground');
+				} else if (object1.type === 'projectile') {
+					if (object2.type === 'fort_piece') {
+						if (velocity > object1.minImpactVelocity) {
+							m3.util.log('fort piece hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
+							
+							object1.damage += (velocity * object2.mass) / m3.config.damage_factor;
+							object2.damage += (velocity * object1.mass) / m3.config.damage_factor;
+							
+							m3.util.log('fort piece damage: ' + object1.damage.toFixed(2));
+							m3.util.log('fort piece damage: ' + object2.damage.toFixed(2));
+						}
+						
+                        if (object1.damage > object1.destroyThreshold) {
+                        	object1.alive = false;
+                        	m3.util.log('fort piece destoryed');
+                        }
+                        if (object2.damage > object2.destroyThreshold) {
+                        	object2.alive = false;
+                        	m3.util.log('fort piece destoryed');
+                        }
+					} else if (object2.type == 'ground') {
+						//m3.util.log('projectile hit ground');
 					}
-				} else if (type1 == 'ground') {
-					
-					if (type2 == 'fort_piece') {
-						m3.util.log('fort piece hit fort piece');						
-						//userData2.damage++;
-					} else if (type2 == 'projectile') {
-						m3.util.log('projectile hit ground');
+				} else if (object1.type === 'ground') {
+					if (object2.type === 'fort_piece') {
+						//m3.util.log('fort piece hit fort piece');						
+					} else if (object2.type == 'projectile') {
+						//m3.util.log('projectile hit ground');
 					}
 				} else {
 					m3.util.log('unknown collision');

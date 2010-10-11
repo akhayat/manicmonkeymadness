@@ -26,7 +26,10 @@ $(function() {
             scaling_factor: 20,
             
             // physics world iterations per step
-            iterations: 10
+            iterations: 10,
+            
+            // damage conversion factor given impact velocity (m/s per damage unit)
+            damage_factor: 75
         };
     }();
 });

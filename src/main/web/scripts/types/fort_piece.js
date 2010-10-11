@@ -22,7 +22,7 @@ $(function() {
         };
         
         var materials = {
-            wood: { density: 1.5, restitution: 0.25, friction: 0.85, splitThreshold: 2, destroyThreshold: 4 }
+            wood: { density: 1.5, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.5, splitThreshold: 2, destroyThreshold: 5 }
         };
         
         return {
@@ -41,7 +41,11 @@ $(function() {
                 object.sprite = Sprite.create(t.s, t.h, t.w);
                 object.angle  = angle;
                 object.type = 'fort_piece';
+                object.alive = true;
                 object.damage = 0;
+                object.destroyThreshold = m.destroyThreshold;
+                object.minImpactVelocity = m.minImpactVelocity;
+                
                 
                 return object;
             },

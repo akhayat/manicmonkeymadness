@@ -79,7 +79,7 @@ $(function() {
                     weapon = cannon.weapon;
                 
                 this.aiming = false;
-                m3.util.log("fire!!!  Angle = " + -1 * theta * (180 / Math.PI));
+                m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;

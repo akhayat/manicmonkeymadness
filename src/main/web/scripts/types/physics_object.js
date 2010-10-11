@@ -20,6 +20,7 @@ $(function() {
             shape:  null,
             sprite: null,
             type: null,
+            alive: null,
             
             // Removes an object from the world.
             destroy: function() {
@@ -29,19 +30,24 @@ $(function() {
             
             // Update function draws the sprite onto the object.
             update: function() {
-                var offset = m3.types.Vector.create(0, 0);
+            	
+            	if (this.alive) {
+            		var offset = m3.types.Vector.create(0, 0);
                 
-                switch (this.shape.GetType()) {
-                    case 0: offset.set(-this.radius, -this.radius); break; // Circle
-                    case 1: offset.set(-this.width,  -this.height); break; // Box
-                }
+            		switch (this.shape.GetType()) {
+                    	case 0: offset.set(-this.radius, -this.radius); break; // Circle
+                    	case 1: offset.set(-this.width,  -this.height); break; // Box
+            		}
                 
-                context.save();
-                context.translate(this.x, this.y);
-                context.rotate(this.angle);
-                context.translate(offset.x, offset.y);
-                this.sprite.update();
-                context.restore();
+            		context.save();
+            		context.translate(this.x, this.y);
+            		context.rotate(this.angle);
+            		context.translate(offset.x, offset.y);
+            		this.sprite.update();
+            		context.restore();
+            	} else {
+            		this.destroy();
+            	}	
             },
             
             // "Constructor".
@@ -101,6 +107,11 @@ $(function() {
         proto.__defineSetter__("angle", function(angle) {
             var body = this.body;
             body.SetXForm(body.GetPosition(), angle);
+        });
+        
+        // Getter for mass (in kilograms).
+        proto.__defineGetter__("mass", function() {
+            return this.body.GetMass();
         });
         
         return proto;

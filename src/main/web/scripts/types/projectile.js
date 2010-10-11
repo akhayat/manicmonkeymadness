@@ -19,6 +19,7 @@ $(function() {
                 p.type = 'projectile';
                 p.body  = projectile.body;
                 p.shape = projectile.shape;
+                p.alive = true;
                                
                 
                 // This will be changed to a switch statement once we develop more weapon types.
