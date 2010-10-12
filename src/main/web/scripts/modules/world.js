@@ -28,7 +28,7 @@ $(function() {
         groundBodyDef.position.Set(ground_x, ground_y);
         var groundBody = world.CreateBody(groundBodyDef);
         var groundShapeDef = new b2PolygonDef();
-        groundShapeDef.restitution = 0.2;
+        groundShapeDef.restitution = 0.1;
         groundShapeDef.friction = 0.9;
         groundShapeDef.density = 1.0;
         groundBody.w = m3.config.level_width / m3.config.scaling_factor;
@@ -36,10 +36,32 @@ $(function() {
         groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
         var groundShape = groundBody.CreateShape(groundShapeDef);
         groundBody.SynchronizeShapes();
+        
+        // // create walls
+        // createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
+        // createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
+        // 
+        // // left player fortress
+        // createBox(2, 20, 1, 6, false, 1);
+        // createBox(8, 20, 1, 6, false, 1);
+        // createBox(4, 15, 10, 0.2, false, 1);
+        // 
+        // // right player fortress
+        // createBox(92, 20, 1, 6, false, 1);
+        // createBox(98, 20, 1, 6, false, 1);
+        // createBox(94, 15, 10, 0.2, false, 1);
+        // 
+        // // some demo bodies
+        //createBox(35, 10, 2, 1, false, 1);
+        // createBox(33, 1, 2, 2, false, 1);
+        // createBox(30, 3, 1, 2, false, 1);
+        // createBall(32, 5, 1, false);
+        // createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
+        
         var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
         groundBody.SetUserData(object);
         objects.push(object);
-
+        
         function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
@@ -55,7 +77,7 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw };
+            var object = { body: body, shape: shape, draw: draw, type: "box"};
             objects.push(object);
             return object;
         };
@@ -76,7 +98,7 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw };
+            var object = { body: body, shape: shape, draw: draw, type: "ball"};
             objects.push(object);
             return object;
         };
@@ -99,10 +121,21 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw };
+            var object = { body: body, shape: shape, draw: draw, type: "poly"};
             objects.push(object);
             return object;
-        }
+        };
+        
+        /*
+         * Returns true if all of the objects in the world 
+         * are asleep
+         */
+        function allSleeping() {
+        	for (var i = 0, n = objects.length; i < n; i+=1) {
+        		m3.util.log("" + objects[i].type + ".sleep = " + objects[i].body.isSleeping);
+        	}
+        	return "";
+        };
         
         function removeObject(object) {
             for (var i = 0, n = objects.length; i < n; i++) {
@@ -119,6 +152,7 @@ $(function() {
             objects: objects,
             createBox: createBox,
             createBall: createBall,
+            allSleeping: allSleeping,
             createPoly: createPoly,
             removeObject: removeObject,
             update: function() {

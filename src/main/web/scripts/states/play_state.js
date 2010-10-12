@@ -33,7 +33,14 @@ $(function() {
             active_projectile: null,
             
             // Keyboard input handlers for the play state.
-            keyHandlers: {
+            keyHandlers: {  
+
+                A: {
+            	    down: function() {
+            	        m3.util.log("allSleeping = " + m3.world.allSleeping());
+                    }
+                },
+        
                 W: {
                     down: function() {
                         m3.launcher.changeWeapon();
