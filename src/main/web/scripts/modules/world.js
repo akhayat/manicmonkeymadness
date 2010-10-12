@@ -132,9 +132,12 @@ $(function() {
          */
         function allSleeping() {
         	for (var i = 0, n = objects.length; i < n; i+=1) {
-        		m3.util.log("" + objects[i].type + ".sleep = " + objects[i].body.isSleeping);
+        		//m3.util.log("" + objects[i].type + ".sleep = " + objects[i].body.IsSleeping());
+        		if(! objects[i].body.IsSleeping()) {
+        			return false;
+        		}
         	}
-        	return "";
+        	return true;
         };
         
         function removeObject(object) {
