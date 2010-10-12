@@ -22,7 +22,7 @@ $(function() {
         };
         
         var materials = {
-            wood: { density: 1.5, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.5, destroyThreshold: 4 }
+            wood: { density: 3.0, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.5, destroyThreshold: 4 }
         };
         
         return {
@@ -105,10 +105,6 @@ $(function() {
                 
                 return object;
             },
-            
-            update: function() {
-                m3.util.log('piece update called');
-            }
         };
     }();
 });

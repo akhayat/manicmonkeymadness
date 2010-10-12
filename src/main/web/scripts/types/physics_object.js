@@ -19,35 +19,34 @@ $(function() {
             body:   null,
             shape:  null,
             sprite: null,
-            type: null,
-            alive: null,
+            type:   null,
+            alive:  null,
             
             // Removes an object from the world.
             destroy: function() {
                 m3.world.removeObject(this.body);
             },
             
-            
             // Update function draws the sprite onto the object.
             update: function() {
-            	
-            	if (this.alive) {
-            		var offset = m3.types.Vector.create(0, 0);
-                
-            		switch (this.shape.GetType()) {
-                    	case 0: offset.set(-this.radius, -this.radius); break; // Circle
-                    	case 1: offset.set(-this.width,  -this.height); break; // Box
-            		}
-                
-            		context.save();
-            		context.translate(this.x, this.y);
-            		context.rotate(this.angle);
-            		context.translate(offset.x, offset.y);
-            		this.sprite.update();
-            		context.restore();
-            	} else {
-            		this.destroy();
-            	}	
+                if (this.alive) {
+                    var offset = m3.types.Vector.create(0, 0);
+                    
+                    switch (this.shape.GetType()) {
+                        case 0: offset.set(-this.radius, -this.radius); break; // Circle
+                        case 1: offset.set(-this.width,  -this.height); break; // Box
+                    }
+                    
+                    context.save();
+                    context.translate(this.x, this.y);
+                    context.rotate(this.angle);
+                    context.translate(offset.x, offset.y);
+                    this.sprite.update();
+                    context.restore();
+                }
+                else {
+                    this.destroy();
+                }
             },
             
             // "Constructor".

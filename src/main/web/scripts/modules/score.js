@@ -25,9 +25,9 @@ $(function() {
                 var player = otherPlayer(object.fort.owner);
                 
                 if (object.type === 'fort_piece') {
-                	player_scores[player] += fort_piece_value;
+                    player_scores[player] += fort_piece_value;
                 } else if (object.type === 'enemy') {
-                	player_scores[player] += enemy_value;
+                    player_scores[player] += enemy_value;
                 }
             }
         };

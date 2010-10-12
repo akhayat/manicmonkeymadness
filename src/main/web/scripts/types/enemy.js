@@ -13,14 +13,13 @@ $(function() {
         var enemies = {
             monkey: {
                 small: { s: assets.demo, h: 23, w: 25 },
-                medium:{ s: assets.demo2, h: 24, w: 33.2}
-            }         		
+                medium:{ s: assets.demo2, h: 24, w: 33.2 }
+            }
         };
         
         var details = {
                 small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 2 },
-        		medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 4 }
-
+                medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 4 }
         };
             
         return {
@@ -102,7 +101,7 @@ $(function() {
                     object.contact = this.contact;
                     object.body   = enemy.body;
                     object.shape  = enemy.shape;
-                    object.fort    = fort;
+                    object.fort   = fort;
                     object.type   = "enemy";
                     
                     if (type === "small") {
@@ -115,7 +114,7 @@ $(function() {
                         object.sprite.addAnimation("eating", [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4], 0.12);
                         object.sprite.play("eating");
                     }
-
+                    
                     object.angle  = angle;
                     object.type = 'enemy';
                     object.alive = true;
@@ -126,8 +125,7 @@ $(function() {
             },
             
             update: function() {
-            	
-            	m3.util.log('enemy update called');
+                m3.util.log('enemy update called');
             }
         };        
     }();

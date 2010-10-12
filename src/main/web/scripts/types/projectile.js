@@ -24,7 +24,8 @@ $(function() {
                         m3.util.log('fort piece destroyed');
                         m3.score.playerDestroyed(other);
                     }
-                } else if (other.type === 'enemy'){
+                }
+                else if (other.type === 'enemy') {
                     if (velocity > other.minImpactVelocity) {
                         m3.util.log('projectile hit enemy at: ' + velocity.toFixed(2) + ' m/s');
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
