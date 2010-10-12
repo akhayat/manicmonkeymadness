@@ -35,6 +35,7 @@ $(function() {
                     enemy.body.SetUserData(object);                
                     object.body   = enemy.body;
                     object.shape  = enemy.shape;
+                    object.type   = "enemy";
                     
                     if (type === "small") {
                         object.sprite = Sprite.create(t.s, t.h, t.w);

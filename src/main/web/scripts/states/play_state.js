@@ -34,12 +34,6 @@ $(function() {
             
             // Keyboard input handlers for the play state.
             keyHandlers: {
-                S: {
-                    down: function() {
-                        m3.score.player_scores[1] += 5.0;
-                    }
-                },
-                
                 W: {
                     down: function() {
                         m3.launcher.changeWeapon();

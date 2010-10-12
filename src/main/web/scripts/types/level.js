@@ -75,7 +75,7 @@ $(function() {
                 level.background = background;
                 
                 // Set up fortresses.
-                level.fortresses = [m3.types.Fortress.create(40), m3.types.Fortress.create(1860)];
+                level.fortresses = [m3.types.Fortress.create(0, 40), m3.types.Fortress.create(1, 1860)];
                 
                 for (var i = 0; i < 2; i++) {
                     var fort = level.fortresses[i];

@@ -10,7 +10,7 @@ $(function() {
         var context       = m3.game.context,
             ui            = m3.ui,
             camera        = m3.camera.position,
-            scores        = m3.score.player_scores,
+            score         = m3.score,
             width         = m3.game.width,
             padding       = m3.types.Vector.create(6, 18),
             score_spacing = 28;
@@ -34,11 +34,11 @@ $(function() {
                 context.font        = "26px Tahoma, Geneva, sans-serif";
                 context.textAlign   = "left";
                 context.lineWidth   = 3;
-                ui.drawStrokedText(scores[0], camera.x + padding.x, camera.y + padding.y + score_spacing);
+                ui.drawStrokedText(score.getScore(0), camera.x + padding.x, camera.y + padding.y + score_spacing);
                 
                 // Right score value
                 context.textAlign = "right";
-                ui.drawStrokedText(scores[1], camera.x + width - padding.x, camera.y + padding.y + score_spacing);
+                ui.drawStrokedText(score.getScore(1), camera.x + width - padding.x, camera.y + padding.y + score_spacing);
             }
         };
     }();

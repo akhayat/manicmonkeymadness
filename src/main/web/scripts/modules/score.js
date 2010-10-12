@@ -1,15 +1,29 @@
 /**
  * score.js
  * 
- * This module contains scoring data for the players. Eventually it'll probably
- * have stuff like point values for various things, etc.
+ * This module contains scoring data and functions for the players.
  * 
  */
 
 $(function() {
     m3.score = function() {
+        var player_scores    = [0, 0];
+            fort_piece_value = 500; // For now all fort pieces are worth the same...this will probably change.
+        
+        var otherPlayer = function(p) {
+            return (p + 1) % 2;
+        };
+        
         return {
-            player_scores: [0, 0]
+            getScore: function(player) {
+                return player_scores[player];
+            },
+            
+            // Awards points for destroying a piece of the enemy fort.
+            playerDestroyed: function(piece) {
+                var player = otherPlayer(piece.fort.owner);
+                player_scores[player] += fort_piece_value;
+            }
         };
     }();
 });
