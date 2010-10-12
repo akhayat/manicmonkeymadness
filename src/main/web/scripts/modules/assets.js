@@ -34,6 +34,7 @@ $(function() {
             
             sprites: {
                 demo:         imageFromSource("sprites/demo_monkey.png"),
+                demo2:		  imageFromSource("sprites/demo2.png"),
                 cannon:       imageFromSource("sprites/cannon.png"),
                 monkey_up:    imageFromSource("sprites/monkeyup.png"),
                 monkey_right: imageFromSource("sprites/monkeyright.png"),
