@@ -29,7 +29,7 @@ $(function() {
             iterations: 10,
             
             // damage conversion factor given impact velocity (m/s per damage unit)
-            damage_factor: 75
+            damage_factor: 70
         };
     }();
 });

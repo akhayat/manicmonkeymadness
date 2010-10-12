@@ -14,7 +14,7 @@ $(function() {
             contact: function(other, velocity) {
                 if (other.type === 'fort_piece') {
                     if (velocity > other.minImpactVelocity) {
-                        m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
+                        m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + ' m/s');
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                     }

@@ -18,8 +18,8 @@ $(function() {
         };
         
         var details = {
-                small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3 },
-        		medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 5 }
+                small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 2 },
+        		medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 4 }
 
         };
             
@@ -28,7 +28,7 @@ $(function() {
             contact: function(other, velocity) {
                 if (other.type === 'fort_piece') {
                     if (velocity > this.minImpactVelocity) {
-                        m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + 'm/s');
+                        m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
                         this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('enemy damage: ' + this.damage.toFixed(2));
