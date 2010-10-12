@@ -39,12 +39,10 @@ $(function() {
                 var fortresses = this.fortresses;
                 
                 this.drawBackground();
-                this.demo_sprite.update();
-                this.demo_sprite2.update();
                 
                 for (var i = 0, n = fortresses.length; i < n; i++) {
                     fortresses[i].update();
-                }
+                }           
             },
             
             // "Constructor".
@@ -76,15 +74,6 @@ $(function() {
                 
                 level.background = background;
                 
-                // Set up sprites for demo purposes.
-                level.demo_sprite = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 55, 400);
-                level.demo_sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
-                level.demo_sprite.play("idle");
-                
-                level.demo_sprite2 = m3.types.Sprite.create(m3.assets.sprites.demo, 23, 25, 1925, 400);
-                level.demo_sprite2.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
-                level.demo_sprite2.play("idle");
-                
                 // Set up fortresses.
                 level.fortresses = [m3.types.Fortress.create(40), m3.types.Fortress.create(1860)];
                 
@@ -101,6 +90,10 @@ $(function() {
                     fort.addPiece("box", "short", "wood", 50,  185, 0);
                     fort.addPiece("box", "short", "wood", 90,  185, 0);
                     fort.addPiece("box", "long",  "wood", 50,  155, Math.PI / 2);
+                    fort.addEnemy("monkey", "medium", 20, 400, 0);
+                    fort.addEnemy("monkey", "medium", 70, 400, 0);
+                    fort.addEnemy("monkey", "small", 20, 200, 0);
+                    fort.addEnemy("monkey", "small", 70, 200, 0);
                 }
                 
                 return level;
