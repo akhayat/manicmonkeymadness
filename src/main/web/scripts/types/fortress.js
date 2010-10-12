@@ -25,7 +25,7 @@ $(function() {
             // Adds an enemy piece to the fortress. x and y are in local coordinate
             // space -- they are relative to the fortress's position.
             addEnemy: function(character, type, x, y, angle) {
-                this.enemies.push(Enemy.create(character, type, this.position + x, y, angle));
+                this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle));
             },
             
             // Fortress's update function updates all of its pieces.

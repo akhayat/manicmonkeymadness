@@ -97,7 +97,7 @@ $(function() {
                 }
                 
                 return level;
-            },
+            }
         };
     }();
 });

@@ -19,32 +19,21 @@ $(function() {
                 
                 if (object1.type === 'fort_piece') {
                     object1.contact(object2, velocity);
-                }
-                else if (object1.type === 'projectile') {
-                    if (object2.type === 'fort_piece') {
-                        if (velocity > object1.minImpactVelocity) {
-                            m3.util.log('fort piece hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
-                            object2.damage += (velocity * object1.mass) / m3.config.damage_factor;
-                            m3.util.log('fort piece damage: ' + object2.damage.toFixed(2));
-                        }
-                        
-                        if (object2.damage > object2.destroyThreshold) {
-                            object2.alive = false;
-                            m3.util.log('fort piece destroyed');
-                        }
-                    } else if (object2.type == 'ground') {
-                        //m3.util.log('projectile hit ground');
-                    }
+                } else if (object1.type === 'enemy') {
+                    object1.contact(object2, velocity);
+                } else if (object1.type === 'projectile') {
+                    object1.contact(object2, velocity);	
                 } else if (object1.type === 'ground') {
-                    if (object2.type === 'fort_piece') {
-                        //m3.util.log('fort piece hit fort piece');
-                    } else if (object2.type == 'projectile') {
-                        //m3.util.log('projectile hit ground');
+                	if (object2.type === 'projectile') {
+                		m3.util.log('projectile hit ground at ' + velocity.toFixed(2) + ' m/s');
+                	} else if (velocity > object2.minImpactVelocity) {
+                    	m3.util.log(object2.type + ' hit ground at ' + velocity.toFixed(2) + ' m/s');
+                        object2.damage += (velocity * object2.mass) / m3.config.damage_factor;
+                        m3.util.log(object2.type + ' damage: ' + object2.damage.toFixed(2));
                     }
                 } else {
                     m3.util.log('unknown collision');
-                }
-                
+                }                
             },
             
             /* This function is called when two objects continue to collide */

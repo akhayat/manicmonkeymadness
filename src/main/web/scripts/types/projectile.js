@@ -10,12 +10,43 @@ $(function() {
         var Sprite = m3.types.Sprite;
         
         return {
+            // Collision callback.
+            contact: function(other, velocity) {
+                if (other.type === 'fort_piece') {
+                    if (velocity > other.minImpactVelocity) {
+                        m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
+                        other.damage += (velocity * this.mass) / m3.config.damage_factor;
+                        m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
+                    }
+                    
+                    if (other.damage > other.destroyThreshold) {
+                        other.alive = false;
+                        m3.util.log('fort piece destroyed');
+                        m3.score.playerDestroyed(other);
+                    }
+                } else if (other.type === 'enemy'){
+                    if (velocity > other.minImpactVelocity) {
+                        m3.util.log('projectile hit enemy at: ' + velocity.toFixed(2) + ' m/s');
+                        other.damage += (velocity * this.mass) / m3.config.damage_factor;
+                        m3.util.log('enemy damage: ' + other.damage.toFixed(2));
+                    }
+                    
+                    if (other.damage > other.destroyThreshold) {
+                        other.alive = false;
+                        m3.util.log('enemy destroyed');
+                        m3.score.playerDestroyed(other);
+                    }
+                }
+            },
+            
             // "Constructor".
             create: function(x, y, impulse_x, impulse_y, type) {
                 var p          = Object.create(m3.types.PhysicsObject.create(x, y)),
                     projectile = m3.world.createBall(x, y, 1, false, 2, .1, 1, false);
                 
+                
                 projectile.body.SetUserData(p);
+                p.contact = this.contact;
                 p.type = 'projectile';
                 p.body  = projectile.body;
                 p.shape = projectile.shape;
