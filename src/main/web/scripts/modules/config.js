@@ -22,6 +22,9 @@ $(function() {
             // Camera's scroll speed in pixels per second.
             camera_scroll_speed: 1200,
             
+            // The maximum amount of time spent per turn, in seconds.
+            max_turn_time: 20.0,
+            
             // scaling factor (pixels per meter)
             scaling_factor: 20,
             

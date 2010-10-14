@@ -36,6 +36,7 @@ $(function() {
         groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
         var groundShape = groundBody.CreateShape(groundShapeDef);
         groundBody.SynchronizeShapes();
+        
         var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
         groundBody.SetUserData(object);
         objects.push(object);
@@ -109,13 +110,19 @@ $(function() {
          * are asleep
          */
         function allSleeping() {
-        	for (var i = 0, n = objects.length; i < n; i+=1) {
-        		//m3.util.log("" + objects[i].type + ".sleep = " + objects[i].body.IsSleeping());
-        		if(! objects[i].body.IsSleeping() && objects[i].type !== "ground") {
-        			return false;
-        		}
-        	}
-        	return true;
+            for (var i = 0, n = objects.length; i < n; i+=1) {
+                if (!objects[i].body.IsSleeping() && objects[i].type !== "ground") {
+                    return false;
+                }
+                // Proposed method of detecting whether physics have settled down:
+                // var v = objects[i].body.GetLinearVelocity();
+                // var t = objects[i].body.GetAngularVelocity();
+                // if (Math.abs(v.x) > 0.25 || Math.abs(v.y) > 0.25 || Math.abs(t) > 0.25) {
+                //     return false;
+                // }
+            }
+            
+            return true;
         };
         
         function removeObject(object) {

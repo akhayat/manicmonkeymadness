@@ -13,16 +13,19 @@ $(function() {
         var pieces = {
             box: {
                 long: {
-                    wood: { s: assets.box_long_wood, h: 100, w: 10 }
+                    wood: { s: assets.box_long_wood, h: 100, w: 10 },
+                    rock: { s: assets.box_long_rock, h: 100, w: 10 }
                 },
                 short: {
-                    wood: { s: assets.box_short_wood, h: 50, w: 10 }
+                    wood: { s: assets.box_short_wood, h: 50, w: 10 },
+                    rock: { s: assets.box_short_rock, h: 50, w: 10 }
                 }
             }
         };
         
         var materials = {
-            wood: { density: 3.0, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.5, destroyThreshold: 4 }
+            wood: { density: 3.0,  restitution: 0.25, friction: 0.8, minImpactVelocity: 0.5,  destroyThreshold: 4.0 },
+            rock: { density: 13.0, restitution: 0.5,  friction: 0.9, minImpactVelocity: 0.65, destroyThreshold: 8.0 }
         };
         
         return {

@@ -44,7 +44,9 @@ $(function() {
                 
                 fort_pieces: {
                     box_long_wood:  imageFromSource("sprites/box_long_wood.png"),
-                    box_short_wood: imageFromSource("sprites/box_short_wood.png")
+                    box_short_wood: imageFromSource("sprites/box_short_wood.png"),
+                    box_long_rock:  imageFromSource("sprites/box_long_rock.png"),
+                    box_short_rock: imageFromSource("sprites/box_short_rock.png"),
                 }
             },
         };

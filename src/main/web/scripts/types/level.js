@@ -90,6 +90,13 @@ $(function() {
                     fort.addPiece("box", "short", "wood", 50,  185, 0);
                     fort.addPiece("box", "short", "wood", 90,  185, 0);
                     fort.addPiece("box", "long",  "wood", 50,  155, Math.PI / 2);
+                    fort.addPiece("box", "long",  "rock", 111, 370, 0);
+                    fort.addPiece("box", "long",  "rock", 111, 270, 0);
+                    fort.addPiece("box", "long",  "rock", -12, 370, 0);
+                    fort.addPiece("box", "long",  "rock", -12, 270, 0);
+                    fort.addPiece("box", "short", "rock", -12, 195, 0);
+                    fort.addPiece("box", "short", "rock", 110, 195, 0);
+                    fort.addPiece("box", "long",  "rock", 50,  145, Math.PI / 2);
                     fort.addEnemy("monkey", "medium", 20, 400, 0);
                     fort.addEnemy("monkey", "medium", 70, 400, 0);
                     fort.addEnemy("monkey", "small", 20, 200, 0);

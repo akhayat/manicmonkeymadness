@@ -15,17 +15,17 @@ $(function() {
                 small: { s: assets.rock, h: 40, w: 40 }
             },
             banana: {
-            	single: { s: assets.banana, h: 40, w: 30 }
+                single: { s: assets.banana, h: 40, w: 30 }
             }
         
         };
             
         var details = {
-            small: { density: 2.0, restitution: 0.1, friction: 1.0 },        
-            single: { density: 1.0, restitution: 0.25, friction: 0.85 }        
+            small: { density: 2.0, restitution: 0.1, friction: 1.0 },
+            single: { density: 1.0, restitution: 0.25, friction: 0.85 }
         };
-                
-                
+        
+        
         return {
             // Collision callback.
             contact: function(other, velocity) {
