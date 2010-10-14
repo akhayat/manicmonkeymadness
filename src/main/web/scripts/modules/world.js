@@ -36,28 +36,6 @@ $(function() {
         groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
         var groundShape = groundBody.CreateShape(groundShapeDef);
         groundBody.SynchronizeShapes();
-        
-        // // create walls
-        // createBox(0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
-        // createBox(m3.config.level_width / m3.config.scaling_factor - 0.2, (m3.config.level_height / 2) / m3.config.scaling_factor, 0.2, 30, true);
-        // 
-        // // left player fortress
-        // createBox(2, 20, 1, 6, false, 1);
-        // createBox(8, 20, 1, 6, false, 1);
-        // createBox(4, 15, 10, 0.2, false, 1);
-        // 
-        // // right player fortress
-        // createBox(92, 20, 1, 6, false, 1);
-        // createBox(98, 20, 1, 6, false, 1);
-        // createBox(94, 15, 10, 0.2, false, 1);
-        // 
-        // // some demo bodies
-        //createBox(35, 10, 2, 1, false, 1);
-        // createBox(33, 1, 2, 2, false, 1);
-        //createBox(30, 3, 1, 2, false, 1);
-        // createBall(32, 5, 1, false);
-        // createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
-        
         var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
         groundBody.SetUserData(object);
         objects.push(object);
@@ -86,7 +64,6 @@ $(function() {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
-            //bodyDef.linearDamping = 0.5;
             bodyDef.angularDamping = 2;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
