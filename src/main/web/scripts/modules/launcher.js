@@ -12,14 +12,15 @@ $(function() {
         
         // Simple private object to represent both players' cannons.
         var Cannon = function(x, y, x_offset, y_offset, facing) {
-            this.x      = x;
-            this.y      = y;
-            this.angle  = 0;
-            this.image  = m3.assets.sprites.cannon;
-            this.offset = m3.types.Vector.create(x_offset, y_offset);
-            this.facing = facing;
-            
-            this.weapon = 0;
+            this.x          = x;
+            this.y          = y;
+            this.angle      = 0;
+            this.image      = m3.assets.sprites.cannon;
+            this.offset     = m3.types.Vector.create(x_offset, y_offset);
+            this.facing     = facing;
+            this.pType      = "rock";
+            this.pDetails   = "small";
+            this.weapon     = 0;
         };
         
         return {
@@ -74,9 +75,10 @@ $(function() {
             },
             
             launch: function(event) {
-                var cannon = this.currentCannon(),
-                    theta  = cannon.angle,
-                    weapon = cannon.weapon;
+                var cannon   = this.currentCannon(),
+                    theta    = cannon.angle,
+                    pType    = cannon.pType,
+                	pDetails = cannon.pDetails;
                 
                 this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
@@ -93,20 +95,23 @@ $(function() {
                     impulse.x = -impulse.x;
                     impulse.y = -impulse.y;
                 }
-                
-                m3.game.state.active_projectile = m3.types.Projectile.create(ball_pos.x, ball_pos.y, impulse.x, impulse.y, weapon);
+
+                m3.game.state.active_projectile = m3.types.Projectile.create(ball_pos.x, ball_pos.y, impulse.x, impulse.y, pType, pDetails);
                 m3.camera.follow(m3.game.state.active_projectile);
             },
             
             changeWeapon: function() {
-                var cannon = this.currentCannon(),
-                    weapon = cannon.weapon;
+                var cannon = this.currentCannon();
                 
-                if (weapon < 1) {
+                if (cannon.weapon < 1) {
                     cannon.weapon += 1;
+                    cannon.pType = "banana";
+                    cannon.pDetails = "single";
                 }
                 else {
                     cannon.weapon = 0;
+                    cannon.pType = "rock";
+                    cannon.pDetails = "small";
                 }
             },
             

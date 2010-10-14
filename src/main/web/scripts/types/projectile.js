@@ -8,7 +8,24 @@
 $(function() {
     m3.types.Projectile = function() {
         var Sprite = m3.types.Sprite;
+            assets = m3.assets.sprites;
         
+        var ammunition = {
+            rock: {
+                small: { s: assets.rock, h: 40, w: 40 }
+            },
+            banana: {
+            	single: { s: assets.banana, h: 40, w: 30 }
+            }
+        
+        };
+            
+        var details = {
+            small: { density: 2.0, restitution: 0.1, friction: 1.0 },        
+            single: { density: 1.0, restitution: 0.25, friction: 0.85 }        
+        };
+                
+                
         return {
             // Collision callback.
             contact: function(other, velocity) {
@@ -41,10 +58,11 @@ $(function() {
             },
             
             // "Constructor".
-            create: function(x, y, impulse_x, impulse_y, type) {
+            create: function(x, y, impulse_x, impulse_y, ammo, type) {
                 var p          = Object.create(m3.types.PhysicsObject.create(x, y)),
-                    projectile = m3.world.createBall(x, y, 1, false, 2, .1, 1, false);
-                
+                    t          = ammunition[ammo][type],
+                    d          = details[type],   
+                    projectile = m3.world.createBall(x, y, 1, false, d.density, d.restitution, d.friction, false);
                 
                 projectile.body.SetUserData(p);
                 p.contact = this.contact;
@@ -52,15 +70,7 @@ $(function() {
                 p.body  = projectile.body;
                 p.shape = projectile.shape;
                 p.alive = true;
-                               
-                
-                // This will be changed to a switch statement once we develop more weapon types.
-                if (type === 0) {
-                    p.sprite = Sprite.create(m3.assets.sprites.rock, 40, 40);
-                }
-                else {
-                    p.sprite = Sprite.create(m3.assets.sprites.banana, 40, 30);
-                }
+                p.sprite = Sprite.create(t.s, t.h, t.w);
                 
                 if (impulse_x !== undefined && impulse_y !== undefined) {
                     p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));
