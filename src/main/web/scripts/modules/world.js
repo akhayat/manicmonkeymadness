@@ -29,7 +29,7 @@ $(function() {
         var groundBody = world.CreateBody(groundBodyDef);
         var groundShapeDef = new b2PolygonDef();
         groundShapeDef.restitution = 0.1;
-        groundShapeDef.friction = 0.9;
+        groundShapeDef.friction = 1;
         groundShapeDef.density = 1.0;
         groundBody.w = m3.config.level_width / m3.config.scaling_factor;
         groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
@@ -54,7 +54,7 @@ $(function() {
         // // some demo bodies
         //createBox(35, 10, 2, 1, false, 1);
         // createBox(33, 1, 2, 2, false, 1);
-        // createBox(30, 3, 1, 2, false, 1);
+        //createBox(30, 3, 1, 2, false, 1);
         // createBall(32, 5, 1, false);
         // createPoly(5, 1, [[1,1], [0,1], [0,0]], false);
         
@@ -86,7 +86,8 @@ $(function() {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
-            bodyDef.angularDamping = 0.1;
+            //bodyDef.linearDamping = 0.5;
+            bodyDef.angularDamping = 2;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
@@ -133,7 +134,7 @@ $(function() {
         function allSleeping() {
         	for (var i = 0, n = objects.length; i < n; i+=1) {
         		//m3.util.log("" + objects[i].type + ".sleep = " + objects[i].body.IsSleeping());
-        		if(! objects[i].body.IsSleeping()) {
+        		if(! objects[i].body.IsSleeping() && objects[i].type !== "ground") {
         			return false;
         		}
         	}
