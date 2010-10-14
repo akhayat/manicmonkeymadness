@@ -40,6 +40,12 @@ $(function() {
             	        m3.util.log("allSleeping = " + m3.world.allSleeping());
                     }
                 },
+                
+                P: {
+                	down: function() {
+                	    m3.world.outOfBounds();
+                    }
+                },
         
                 W: {
                     down: function() {
@@ -105,7 +111,9 @@ $(function() {
                 // For now, after the player shoots their cannon, we switch to the other player after 8 seconds.
                 // Eventually we should instead have some way of detecting when the physics have "settled down",
                 // like angry birds does.
-                if (m3.world.allSleeping()) {
+            	var x = this.active_projectile.body.GetPosition().x;
+            	
+                if (m3.world.allSleeping() || x < 0 || x > m3.config.level_width / m3.config.scaling_factor) {
                     var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                     m3.camera.stopFollowing();
                     m3.camera.slideTo(camera_position, 0, "smooth");
