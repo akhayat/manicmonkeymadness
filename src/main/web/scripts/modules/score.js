@@ -9,7 +9,7 @@ $(function() {
     m3.score = function() {
         var player_scores    = [0, 0];
             fort_piece_value = 500; // For now all fort pieces are worth the same...this will probably change.
-            enemy_value = 1000;
+            enemy_value      = 1000;
         
         var otherPlayer = function(p) {
             return (p + 1) % 2;

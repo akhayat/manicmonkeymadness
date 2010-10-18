@@ -16,25 +16,61 @@ $(function() {
         
         var proto = {
             // Public members.
-            body:   null,
-            shape:  null,
-            sprite: null,
-            type:   null,
-            alive:  null,
+            body:      null,
+            shape:     null,
+            sprite:    null,
+            type:      null,
+            alive:     null,
+            container: null,
             
             // Removes an object from the world.
             destroy: function() {
+                var container = this.container;
+                
                 m3.world.removeObject(this.body);
+                
+                if (container) {
+                    var i = container.indexOf(this);
+                    if (i >= 0) {
+                        container.remove(i);
+                    }
+                }
             },
             
-            // Update function draws the sprite onto the object.
+            // Update function draws the sprite onto the object, and destroys the object
+            // when it goes off screen.
             update: function() {
                 if (this.alive) {
-                    var offset = m3.types.Vector.create(0, 0);
+                    var offset = m3.types.Vector.create(0, 0),
+                        x      = this.x;
                     
                     switch (this.shape.GetType()) {
-                        case 0: offset.set(-this.radius, -this.radius); break; // Circle
-                        case 1: offset.set(-this.width,  -this.height); break; // Box
+                        // Circle
+                        case 0:
+                            var r = this.radius;
+                            
+                            if (x + r <= 0.0 || x - r >= m3.config.level_width) {
+                                m3.score.playerDestroyed(this);
+                                this.destroy();
+                            }
+                            
+                            offset.set(-r, -r);
+                            break;
+                        
+                        // Box
+                        case 1:
+                            var width       = this.width,
+                                height      = this.height,
+                                angle       = this.angle,
+                                distance    = Math.abs(width * Math.cos(angle) + height * Math.sin(angle));
+                            
+                            if (x + distance <= 0.0 || x - distance >= m3.config.level_width) {
+                                m3.score.playerDestroyed(this);
+                                this.destroy();
+                            }
+                            
+                            offset.set(-width, -height);
+                            break;
                     }
                     
                     context.save();
@@ -50,8 +86,10 @@ $(function() {
             },
             
             // "Constructor".
-            create: function(x, y) {
-                return Object.create(this);
+            create: function(x, y, container) {
+                var o = Object.create(this);
+                o.container = container ? container : null;
+                return o;
             },
         };
         

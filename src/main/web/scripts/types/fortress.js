@@ -19,19 +19,19 @@ $(function() {
             // Adds a fortress piece to the fortress. x and y are in local coordinate
             // space -- they are relative to the fortress's position.
             addPiece: function(shape, size, material, x, y, angle) {
-                this.pieces.push(FortPiece.create(this, shape, size, material, this.position + x, y, angle));
+                this.pieces.push(FortPiece.create(this, shape, size, material, this.position + x, y, angle, this.pieces));
             },
             
             // Adds an enemy piece to the fortress. x and y are in local coordinate
             // space -- they are relative to the fortress's position.
             addEnemy: function(character, type, x, y, angle) {
-                this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle));
+                this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle, this.enemies));
             },
             
             // Fortress's update function updates all of its pieces.
             update: function() {
-                var pieces = this.pieces;
-                var enemies = this.enemies;
+                var pieces  = this.pieces.slice(),
+                    enemies = this.enemies.slice();
                 
                 for (var i = 0, n = pieces.length; i < n; i++) {
                     pieces[i].update();

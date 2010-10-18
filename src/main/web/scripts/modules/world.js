@@ -13,7 +13,7 @@ $(function() {
         // create the world
         var worldAABB = new b2AABB();
         worldAABB.lowerBound.Set(-10000.0, -10000.0);
-        worldAABB.upperBound.Set(10000.0, 10000.0);        
+        worldAABB.upperBound.Set(10000.0, 10000.0);
         var gravity = new b2Vec2(0.0, 9.8);
         var world = new b2World(worldAABB, gravity, true);
         world.SetContactListener(m3.contact);

@@ -85,8 +85,8 @@ $(function() {
             },
             
             // "Constructor".
-            create: function(fort, shape, size, material, x, y, angle) {
-                var object = Object.create(m3.types.PhysicsObject.create(x, y)),
+            create: function(fort, shape, size, material, x, y, angle, container) {
+                var object = Object.create(m3.types.PhysicsObject.create(x, y, container)),
                     t     = pieces[shape][size][material],
                     m     = materials[material],
                     scale = m3.config.scaling_factor,

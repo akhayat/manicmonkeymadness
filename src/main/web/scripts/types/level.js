@@ -42,7 +42,7 @@ $(function() {
                 
                 for (var i = 0, n = fortresses.length; i < n; i++) {
                     fortresses[i].update();
-                }           
+                }
             },
             
             // "Constructor".
