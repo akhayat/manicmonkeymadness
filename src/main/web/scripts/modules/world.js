@@ -108,11 +108,11 @@ $(function() {
         /*
          * A method to test for settled physics  
          */
-        function allSettled() {
+        function allSettled(threshold) {
         	for (var i = 0, n = objects.length; i < n; i+=1) {
         	    var v = objects[i].body.GetLinearVelocity();
                 var t = objects[i].body.GetAngularVelocity();
-                if (v.Length() > 0.25 || Math.abs(t) > 0.25) {
+                if (v.Length() > threshold || Math.abs(t) > threshold) {
                 	return false;
                 }
         	}

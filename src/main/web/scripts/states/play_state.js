@@ -126,10 +126,14 @@ $(function() {
             
             // This is the update function for the attacking state.
             updateAttacking: function() {
-                var x = this.active_projectile.body.GetPosition().x;
-                var transition = m3.world.allSleeping() ||
+            	
+            	/*
+            	 * Check if the projectile is offscreen
+            	 */
+                var x = this.active_projectile.body.GetPosition().x * m3.config.scaling_factor;
+                var transition = m3.world.allSettled(0.25) ||
                                  this.state_time > m3.config.max_turn_time ||
-                                 x < 0 || x > m3.config.level_width / m3.config.scaling_factor;
+                                 x < 0 || x > m3.config.level_width;
                 
                 if (transition) {
                     m3.camera.stopFollowing();
