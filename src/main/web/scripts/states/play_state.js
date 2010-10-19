@@ -126,10 +126,9 @@ $(function() {
             
             // This is the update function for the attacking state.
             updateAttacking: function() {
-            	
-            	/*
-            	 * Check if the projectile is offscreen
-            	 */
+                /*
+                 * Check if the projectile is offscreen
+                 */
                 var x = this.active_projectile.body.GetPosition().x * m3.config.scaling_factor;
                 var transition = m3.world.allSettled(0.25) ||
                                  this.state_time > m3.config.max_turn_time ||

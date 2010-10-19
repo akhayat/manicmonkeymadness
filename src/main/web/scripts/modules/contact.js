@@ -22,17 +22,17 @@ $(function() {
                 } else if (object1.type === 'enemy') {
                     object1.contact(object2, velocity);
                 } else if (object1.type === 'projectile') {
-                    object1.contact(object2, velocity);	
+                    object1.contact(object2, velocity);
                 } else if (object1.type === 'ground') {
-                	if (object2.type === 'projectile') {
-                		m3.util.log('projectile hit ground at ' + velocity.toFixed(2) + ' m/s');
-                	} else if (velocity > object2.minImpactVelocity) {
-                    	m3.util.log(object2.type + ' hit ground at ' + velocity.toFixed(2) + ' m/s');
+                    if (object2.type === 'projectile') {
+                        m3.util.log('projectile hit ground at ' + velocity.toFixed(2) + ' m/s');
+                    } else if (velocity > object2.minImpactVelocity) {
+                        m3.util.log(object2.type + ' hit ground at ' + velocity.toFixed(2) + ' m/s');
                         object2.damage += (velocity * object2.mass) / m3.config.damage_factor;
                         m3.util.log(object2.type + ' damage: ' + object2.damage.toFixed(2));
                         
                         if (object2.damage > object2.destroyThreshold) {
-                        	object2.alive = false;
+                            object2.alive = false;
                             m3.util.log('fort piece destroyed');
                             m3.score.playerDestroyed(object2);
                         }

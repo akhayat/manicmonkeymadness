@@ -42,14 +42,15 @@ $(function() {
             update: function() {
                 if (this.alive) {
                     var offset = m3.types.Vector.create(0, 0),
-                        x      = this.x;
+                        x      = this.x,
+                        type   = this.type;
                     
                     switch (this.shape.GetType()) {
                         // Circle
                         case 0:
                             var r = this.radius;
                             
-                            if (x + r <= 0.0 || x - r >= m3.config.level_width) {
+                            if (type !== "projectile" && (x + r <= 0.0 || x - r >= m3.config.level_width)) {
                                 m3.score.playerDestroyed(this);
                                 this.destroy();
                             }
@@ -64,7 +65,7 @@ $(function() {
                                 angle    = this.angle,
                                 distance = Math.abs(width * Math.cos(angle) + height * Math.sin(angle));
                             
-                            if (x + distance <= 0.0 || x - distance >= m3.config.level_width) {
+                            if (type !== "projectile" && (x + distance <= 0.0 || x - distance >= m3.config.level_width)) {
                                 m3.score.playerDestroyed(this);
                                 this.destroy();
                             }
