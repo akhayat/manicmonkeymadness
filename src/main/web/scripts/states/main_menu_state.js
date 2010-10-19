@@ -13,6 +13,12 @@ $(function () {
                     down: function() {
                         m3.game.state = m3.states.PlayState.create();
                     }
+                },
+                
+                C: {
+                	down: function() {
+                		$('#console').toggle();
+                	}
                 }
             },
             

@@ -43,6 +43,12 @@ $(function() {
                     }
                 },
                 
+                C: {
+                	down: function() {
+                		$('#console').toggle();
+                	}
+                },
+                
                 P: {
                     down: function() {
                         m3.world.outOfBounds();
