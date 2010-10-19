@@ -59,10 +59,10 @@ $(function() {
                         
                         // Box
                         case 1:
-                            var width       = this.width,
-                                height      = this.height,
-                                angle       = this.angle,
-                                distance    = Math.abs(width * Math.cos(angle) + height * Math.sin(angle));
+                            var width    = this.width,
+                                height   = this.height,
+                                angle    = this.angle,
+                                distance = Math.abs(width * Math.cos(angle) + height * Math.sin(angle));
                             
                             if (x + distance <= 0.0 || x - distance >= m3.config.level_width) {
                                 m3.score.playerDestroyed(this);

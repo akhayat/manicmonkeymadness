@@ -21,26 +21,6 @@ $(function() {
         // reference of the world's objects
         var objects = [];
         
-        // create the ground       
-        var groundBodyDef = new b2BodyDef();
-        var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
-        var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
-        groundBodyDef.position.Set(ground_x, ground_y);
-        var groundBody = world.CreateBody(groundBodyDef);
-        var groundShapeDef = new b2PolygonDef();
-        groundShapeDef.restitution = 0.1;
-        groundShapeDef.friction = 1;
-        groundShapeDef.density = 1.0;
-        groundBody.w = m3.config.level_width / m3.config.scaling_factor;
-        groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
-        groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
-        var groundShape = groundBody.CreateShape(groundShapeDef);
-        groundBody.SynchronizeShapes();
-        
-        var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
-        groundBody.SetUserData(object);
-        objects.push(object);
-        
         function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
@@ -135,6 +115,35 @@ $(function() {
             }
         };
         
+        var clear = function() {
+            for (var i = 0, n = objects.length; i < n; i++) {
+                world.DestroyBody(objects[i].body);
+            }
+            objects = [];
+        };
+        
+        var init = function() {
+            // create the ground       
+            var groundBodyDef = new b2BodyDef();
+            var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
+            var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
+            groundBodyDef.position.Set(ground_x, ground_y);
+            var groundBody = world.CreateBody(groundBodyDef);
+            var groundShapeDef = new b2PolygonDef();
+            groundShapeDef.restitution = 0.1;
+            groundShapeDef.friction = 1;
+            groundShapeDef.density = 1.0;
+            groundBody.w = m3.config.level_width / m3.config.scaling_factor;
+            groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
+            groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
+            var groundShape = groundBody.CreateShape(groundShapeDef);
+            groundBody.SynchronizeShapes();
+            
+            var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
+            groundBody.SetUserData(object);
+            objects.push(object);
+        };
+        
         return {
             universe: world,
             objects: objects,
@@ -143,6 +152,8 @@ $(function() {
             allSleeping: allSleeping,
             createPoly: createPoly,
             removeObject: removeObject,
+            clear: clear,
+            init: init,
             update: function() {
                 var context = m3.game.context;
                 context.save();

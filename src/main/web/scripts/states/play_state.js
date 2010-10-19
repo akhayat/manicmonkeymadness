@@ -21,6 +21,9 @@ $(function() {
             //                    physics system do its work.
             //   - transitioning: After the attacking state is finished, we're transitioning
             //                    back to the other player.
+            //   - done:          One of the players has won and the game has ended. We're
+            //                    waiting for the players to choose to start over or return
+            //                    to the main menu.
             game_state: "starting",
             
             // This keeps track of how long we've been in the current state.
@@ -34,7 +37,6 @@ $(function() {
             
             // Keyboard input handlers for the play state.
             keyHandlers: {
-                
                 A: {
                     down: function() {
                         m3.util.log("allSleeping = " + m3.world.allSleeping());
@@ -56,6 +58,22 @@ $(function() {
                 ESCAPE: {
                     down: function() {
                         m3.launcher.aiming = false;
+                    }
+                },
+                
+                Q: {
+                    down: function() {
+                        if (m3.game.state.game_state === "done") {
+                            m3.game.state = m3.states.MainMenuState.create();
+                        }
+                    }
+                },
+                
+                N: {
+                    down: function() {
+                        if (m3.game.state.game_state === "done") {
+                            m3.game.state = m3.states.PlayState.create();
+                        }
                     }
                 }
             },
@@ -114,13 +132,19 @@ $(function() {
                                  x < 0 || x > m3.config.level_width / m3.config.scaling_factor;
                 
                 if (transition) {
-                    var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                     m3.camera.stopFollowing();
-                    m3.camera.slideTo(camera_position, 0, "smooth");
-                    this.active_player = (this.active_player + 1) % 2;
                     this.active_projectile.destroy();
                     this.active_projectile = null;
-                    this.setState("transitioning");
+                    
+                    if (this.level.finished()) {
+                        this.setState("done");
+                    }
+                    else {
+                        var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+                        m3.camera.slideTo(camera_position, 0, "smooth");
+                        this.active_player = (this.active_player + 1) % 2;
+                        this.setState("transitioning");
+                    }
                 }
             },
             
@@ -130,6 +154,11 @@ $(function() {
                 if (!m3.camera.sliding) {
                     this.setState("waiting");
                 }
+            },
+            
+            // This is the update function for the done state.
+            updateDone: function() {
+                // Nothing yet.
             },
             
             // This is the main update function which mostly just calls other update functions.
@@ -146,6 +175,8 @@ $(function() {
                         this.updateAttacking(); break;
                     case ("transitioning"):
                         this.updateTransitioning(); break;
+                    case ("done"):
+                        this.updateDone(); break;
                     default:
                         m3.util.log("Play state has entered an invalid state!");
                 }
@@ -167,7 +198,11 @@ $(function() {
             create: function() {
                 var state = Object.create(this);
                 
-                state.level = m3.types.Level.create();
+                m3.score.reset();
+                m3.world.clear();
+                m3.world.init();
+                
+                state.level         = m3.types.Level.create();
                 state.active_player = m3.math.randomInteger(0, 1);
                 
                 // If the second player is starting, we need to warp the camera to their side.

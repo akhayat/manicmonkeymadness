@@ -25,7 +25,6 @@ $(function() {
             single: { density: 1.0, restitution: 0.25, friction: 0.85 }
         };
         
-        
         return {
             // Collision callback.
             contact: function(other, velocity) {

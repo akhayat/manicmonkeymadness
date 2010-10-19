@@ -29,6 +29,12 @@ $(function() {
                 } else if (object.type === 'enemy') {
                     player_scores[player] += enemy_value;
                 }
+            },
+            
+            reset: function() {
+                for (var i = 0, n = player_scores.length; i < n; i++) {
+                    player_scores[i] = 0;
+                }
             }
         };
     }();

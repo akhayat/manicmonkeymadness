@@ -76,8 +76,8 @@ $(function() {
                         m3.score.playerDestroyed(other);
                     }
                 } else if (other.type === 'ground') {
-                	if (velocity > this.minImpactVelocity) {
-                		m3.util.log('enemy hit ground at: ' + velocity.toFixed(2) + ' m/s');
+                    if (velocity > this.minImpactVelocity) {
+                        m3.util.log('enemy hit ground at: ' + velocity.toFixed(2) + ' m/s');
                         this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         m3.util.log('enemy damage: ' + this.damage.toFixed(2));
                     }
@@ -89,9 +89,10 @@ $(function() {
                     }
                 }
             },
+            
             // "Constructor".
-            create: function(fort, character, type, x, y, angle) {
-                var object = Object.create(m3.types.PhysicsObject.create(x, y)),
+            create: function(fort, character, type, x, y, angle, container) {
+                var object = Object.create(m3.types.PhysicsObject.create(x, y, container)),
                     t     = enemies[character][type],
                     d     = details[type],
                     scale = m3.config.scaling_factor,
@@ -123,10 +124,6 @@ $(function() {
                                
                     return object;
             },
-            
-            update: function() {
-                m3.util.log('enemy update called');
-            }
-        };        
+        };
     }();
 });

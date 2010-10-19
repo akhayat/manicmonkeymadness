@@ -11,19 +11,22 @@ $(function() {
         var context = m3.game.context;
         
         return {
-            /**
-             * Draws text with an outline.
-             */
+            // Draws text with an outline
             drawStrokedText: function(text, x, y) {
                 context.strokeText(text, x, y);
                 context.fillText(text, x, y);
             },
             
             update: function() {
-                // For now we just have one UI module.
-                this.turn.update();
+                if (m3.game.state.game_state === "done") {
+                    this.done.update();
+                }
+                else {
+                    this.turn.update();
+                    this.weapon.update();
+                }
+                
                 this.score.update();
-                this.weapon.update();
             }
         };
     }();

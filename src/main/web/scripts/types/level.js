@@ -26,12 +26,25 @@ $(function() {
                 
                 // Draw the layers of the background itself.
                 for (var i = 0, n = background.layers.length; i < n; i++) {
-                    var image = background.layers[i].image;
-                    var x = m3.camera.position.x * (1.0 - background.layers[i].scroll_factor);
-                    var y = m3.game.height - image.height - background.layers[i].offset;
+                    var image = background.layers[i].image,
+                        x     = m3.camera.position.x * (1.0 - background.layers[i].scroll_factor),
+                        y     = m3.game.height - image.height - background.layers[i].offset;
                     
                     context.drawImage(image, x, y - m3.config.ground_height);
                 }
+            },
+            
+            // A level is finished if one of its fortresses is destroyed.
+            finished: function() {
+                var fortresses = this.fortresses;
+                
+                for (var i = 0, n = fortresses.length; i < n; i++) {
+                    if (fortresses[i].isDestroyed()) {
+                        return true;
+                    }
+                }
+                
+                return false;
             },
             
             // Update function for the level.

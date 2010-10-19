@@ -28,6 +28,12 @@ $(function() {
                 this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle, this.enemies));
             },
             
+            // Returns whether or not the fort is destroyed. A fort is considered destroyed
+            // if all of its monkeys are dead.
+            isDestroyed: function() {
+                return this.enemies.length <= 0;
+            },
+            
             // Fortress's update function updates all of its pieces.
             update: function() {
                 var pieces  = this.pieces.slice(),
