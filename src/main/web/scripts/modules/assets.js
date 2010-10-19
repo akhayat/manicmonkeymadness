@@ -35,12 +35,12 @@ $(function() {
             sprites: {
                 demo:         imageFromSource("sprites/demo_monkey.png"),
                 demo2:		  imageFromSource("sprites/demo2.png"),
-                cannon:       imageFromSource("sprites/cannon.png"),
+                cannon:       imageFromSource("sprites/cannon2.png"),
                 monkey_up:    imageFromSource("sprites/monkeyup.png"),
                 monkey_right: imageFromSource("sprites/monkeyright.png"),
                 monkey_left:  imageFromSource("sprites/monkeyleft.png"),
                 rock:         imageFromSource("sprites/rock.png"),
-                banana:       imageFromSource("sprites/banana.png"),
+                banana:       imageFromSource("sprites/banana2.png"),
                 
                 fort_pieces: {
                     box_long_wood:  imageFromSource("sprites/box_long_wood.png"),

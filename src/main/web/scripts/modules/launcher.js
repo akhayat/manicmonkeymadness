@@ -25,7 +25,7 @@ $(function() {
         
         return {
             aiming:  false,
-            cannons: [new Cannon(150, 325, 56, 88, "right"), new Cannon(m3.config.level_width - 350, 325, 135, 88, "left")],
+            cannons: [new Cannon(175, 360, 22, 40, "right"), new Cannon(m3.config.level_width - 275, 360, 71, 40, "left")],
             
             // Returns the current cannon based on whose turn it is.
             currentCannon: function() {
@@ -46,8 +46,8 @@ $(function() {
                     // Since there is a difference between the width of the actual level, and the 
                     // width of the canvas, I had to include this so that the rotation of the cannon
                     // would be smooth.
-                    var right = cannon.facing == "right" 
-                    var x = ( right ? cannon.x : m3.game.width - cannon.offset.x);
+                    var right = cannon.facing == "right";
+                    var x = (right ? cannon.x : m3.game.width - cannon.offset.x);
                     var y = (right ? cannon.y : m3.game.height - cannon.offset.y);
                     
                     // Caps the angle at 90 or 0.
@@ -85,11 +85,11 @@ $(function() {
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;
-                var ball_pos = m3.types.Vector.create(cannon.x / m3.config.scaling_factor, cannon.y / m3.config.scaling_factor + 2.0);
+                var ball_pos = m3.types.Vector.create(cannon.x / m3.config.scaling_factor, (cannon.y + 24.0) / m3.config.scaling_factor);
                 var impulse = m3.types.Vector.create(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
                 
                 if (cannon.facing === "right") {
-                    ball_pos.x += 5.5;
+                    ball_pos.x += 92 / m3.config.scaling_factor;
                 }
                 else {
                     impulse.x = -impulse.x;
@@ -132,7 +132,6 @@ $(function() {
                     // instead of the origin
                     context.translate(cannon.x + cannon.offset.x, cannon.y + cannon.offset.y);
                     context.rotate(cannon.angle);
-                    context.scale(.5, .5);
                     
                     if (cannon.facing === "left") {
                         context.translate(cannon.image.width, 0);
@@ -145,7 +144,7 @@ $(function() {
                     
                     context.restore();
                 }
-            },
+            }
         };
     }();
 });

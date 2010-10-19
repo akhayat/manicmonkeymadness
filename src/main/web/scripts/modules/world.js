@@ -21,7 +21,7 @@ $(function() {
         // reference of the world's objects
         var objects = [];
         
-        function createBox(x, y, width, height, fixed, density, restitution, friction, draw) {
+        var createBox = function(x, y, width, height, fixed, density, restitution, friction, draw) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             bodyDef.angularDamping = 0.1;
@@ -41,7 +41,7 @@ $(function() {
             return object;
         };
         
-        function createBall(x, y, radius, fixed, density, restitution, friction, draw) {
+        var createBall = function(x, y, radius, fixed, density, restitution, friction, draw) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
@@ -62,7 +62,7 @@ $(function() {
             return object;
         };
        
-        function createPoly(x, y, points, fixed, density, restitution, friction, draw) {
+        var createPoly = function(x, y, points, fixed, density, restitution, friction, draw) {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             bodyDef.angularDamping = 0.1;
@@ -89,7 +89,7 @@ $(function() {
          * Returns true if all of the objects in the world 
          * are asleep
          */
-        function allSleeping() {
+        var allSleeping = function() {
             for (var i = 0, n = objects.length; i < n; i+=1) {
                 if (!objects[i].body.IsSleeping() && objects[i].type !== "ground") {
                     return false;
@@ -108,7 +108,7 @@ $(function() {
         /*
          * A method to test for settled physics  
          */
-        function allSettled(threshold) {
+        var allSettled = function(threshold) {
         	for (var i = 0, n = objects.length; i < n; i+=1) {
         	    var v = objects[i].body.GetLinearVelocity();
                 var t = objects[i].body.GetAngularVelocity();
@@ -117,9 +117,9 @@ $(function() {
                 }
         	}
         	return true;
-        }
+        };
         
-        function removeObject(object) {
+        var removeObject = function(object) {
             for (var i = 0, n = objects.length; i < n; i++) {
                 if (object === objects[i].body) {
                     objects.splice(i, 1);
