@@ -45,7 +45,7 @@ $(function() {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
-            bodyDef.angularDamping = 2;
+            bodyDef.angularDamping = 2.5;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
@@ -105,6 +105,20 @@ $(function() {
             return true;
         };
         
+        /*
+         * A method to test for settled physics  
+         */
+        function allSettled() {
+        	for (var i = 0, n = objects.length; i < n; i+=1) {
+        	    var v = objects[i].body.GetLinearVelocity();
+                var t = objects[i].body.GetAngularVelocity();
+                if (v.Length() > 0.25 || Math.abs(t) > 0.25) {
+                	return false;
+                }
+        	}
+        	return true;
+        }
+        
         function removeObject(object) {
             for (var i = 0, n = objects.length; i < n; i++) {
                 if (object === objects[i].body) {
@@ -150,6 +164,7 @@ $(function() {
             createBox: createBox,
             createBall: createBall,
             allSleeping: allSleeping,
+            allSettled: allSettled,
             createPoly: createPoly,
             removeObject: removeObject,
             clear: clear,
