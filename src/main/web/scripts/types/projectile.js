@@ -22,7 +22,7 @@ $(function() {
             
         var details = {
             small:  { density: 2.0, restitution: 0.1, friction: 1.0 },
-            single: { density: 1.5, restitution: 0.15, friction: 0.85 }
+            single: { density: 1.5, restitution: 0, friction: 0.85 }
         };
         
         return {

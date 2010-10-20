@@ -9,12 +9,14 @@ $(function() {
     m3.types.Fortress = function() {
         var FortPiece = m3.types.FortPiece;
         var Enemy     = m3.types.Enemy;
+        var Weapon = m3.types.Weapon;
         
         return {
             owner:    null,
             position: null,
             pieces:   null,
             enemies:  null,
+            weapon: null,
             
             // Adds a fortress piece to the fortress. x and y are in local coordinate
             // space -- they are relative to the fortress's position.
@@ -28,6 +30,11 @@ $(function() {
                 this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle, this.enemies));
             },
             
+            addLauncher: function(skin, type, x, y, angle, axis) {
+            	this.weapon = (Weapon.create(this, skin, type, this.position + x, y, angle, axis));
+            	
+            },
+            
             // Returns whether or not the fort is destroyed. A fort is considered destroyed
             // if all of its monkeys are dead.
             isDestroyed: function() {
@@ -37,7 +44,8 @@ $(function() {
             // Fortress's update function updates all of its pieces.
             update: function() {
                 var pieces  = this.pieces.slice(),
-                    enemies = this.enemies.slice();
+                    enemies = this.enemies.slice(),
+                    weapon = this.weapon;
                 
                 for (var i = 0, n = pieces.length; i < n; i++) {
                     pieces[i].update();
@@ -46,6 +54,8 @@ $(function() {
                 for (var j = 0, n = enemies.length; j < n; j++) {
                     enemies[j].update();
                 }
+                
+                weapon.update();
             },
             
             // "Constructor".
@@ -55,6 +65,7 @@ $(function() {
                 f.position = x;
                 f.pieces = [];
                 f.enemies = [];
+                f.weapon = null;
                 return f;
             },
         };

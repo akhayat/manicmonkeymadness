@@ -51,8 +51,6 @@ $(function() {
                 canvas.onmousedown   = m3.input.processMouseDown;
                 document.onmouseup   = m3.input.processMouseUp;
                 document.onmousemove = m3.input.processMouseMove;
-                
-                m3.launcher.init();
             }
         };
     }();

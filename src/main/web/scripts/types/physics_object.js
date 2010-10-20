@@ -78,7 +78,7 @@ $(function() {
                     context.translate(this.x, this.y);
                     context.rotate(this.angle);
                     context.translate(offset.x, offset.y);
-                    this.sprite.update();
+                    if (!!this.sprite) this.sprite.update();
                     context.restore();
                 }
                 else {

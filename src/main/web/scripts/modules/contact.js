@@ -23,6 +23,8 @@ $(function() {
                     object1.contact(object2, velocity);
                 } else if (object1.type === 'projectile') {
                     object1.contact(object2, velocity);
+                } else if (object1.type === 'weapon') {
+                	object1.contact(object2, velocity);
                 } else if (object1.type === 'ground') {
                     if (object2.type === 'projectile') {
                         m3.util.log('projectile hit ground at ' + velocity.toFixed(2) + ' m/s');

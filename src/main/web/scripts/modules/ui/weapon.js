@@ -15,12 +15,12 @@ $(function() {
         return {
             update: function() {
                 var active_player = m3.game.state.active_player,
-                    cannon        = cannons[active_player],
+                    cannon        = m3.game.state.level.fortresses[active_player].weapon,
                     game_width    = m3.game.width
                     icon          = null;
                 
                 // Temporary until we have a weapon type data structure set up.
-                if (cannon.weapon == 1) {
+                if (cannon.weapon === 1) {
                     icon = m3.assets.sprites.banana;
                 }
                 else {

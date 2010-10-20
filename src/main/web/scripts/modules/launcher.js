@@ -9,27 +9,16 @@
 $(function() {
     m3.launcher = function() {
         var mouse_coords = m3.types.Vector.create();
-        
-        // Simple private object to represent both players' cannons.
-        var Cannon = function(x, y, x_offset, y_offset, facing) {
-            this.x          = x;
-            this.y          = y;
-            this.angle      = 0;
-            this.image      = m3.assets.sprites.cannon;
-            this.offset     = m3.types.Vector.create(x_offset, y_offset);
-            this.facing     = facing;
-            this.pType      = "rock";
-            this.pDetails   = "small";
-            this.weapon     = 0;
-        };
-        
+
         return {
             aiming:  false,
-            cannons: [new Cannon(175, 360, 22, 40, "right"), new Cannon(m3.config.level_width - 275, 360, 71, 40, "left")],
+            cannons: [],
+            
+            image: m3.assets.sprites.cannon,
             
             // Returns the current cannon based on whose turn it is.
             currentCannon: function() {
-                return this.cannons[m3.game.state.active_player];
+                return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
             },
             
             prepareLaunch: function(event) {
@@ -47,8 +36,8 @@ $(function() {
                     // width of the canvas, I had to include this so that the rotation of the cannon
                     // would be smooth.
                     var right = cannon.facing == "right";
-                    var x = (right ? cannon.x : m3.game.width - cannon.offset.x);
-                    var y = (right ? cannon.y : m3.game.height - cannon.offset.y);
+                    var x = (right ? cannon.x : m3.game.width - cannon.axis.x);
+                    var y = (right ? cannon.y : m3.game.height - cannon.axis.y);
                     
                     // Caps the angle at 90 or 0.
                     if (right) {
@@ -115,31 +104,28 @@ $(function() {
                 }
             },
             
-            init: function() {
-                // Nothing here right now
-            },
-            
             update: function() {
                 var context = m3.game.context;
                 
                 // Draws both cannons at the appropriate angles.
                 for (var i = 0; i < 2; i++) {
-                    var cannon = this.cannons[i];
+                	var fortress = m3.game.state.level.fortresses[i];
+                    var cannon = fortress.weapon;
                     
                     context.save();
                     
                     // This translate and rotate ensures the rotation is around the wheel of the cannon
                     // instead of the origin
-                    context.translate(cannon.x + cannon.offset.x, cannon.y + cannon.offset.y);
+                    context.translate(cannon.x + cannon.axis.x, cannon.y + cannon.axis.y);
                     context.rotate(cannon.angle);
                     
                     if (cannon.facing === "left") {
-                        context.translate(cannon.image.width, 0);
+                        context.translate(this.image.width, 0);
                         context.scale(-1, 1);
-                        context.drawImage(cannon.image, cannon.offset.x, -cannon.offset.y);
+                        context.drawImage(this.image, cannon.axis.x, -cannon.axis.y);
                     }
                     else {
-                        context.drawImage(cannon.image, -cannon.offset.x, -cannon.offset.y);
+                        context.drawImage(this.image, -cannon.axis.x, -cannon.axis.y);
                     }
                     
                     context.restore();
