@@ -75,7 +75,7 @@ $(function() {
             follow: function(object) {
                 if (this.state !== "idle")
                     return;
-                
+
                 this.state = "following";
                 following  = object;
             },
@@ -115,7 +115,14 @@ $(function() {
                     }
                 }
                 else if (this.state === "following" && following) {
-                    this.warp(following.x - m3.game.width / 2, following.y - m3.game.height / 2);
+                	// Follow an object until it reaches the other side
+                    var player = m3.game.state.active_player;
+                    if ((this.position.x === this.minBound.x && !!player) 
+                     || (this.position.x === this.maxBound.x && !player)) {
+                    	this.stopFollowing();
+                    } else {
+                    	this.warp(following.x - m3.game.width / 2, following.y - m3.game.height / 2);
+                    }	
                 }
                 else if (!m3.launcher.aiming) {
                     // Move the camera with the arrow keys.
