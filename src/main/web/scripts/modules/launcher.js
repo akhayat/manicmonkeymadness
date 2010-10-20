@@ -78,7 +78,7 @@ $(function() {
                 var impulse = m3.types.Vector.create(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
                 
                 if (cannon.facing === "right") {
-                    ball_pos.x += 92 / m3.config.scaling_factor;
+                    ball_pos.x += 92 * Math.cos(theta) / m3.config.scaling_factor;
                 }
                 else {
                     impulse.x = -impulse.x;
@@ -116,15 +116,17 @@ $(function() {
                     
                     // This translate and rotate ensures the rotation is around the wheel of the cannon
                     // instead of the origin
-                    context.translate(cannon.x + cannon.axis.x, cannon.y + cannon.axis.y);
-                    context.rotate(cannon.angle);
+                   context.translate(cannon.x + cannon.axis.x, cannon.y + cannon.axis.y);
                     
                     if (cannon.facing === "left") {
-                        context.translate(this.image.width, 0);
+                        context.translate(this.image.width / 2, 0);
+                        context.rotate(cannon.angle);
                         context.scale(-1, 1);
                         context.drawImage(this.image, cannon.axis.x, -cannon.axis.y);
                     }
                     else {
+                        context.translate(this.image.width / -2, 0);
+                        context.rotate(cannon.angle);
                         context.drawImage(this.image, -cannon.axis.x, -cannon.axis.y);
                     }
                     
