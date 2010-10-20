@@ -28,8 +28,6 @@ $(function() {
         return {
             // Collision callback.
             contact: function(other, velocity) {
-                m3.util.log("Projectile contact!");
-                
                 if (other.type === 'fort_piece') {
                     if (velocity > other.minImpactVelocity) {
                         m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + ' m/s');
@@ -66,11 +64,12 @@ $(function() {
                     projectile = m3.world.createBall(x, y, t.radius, false, d.density, d.restitution, d.friction, false);
                 
                 projectile.body.SetUserData(p);
-                p.type   = 'projectile';
-                p.body   = projectile.body;
-                p.shape  = projectile.shape;
-                p.alive  = true;
-                p.sprite = Sprite.create(t.s, t.h, t.w);
+                p.contact = this.contact;
+                p.type    = "projectile";
+                p.body    = projectile.body;
+                p.shape   = projectile.shape;
+                p.alive   = true;
+                p.sprite  = Sprite.create(t.s, t.h, t.w);
                 
                 if (impulse_x !== undefined && impulse_y !== undefined) {
                     p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));

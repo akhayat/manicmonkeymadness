@@ -34,48 +34,25 @@ $(function() {
                 if (other.type === 'fort_piece') {
                     if (velocity > this.minImpactVelocity) {
                         m3.util.log('fort piece hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('fort piece damage: ' + this.damage.toFixed(2));
                         m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('fort piece destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
                     if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('fort piece destroyed');
                         m3.score.playerDestroyed(other);
                     }
-                } else if (other.type === 'projectile') {
-                    if (velocity > this.minImpactVelocity) {
-                        m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
-                        m3.util.log('fort piece damage: ' + this.damage.toFixed(2))
-                    }
-                    
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('fort piece destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
-                } else if (other.type === 'enemy') {
+                }
+                else if (other.type === 'enemy') {
                     if (velocity > this.minImpactVelocity) {
                         m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('fort piece damage: ' + this.damage.toFixed(2));
                         m3.util.log('enemy damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('fort piece destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
                     if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('enemy destroyed');

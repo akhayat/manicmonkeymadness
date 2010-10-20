@@ -19,7 +19,7 @@ $(function() {
         
         var details = {
                 small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 2 },
-                medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 4 }
+                medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.75 }
         };
             
         return {
@@ -28,64 +28,29 @@ $(function() {
                 if (other.type === 'fort_piece') {
                     if (velocity > this.minImpactVelocity) {
                         m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('enemy damage: ' + this.damage.toFixed(2));
                         m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('enemy destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
                     if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('fort piece destroyed');
                         m3.score.playerDestroyed(other);
                     }
-                } else if (other.type === 'projectile') {
-                    if (velocity > this.minImpactVelocity) {
-                        m3.util.log('projectile hit enemy at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
-                        m3.util.log('enemy damage: ' + this.damage.toFixed(2));
-                    }
-                    
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('enemy destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
-                } else if (other.type === 'enemy'){
+                }
+                else if (other.type === 'enemy') {
                     if (velocity > other.minImpactVelocity) {
                         m3.util.log('enemy hit enemy at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
                         other.damage += (velocity * this.mass) / m3.config.damage_factor;
                         m3.util.log('enemy damage: ' + this.damage.toFixed(2));
                         m3.util.log('enemy damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (this.damage > this.destroyThreshold) {
-                        this.alive = false;
-                        m3.util.log('enemy destroyed');
-                        m3.score.playerDestroyed(this);
-                    }
                     if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('enemy destroyed');
                         m3.score.playerDestroyed(other);
-                    }
-                } else if (other.type === 'ground') {
-                    if (velocity > this.minImpactVelocity) {
-                        m3.util.log('enemy hit ground at: ' + velocity.toFixed(2) + ' m/s');
-                        this.damage += (velocity * other.mass) / m3.config.damage_factor;
-                        m3.util.log('enemy damage: ' + this.damage.toFixed(2));
-                    }
-                        
-                    if (this.damage > this.destroyThreshold) {
-                    	this.alive = false;
-                        m3.util.log('enemy destroyed');
-                        m3.score.playerDestroyed(this);
                     }
                 }
             },
@@ -117,10 +82,11 @@ $(function() {
                     }
                     
                     object.angle  = angle;
-                    object.type = 'enemy';
-                    object.alive = true;
+                    object.type   = 'enemy';
+                    object.alive  = true;
                     object.damage = 0;
-                    object.destroyThreshold = d.destroyThreshold;
+                    object.destroyThreshold  = d.destroyThreshold;
+                    object.minImpactVelocity = d.minImpactVelocity;
                                
                     return object;
             },

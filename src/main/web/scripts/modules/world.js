@@ -45,7 +45,7 @@ $(function() {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
-            bodyDef.angularDamping = 2.5;
+            bodyDef.angularDamping = 1.0;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
@@ -57,7 +57,7 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw, type: "ball"};
+            var object = { body: body, shape: shape, draw: draw, type: "ball" };
             objects.push(object);
             return object;
         };

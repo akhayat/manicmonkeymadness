@@ -11,21 +11,15 @@ $(function() {
         return {
             /* This function is called when two objects begin to collide */
             Add: function(point) {
-                //m3.util.log('add');
-                
                 var object1 = point.shape1.GetBody().GetUserData(),
                     object2 = point.shape2.GetBody().GetUserData(),
                     velocity = point.velocity.Length();
                 
-                if (object1.type === 'fort_piece') {
+                if (object1 && object1.contact) {
                     object1.contact(object2, velocity);
-                } else if (object1.type === 'enemy') {
-                    object1.contact(object2, velocity);
-                } else if (object1.type === 'projectile') {
-                    object1.contact(object2, velocity);
-                } else if (object1.type === 'weapon') {
-                	object1.contact(object2, velocity);
-                } else if (object1.type === 'ground') {
+                }
+                else if (object1.type === "ground") {
+                    // It would be nice to move this somewhere else...maybe make a ground type?
                     if (object2.type === 'projectile') {
                         m3.util.log('projectile hit ground at ' + velocity.toFixed(2) + ' m/s');
                     } else if (velocity > object2.minImpactVelocity) {
@@ -39,9 +33,11 @@ $(function() {
                             m3.score.playerDestroyed(object2);
                         }
                     }
-                } else {
-                    m3.util.log('unknown collision');
-                }                
+                }
+                
+                if (object2 && object2.contact) {
+                    object2.contact(object1, velocity);
+                }             
             },
             
             /* This function is called when two objects continue to collide */
