@@ -33,7 +33,13 @@ $(function() {
                         m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (other.damage > other.destroyThreshold) {
+                    if (other.damage >= other.destroyThreshold / 3 && other.damage < other.destroyThreshold * 2 / 3 && other.sprites.damaged) {
+                        other.sprite = other.sprites.damaged;
+                    }
+                    else if (other.damage >= other.destroyThreshold * 2 / 3 && other.damage < other.destroyThreshold && other.sprites.destroyed) {
+                        other.sprite = other.sprites.destroyed;
+                    }
+                    else if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('fort piece destroyed');
                         m3.score.playerDestroyed(other);

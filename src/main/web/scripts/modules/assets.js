@@ -43,10 +43,20 @@ $(function() {
                 banana:       imageFromSource("sprites/banana2.png"),
                 
                 fort_pieces: {
-                    box_long_wood:  imageFromSource("sprites/box_long_wood.png"),
-                    box_short_wood: imageFromSource("sprites/box_short_wood.png"),
-                    box_long_rock:  imageFromSource("sprites/box_long_rock.png"),
-                    box_short_rock: imageFromSource("sprites/box_short_rock.png"),
+                    box_long_wood: {
+                        normal:    imageFromSource("sprites/box_long_wood.png"),
+                        damaged:   imageFromSource("sprites/box_long_wood_damaged.png"),
+                        destroyed: imageFromSource("sprites/box_long_wood_destroyed.png")
+                    },
+                    box_short_wood: {
+                        normal:    imageFromSource("sprites/box_short_wood.png")
+                    },
+                    box_long_rock: {
+                        normal:    imageFromSource("sprites/box_long_rock.png")
+                    },
+                    box_short_rock: {
+                        normal:    imageFromSource("sprites/box_long_rock.png")
+                    }
                 }
             },
         };

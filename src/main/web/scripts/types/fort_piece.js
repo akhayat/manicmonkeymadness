@@ -39,7 +39,13 @@ $(function() {
                         m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                     }
                     
-                    if (other.damage > other.destroyThreshold) {
+                    if (other.damage >= other.destroyThreshold / 3 && other.damage < other.destroyThreshold * 2 / 3 && other.sprites.damaged) {
+                        other.sprite = other.sprites.damaged;
+                    }
+                    else if (other.damage >= other.destroyThreshold * 2 / 3 && other.damage < other.destroyThreshold && other.sprites.destroyed) {
+                        other.sprite = other.sprites.destroyed;
+                    }
+                    else if (other.damage > other.destroyThreshold) {
                         other.alive = false;
                         m3.util.log('fort piece destroyed');
                         m3.score.playerDestroyed(other);
@@ -75,7 +81,11 @@ $(function() {
                 object.fort    = fort;
                 object.body    = piece.body;
                 object.shape   = piece.shape;
-                object.sprite  = Sprite.create(t.s, t.h, t.w);
+                object.sprites = {};
+                object.sprites.normal    = Sprite.create(t.s.normal, t.h, t.w);
+                object.sprites.damaged   = t.s.damaged   ? Sprite.create(t.s.damaged, t.h, t.w) : null;
+                object.sprites.destroyed = t.s.destroyed ? Sprite.create(t.s.damaged, t.h, t.w) : null;
+                object.sprite = object.sprites.normal;
                 object.angle   = angle;
                 object.type    = "fort_piece";
                 object.alive   = true;
