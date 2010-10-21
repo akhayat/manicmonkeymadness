@@ -1,5 +1,5 @@
 /**
- * launcher_type.js
+ * weapon.js
  * 
  * This object represents the launcher located in each fortress.
  * 
@@ -78,10 +78,10 @@ $(function() {
                 object.pDetails   = "small";
                 
 //                if (impulse_x !== undefined && impulse_y !== undefined) {
-//                    p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));
+//                    object.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));
 //                    
 //                    var torque = (impulse_x < 0) ? -400.0 : 400.0;
-//                    p.body.ApplyTorque(torque);
+//                    object.body.ApplyTorque(torque);
 //                }
                 
                 return object;
