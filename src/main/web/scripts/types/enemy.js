@@ -12,8 +12,8 @@ $(function() {
         
         var enemies = {
             monkey: {
-                small: { s: assets.demo, h: 23, w: 25 },
-                medium:{ s: assets.demo2, h: 24, w: 33.2 }
+                small: { s: assets.monkey, h: 49, w: 41 },
+                medium:{ s: assets.monkey_hemlet, h: 51, w: 41 }
             }
         };
         
@@ -75,27 +75,26 @@ $(function() {
                     object.shape  = enemy.shape;
                     object.fort   = fort;
                     object.type   = "enemy";
-                    
-                    if (type === "small") {
-                        object.sprite = Sprite.create(t.s, t.h, t.w);
-                        object.sprite.addAnimation("idle", [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
-                        object.sprite.play("idle");
-                    }
-                    else if (type === "medium") {
-                        object.sprite = Sprite.create(t.s, t.h, t.w);
-                        object.sprite.addAnimation("eating", [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4], 0.12);
-                        object.sprite.play("eating");
-                    }
-                    
+                    object.subtype = character + '_' + type;
                     object.angle  = angle;
-                    object.type   = 'enemy';
                     object.alive  = true;
                     object.damage = 0;
                     object.destroyThreshold  = d.destroyThreshold;
                     object.minImpactVelocity = d.minImpactVelocity;
-                               
+                    
+                    if (type === "small") {
+                        object.sprite = Sprite.create(t.s, t.h, t.w);
+                        object.sprite.addAnimation(object.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+                        object.sprite.play(object.subtype);
+                    }
+                    else if (type === "medium") {
+                        object.sprite = Sprite.create(t.s, t.h, t.w);
+                        object.sprite.addAnimation(object.subtype, [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3], 0.12);
+                        object.sprite.play(object.subtype);
+                    }
+
                     return object;
-            },
+            }
         };
     }();
 });

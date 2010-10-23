@@ -67,7 +67,7 @@ $(function() {
                 f.enemies = [];
                 f.weapon = null;
                 return f;
-            },
+            }
         };
     }();
 });

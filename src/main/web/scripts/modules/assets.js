@@ -33,14 +33,11 @@ $(function() {
             },
             
             sprites: {
-                demo:         imageFromSource("sprites/demo_monkey.png"),
-                demo2:		  imageFromSource("sprites/demo2.png"),
-                cannon:       imageFromSource("sprites/cannon2.png"),
-                monkey_up:    imageFromSource("sprites/monkeyup.png"),
-                monkey_right: imageFromSource("sprites/monkeyright.png"),
-                monkey_left:  imageFromSource("sprites/monkeyleft.png"),
+                cannon:       imageFromSource("sprites/cannon.png"),
                 rock:         imageFromSource("sprites/rock.png"),
-                banana:       imageFromSource("sprites/banana2.png"),
+                banana:       imageFromSource("sprites/banana.png"),
+                monkey:       imageFromSource("sprites/monkey.png"),
+                monkey_hemlet: imageFromSource("sprites/monkey_helmet.png"),
                 
                 fort_pieces: {
                     box_long_wood: {
@@ -58,7 +55,7 @@ $(function() {
                         normal:    imageFromSource("sprites/box_long_rock.png")
                     }
                 }
-            },
+            }
         };
     }();
 });
