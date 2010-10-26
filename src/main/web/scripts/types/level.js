@@ -116,8 +116,8 @@ $(function() {
                     fort.addEnemy("monkey", "small", 70, 200, 0);
                 }
                 
-                level.fortresses[0].addLauncher("cannon", "grey", 200, 360, 0, m3.types.Vector.create(22, 40));
-                level.fortresses[1].addLauncher("cannon", "grey", -120, 360, 0, m3.types.Vector.create(-22, 40));
+                level.fortresses[0].addLauncher("cannon", "grey", 200, 381, 0, m3.types.Vector.create(-25, 18));
+                level.fortresses[1].addLauncher("cannon", "grey", -120, 381, 0, m3.types.Vector.create(25, 18));
                 
                 return level;
             }

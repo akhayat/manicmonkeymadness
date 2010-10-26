@@ -60,7 +60,7 @@ $(function() {
                     s          = skins[skin][type],
                     d          = details[type],
                     scale = m3.config.scaling_factor,
-                    weapon = m3.world.createBox(x / scale, y / scale, s.w / scale, s.h / scale, true, d.density, d.restitution, d.friction, false);
+                    weapon = m3.world.createBox(x / scale, y / scale, s.w / scale, 41 / scale, true, d.density, d.restitution, d.friction, false);
                 
                 weapon.body.SetUserData(object);
                 object.contact = this.contact;
@@ -76,13 +76,6 @@ $(function() {
                 object.weapon = 0;
                 object.pType      = "rock";
                 object.pDetails   = "small";
-                
-//                if (impulse_x !== undefined && impulse_y !== undefined) {
-//                    object.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));
-//                    
-//                    var torque = (impulse_x < 0) ? -400.0 : 400.0;
-//                    object.body.ApplyTorque(torque);
-//                }
                 
                 return object;
             }

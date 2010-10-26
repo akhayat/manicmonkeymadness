@@ -85,6 +85,15 @@ $(function() {
             return object;
         };
         
+        var createJoint = function(body1, body2, anchorPoint) {
+        	var jointDef = new b2JointDef();
+        	jointDef.body1 = body1;
+        	jointDef.body2 = body2;
+        	jointDef.anchorPoint = anchorPoint;
+        	var joint = world.CreateJoint(jointDef);
+        	return joint;
+        };
+        
         /*
          * Returns true if all of the objects in the world 
          * are asleep
@@ -163,9 +172,10 @@ $(function() {
             objects: objects,
             createBox: createBox,
             createBall: createBall,
+            createPoly: createPoly,
+            createJoint: createJoint,
             allSleeping: allSleeping,
             allSettled: allSettled,
-            createPoly: createPoly,
             removeObject: removeObject,
             clear: clear,
             init: init,

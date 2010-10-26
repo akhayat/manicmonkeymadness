@@ -16,8 +16,8 @@ $(function() {
             
             image: m3.assets.sprites.cannon,
             
-            // Returns the current cannon based on whose turn it is.
-            currentCannon: function() {
+            // Returns the current launcher based on whose turn it is.
+            currentLauncher: function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
             },
             
@@ -27,57 +27,57 @@ $(function() {
             
             aim: function(event) {
                 if (this.aiming) {
-                    var cannon = this.currentCannon();
+                    var launcher = this.currentLauncher();
                     
                     mouse_coords.x = event.pageX - m3.game.x;
                     mouse_coords.y = event.pageY - m3.game.y;
                     
                     // Since there is a difference between the width of the actual level, and the 
-                    // width of the canvas, I had to include this so that the rotation of the cannon
+                    // width of the canvas, I had to include this so that the rotation of the launcher
                     // would be smooth.
-                    var right = cannon.facing == "right";
-                    var x = (right ? cannon.x : m3.game.width - cannon.axis.x);
-                    var y = (right ? cannon.y : m3.game.height - cannon.axis.y);
+                    var right = launcher.facing === "right";
+                    var x = (right ? launcher.x : m3.game.width - launcher.axis.x);
+                    var y = (right ? launcher.y : m3.game.height - launcher.axis.y);
                     
                     // Caps the angle at 90 or 0.
                     if (right) {
-                        // Calculates the angle using the cannon and the mouse location. Good ole trig.
-                        cannon.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
-                        if (cannon.angle > 0 && cannon.angle <= Math.PI) {
-                            cannon.angle = 0;
+                        // Calculates the angle using the launcher and the mouse location. Good ole trig.
+                        launcher.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
+                        if (launcher.angle > 0 && launcher.angle <= Math.PI) {
+                            launcher.angle = 0;
                         }
-                        else if (cannon.angle < -1 * Math.PI / 2) {
-                            cannon.angle = -1 * Math.PI / 2;
+                        else if (launcher.angle < -1 * Math.PI / 2) {
+                            launcher.angle = -1 * Math.PI / 2;
                         }
                     }
                     else {
                         // I have to negate the x and y values so it fires in the correct direction.
-                        cannon.angle = Math.atan2((y - mouse_coords.y),(x - mouse_coords.x));
-                        if (cannon.angle < 0) {
-                            cannon.angle = 0;
+                        launcher.angle = Math.atan2((y - mouse_coords.y),(x - mouse_coords.x));
+                        if (launcher.angle < 0) {
+                            launcher.angle = 0;
                         }
-                        else if (cannon.angle > Math.PI / 2) {
-                            cannon.angle = Math.PI / 2;
+                        else if (launcher.angle > Math.PI / 2) {
+                            launcher.angle = Math.PI / 2;
                         }
                     }
                 }
             },
             
             launch: function(event) {
-                var cannon   = this.currentCannon(),
-                    theta    = cannon.angle,
-                    pType    = cannon.pType,
-                	pDetails = cannon.pDetails;
+                var launcher   = this.currentLauncher(),
+                    theta    = launcher.angle,
+                    pType    = launcher.pType,
+                	pDetails = launcher.pDetails;
                 
                 this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;
-                var ball_pos = m3.types.Vector.create(cannon.x / m3.config.scaling_factor, (cannon.y + 24.0) / m3.config.scaling_factor);
+                var ball_pos = m3.types.Vector.create(launcher.x / m3.config.scaling_factor, (launcher.y + 24.0) / m3.config.scaling_factor);
                 var impulse = m3.types.Vector.create(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
                 
-                if (cannon.facing === "right") {
+                if (launcher.facing === "right") {
                     ball_pos.x += 92 * Math.cos(theta) / m3.config.scaling_factor;
                 }
                 else {
@@ -90,44 +90,46 @@ $(function() {
             },
             
             changeWeapon: function() {
-                var cannon = this.currentCannon();
+                var launcher = this.currentLauncher();
                 
-                if (cannon.weapon < 1) {
-                    cannon.weapon += 1;
-                    cannon.pType = "banana";
-                    cannon.pDetails = "single";
+                if (launcher.weapon < 1) {
+                    launcher.weapon += 1;
+                    launcher.pType = "banana";
+                    launcher.pDetails = "single";
                 }
                 else {
-                    cannon.weapon = 0;
-                    cannon.pType = "rock";
-                    cannon.pDetails = "small";
+                    launcher.weapon = 0;
+                    launcher.pType = "rock";
+                    launcher.pDetails = "small";
                 }
             },
             
             update: function() {
                 var context = m3.game.context;
                 
-                // Draws both cannons at the appropriate angles.
+                // Draws both launchers at the appropriate angles.
                 for (var i = 0; i < 2; i++) {
                 	var fortress = m3.game.state.level.fortresses[i];
-                    var cannon = fortress.weapon;
-                    
+                    var launcher = fortress.weapon;
+                   
                     context.save();
                     
-                    // This translate and rotate ensures the rotation is around the wheel of the cannon
+                    // This translate and rotate ensures the rotation is around the wheel of the launcher
                     // instead of the origin
-                   context.translate(cannon.x + cannon.axis.x, cannon.y + cannon.axis.y);
+                    context.translate(launcher.x, launcher.y);
                     
-                    if (cannon.facing === "left") {
-                        context.translate(this.image.width / 2, 0);
-                        context.rotate(cannon.angle);
-                        context.scale(-1, 1);
-                        context.drawImage(this.image, cannon.axis.x, -cannon.axis.y);
+                    if (launcher.facing === "left") {
+                    	context.scale(-1, 1);
+                        context.translate(-launcher.axis.x, launcher.axis.y);
+                        context.rotate(-launcher.angle);                        
+                        context.translate(this.image.width / -2, 0);                        
+                        context.drawImage(this.image, launcher.axis.x, -(41/2 + launcher.axis.y));
                     }
                     else {
+                        context.translate(launcher.axis.x, launcher.axis.y);
+                        context.rotate(launcher.angle);
                         context.translate(this.image.width / -2, 0);
-                        context.rotate(cannon.angle);
-                        context.drawImage(this.image, -cannon.axis.x, -cannon.axis.y);
+                        context.drawImage(this.image, -launcher.axis.x, -(41/2 + launcher.axis.y));
                     }
                     
                     context.restore();
