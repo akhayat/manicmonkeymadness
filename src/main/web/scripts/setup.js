@@ -24,6 +24,14 @@ if (typeof Object.create !== "function") {
     };
 }
 
+// Object.inherit will let you set the prototype of an object.
+if (typeof Object.inherit !== "function") {
+    Object.inherit = function(o, p) {
+        o.__proto__ = p;
+        return o;
+    };
+}
+
 // Give arrays a remove function.
 Array.prototype.remove = function(from, to) {
     var rest = this.slice((to || from) + 1 || this.length);
