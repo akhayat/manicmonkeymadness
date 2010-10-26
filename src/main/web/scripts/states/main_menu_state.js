@@ -15,10 +15,16 @@ $(function () {
                     }
                 },
                 
+                E: {
+                    down: function() {
+                        m3.game.state = m3.states.EditLevelState.create();
+                    }
+                },
+                
                 C: {
-                	down: function() {
-                		$('#console').toggle();
-                	}
+                    down: function() {
+                        $('#console').toggle();
+                    }
                 }
             },
             
@@ -46,7 +52,7 @@ $(function () {
                 context.fillText("Manic Monkey Madness!!!", half_width, half_height);
                 
                 context.font = "bold 30px sans-serif";
-                context.fillText("PLAY", half_width, half_height + 80);
+                context.fillText("Click to play, or press E to create a fortress!", half_width, half_height + 80);
             },
             
             // "Constructor".
