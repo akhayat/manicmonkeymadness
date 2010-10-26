@@ -64,6 +64,11 @@ a:hover {
 	background: #888888;
 }
 
+#music {
+	width: 300px;
+	margin: 0px auto 40px auto;
+}
+
 #console {
 	width: 900px;
 	margin: 0px auto 20px auto;
