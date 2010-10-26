@@ -37,12 +37,7 @@ $(function() {
             
             // Keyboard input handlers for the play state.
             keyHandlers: {
-                A: {
-                    down: function() {
-                        m3.util.log("allSleeping = " + m3.world.allSleeping());
-                    }
-                },
-                
+         
                 C: {
                 	down: function() {
                 		$('#console').toggle();
@@ -51,7 +46,7 @@ $(function() {
                 
                 P: {
                     down: function() {
-                        m3.world.outOfBounds();
+                        m3.sound.toggle(m3.assets.music.monkeys);
                     }
                 },
                 
@@ -120,6 +115,8 @@ $(function() {
             
             // This is the update function for the starting state.
             updateStarting: function() {
+        	    var music = m3.assets.music.monkeys;
+        	    music.play();
                 if (this.state_time >= 0.5) {
                     this.setState("waiting");
                 }

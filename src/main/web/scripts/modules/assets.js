@@ -19,6 +19,14 @@ $(function() {
         return image;
     };
     
+    var soundFromSource = function(source, loop, preload) {
+    	var sound = new Audio("audio/" + source);
+    	sound.loop = loop;
+    	sound.preload = preload;
+    	sound.paused = true;
+    	return sound;
+    };
+    
     m3.assets = function() {
         return {
             /**
@@ -55,6 +63,10 @@ $(function() {
                         normal:    imageFromSource("sprites/box_long_rock.png")
                     }
                 }
+            },
+            
+            music: {
+            	monkeys: soundFromSource("music/monkeys.ogg", true, "auto")
             }
         };
     }();
