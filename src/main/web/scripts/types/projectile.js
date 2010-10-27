@@ -16,10 +16,10 @@ $(function() {
         
         var ammunition = {
             rock: {
-                small: { s: assets.rock, h: 40, w: 40, radius: 1 }
+                small: { s: assets.rock, h: 38, w: 38, radius: 19 }
             },
             banana: {
-                single: { s: assets.banana, h: 27, w: 34, radius: 0.75 }
+                single: { s: assets.banana, h: 27, w: 34, radius: 19 }
             }
         
         };
@@ -69,8 +69,9 @@ $(function() {
         Projectile.create = function(x, y, impulse_x, impulse_y, ammo, type) {
             var p     = Object.inherit(m3.types.PhysicsObject.create(x, y), this),
                 t     = ammunition[ammo][type],
-                d     = details[type],   
-                piece = m3.world.createBall(x, y, t.radius, false, d.density, d.restitution, d.friction, false);
+                d     = details[type],
+                scale = m3.config.scaling_factor;
+                piece = m3.world.createBall(x / scale, y / scale, t.radius / scale, false, d.density, d.restitution, d.friction, false);
             
             piece.body.SetUserData(p);
             p.contact = this.contact;

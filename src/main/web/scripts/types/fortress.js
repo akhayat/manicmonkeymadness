@@ -30,8 +30,8 @@ $(function() {
                 this.enemies.push(Enemy.create(this, character, type, this.position + x, y, angle, this.enemies));
             },
             
-            addLauncher: function(skin, type, x, y, angle, axis) {
-            	this.weapon = (Weapon.create(this, skin, type, this.position + x, y, angle, axis));
+            addLauncher: function(skin, type, x, y, angle, axisOffset, launchOffset) {
+            	this.weapon = (Weapon.create(this, skin, type, this.position + x, y, angle, axisOffset, launchOffset));
             	
             },
             

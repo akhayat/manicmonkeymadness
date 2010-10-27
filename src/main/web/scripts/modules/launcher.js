@@ -13,9 +13,7 @@ $(function() {
         return {
             aiming:  false,
             cannons: [],
-            
-            image: m3.assets.sprites.cannon,
-            
+
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
@@ -36,8 +34,8 @@ $(function() {
                     // width of the canvas, I had to include this so that the rotation of the launcher
                     // would be smooth.
                     var right = launcher.facing === "right";
-                    var x = (right ? launcher.x : m3.game.width - launcher.axis.x);
-                    var y = (right ? launcher.y : m3.game.height - launcher.axis.y);
+                    var x = right ? launcher.x + launcher.axisOffset.x : (launcher.x + launcher.axisOffset.x) - m3.game.width;
+                    var y = launcher.y + launcher.axisOffset.y;
                     
                     // Caps the angle at 90 or 0.
                     if (right) {
@@ -64,29 +62,29 @@ $(function() {
             },
             
             launch: function(event) {
-                var launcher   = this.currentLauncher(),
-                    theta    = launcher.angle,
-                    pType    = launcher.pType,
-                	pDetails = launcher.pDetails;
+                var launcher     = this.currentLauncher(),
+                    theta        = launcher.angle,
+                    axisOffset   = launcher.axisOffset,
+                    launchOffset = launcher.launchOffset,
+                    power        = launcher.power,
+                    pType        = launcher.pType,
+                	pDetails     = launcher.pDetails;
                 
                 this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
                 m3.assets.sfx.explosion.play();
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
-                var magnitude = 200;
-                var ball_pos = m3.types.Vector.create(launcher.x / m3.config.scaling_factor, (launcher.y + 24.0) / m3.config.scaling_factor);
-                var impulse = m3.types.Vector.create(magnitude * Math.cos(theta), magnitude * Math.sin(theta));
+                var axislaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
+                var launchPoint = m3.types.Vector.create((launcher.x + axisOffset.x + axislaunchOffset.x), (launcher.y + axisOffset.y + axislaunchOffset.y));
+                var impulse = m3.types.Vector.create(power * Math.cos(theta), power * Math.sin(theta));
                 
-                if (launcher.facing === "right") {
-                    ball_pos.x += 92 * Math.cos(theta) / m3.config.scaling_factor;
-                }
-                else {
+                if (launcher.facing === "left") {
                     impulse.x = -impulse.x;
                     impulse.y = -impulse.y;
                 }
 
-                m3.game.state.active_projectile = m3.types.Projectile.create(ball_pos.x, ball_pos.y, impulse.x, impulse.y, pType, pDetails);
+                m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
                 m3.camera.follow(m3.game.state.active_projectile);
             },
             
@@ -110,27 +108,29 @@ $(function() {
                 
                 // Draws both launchers at the appropriate angles.
                 for (var i = 0; i < 2; i++) {
-                	var fortress = m3.game.state.level.fortresses[i];
-                    var launcher = fortress.weapon;
-                   
+                	var fortress = m3.game.state.level.fortresses[i],
+                        launcher = fortress.weapon,
+                        axisOffset = launcher.axisOffset,
+                        barrelHeight = launcher.barrelHeight,
+                        image = launcher.image;
+                	
                     context.save();
                     
-                    // This translate and rotate ensures the rotation is around the wheel of the launcher
-                    // instead of the origin
+                    // Rotate about the wheel axle
                     context.translate(launcher.x, launcher.y);
                     
                     if (launcher.facing === "left") {
                     	context.scale(-1, 1);
-                        context.translate(-launcher.axis.x, launcher.axis.y);
+                        context.translate(-axisOffset.x, axisOffset.y);
                         context.rotate(-launcher.angle);                        
-                        context.translate(this.image.width / -2, 0);                        
-                        context.drawImage(this.image, launcher.axis.x, -(41/2 + launcher.axis.y));
+                        context.translate(image.width / -2, 0);                        
+                        context.drawImage(image, axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
                     }
                     else {
-                        context.translate(launcher.axis.x, launcher.axis.y);
+                        context.translate(axisOffset.x, axisOffset.y);
                         context.rotate(launcher.angle);
-                        context.translate(this.image.width / -2, 0);
-                        context.drawImage(this.image, -launcher.axis.x, -(41/2 + launcher.axis.y));
+                        context.translate(image.width / -2, 0);
+                        context.drawImage(image, -axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
                     }
                     
                     context.restore();

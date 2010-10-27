@@ -13,12 +13,12 @@ $(function() {
         
         var skins = {
             cannon: {
-                grey: { s: assets.cannon, h: 60, w: 92 }
+                grey: { s: assets.cannon, h: 60, w: 92, barrelHeight: 41 }
             }       
         };
             
         var details = {
-            grey: { density: 2.0, restitution: 0.1, friction: 1.0 }
+            grey: { density: 2.0, restitution: 0.1, friction: 1.0, power: 200 }
         };
         
         return {
@@ -55,12 +55,12 @@ $(function() {
         	
           
             // "Constructor".
-            create: function(fort, skin, type, x, y, angle, axis) {
-                var object     = Object.create(m3.types.PhysicsObject.create(x, y)),
-                    s          = skins[skin][type],
-                    d          = details[type],
-                    scale = m3.config.scaling_factor,
-                    weapon = m3.world.createBox(x / scale, y / scale, s.w / scale, 41 / scale, true, d.density, d.restitution, d.friction, false);
+            create: function(fort, skin, type, x, y, angle, axisOffset, launchOffset) {
+                var object = Object.create(m3.types.PhysicsObject.create(x, y)),
+                    s      = skins[skin][type],
+                    d      = details[type],
+                    scale  = m3.config.scaling_factor,
+                    weapon = m3.world.createBox(x / scale, y / scale, s.w / scale, s.barrelHeight / scale, true, d.density, d.restitution, d.friction, false);
                 
                 weapon.body.SetUserData(object);
                 object.contact = this.contact;
@@ -72,8 +72,12 @@ $(function() {
                 object.angle = angle;
                 object.alive = true;
                 object.damage = 0;
-                object.axis = axis;
+                object.axisOffset = axisOffset;
+                object.launchOffset = launchOffset;
                 object.weapon = 0;
+                object.power = d.power;
+                object.barrelHeight = s.barrelHeight;
+                object.image = s.s;
                 object.pType      = "rock";
                 object.pDetails   = "small";
                 
