@@ -27,6 +27,7 @@ $(function() {
                 if (object.type === 'fort_piece') {
                     player_scores[player] += fort_piece_value;
                 } else if (object.type === 'enemy') {
+                	m3.assets.sfx.monkeyScream.play();
                     player_scores[player] += enemy_value;
                 }
             },

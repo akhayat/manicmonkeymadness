@@ -28,6 +28,7 @@ $(function() {
         
         // Collision callback.
         Enemy.contact = function(other, velocity) {
+        	m3.assets.sfx.monkeyGrunt.play();
             if (other.type === 'fort_piece') {
                 if (velocity > this.minImpactVelocity) {
                     m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
@@ -50,6 +51,7 @@ $(function() {
             }
             else if (other.type === 'enemy') {
                 if (velocity > other.minImpactVelocity) {
+                	
                     m3.util.log('enemy hit enemy at: ' + velocity.toFixed(2) + ' m/s');
                     other.damage += (velocity * this.mass) / m3.config.damage_factor;
                     m3.util.log('enemy damage: ' + this.damage.toFixed(2));

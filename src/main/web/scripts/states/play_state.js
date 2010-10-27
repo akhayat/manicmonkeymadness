@@ -46,7 +46,13 @@ $(function() {
                 
                 P: {
                     down: function() {
-                        m3.sound.toggle(m3.assets.music.monkeys);
+                        m3.sound.currentSong.toggle();
+                    }
+                },
+                
+                S: {
+                	down: function() {
+                	    m3.sound.toggleSound();
                     }
                 },
                 
@@ -115,7 +121,7 @@ $(function() {
             
             // This is the update function for the starting state.
             updateStarting: function() {
-        	    var music = m3.assets.music.monkeys;
+            	var music = m3.sound.currentSong;
         	    music.play();
                 if (this.state_time >= 0.5) {
                     this.setState("waiting");

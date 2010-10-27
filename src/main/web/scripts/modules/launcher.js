@@ -71,6 +71,7 @@ $(function() {
                 
                 this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
+                m3.assets.sfx.explosion.play();
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
                 var magnitude = 200;

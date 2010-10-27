@@ -19,12 +19,40 @@ $(function() {
         return image;
     };
     
-    var soundFromSource = function(source, loop, preload) {
-    	var sound = new Audio("audio/" + source);
-    	sound.loop = loop;
-    	sound.preload = preload;
-    	sound.paused = true;
-    	return sound;
+    var soundFromSource = function(source, loop) {
+        var sound = new Audio("audio/" + source);
+            paused = true;
+        sound.loop = loop;
+        sound.preload = "auto";
+	    
+        /*
+         * Had to make  wrapper around the javascript Audio object
+         * in order for toggling the sound on and off to work properly
+         */
+        return {
+		    play: function() {
+		        if(m3.sound.soundOn()) {
+		    	    sound.play();
+		            paused = false;
+		        }
+	        },
+	        
+	        pause: function() {
+	    	    sound.pause();
+	    	    paused = true;
+	        },
+	        
+	        toggle: function() {
+	    	    if(m3.sound.soundOn() && paused) {
+	    		    paused = false;
+	        		sound.play();
+	    	    }
+	    	    else {
+	    		    paused = true;
+	    		    sound.pause();
+	        	}
+	        }
+        }
     };
     
     m3.assets = function() {
@@ -66,7 +94,15 @@ $(function() {
             },
             
             music: {
-            	monkeys: soundFromSource("music/monkeys.ogg", true, "auto")
+            	monkeys: soundFromSource("music/monkeys.ogg", true)
+            },
+            
+            sfx: {
+            	//from ilovewavs.com
+            	monkeyScream: soundFromSource("effects/monkey_scream.ogg", false),
+            	monkeyGrunt:  soundFromSource("effects/monkey_grunt.ogg"), 
+                //from partnersinrhyme.com
+                explosion: soundFromSource("effects/explosion.ogg", false)
             }
         };
     }();
