@@ -20,8 +20,16 @@ $(function() {
     };
     
     var soundFromSource = function(source, loop) {
-        var sound = new Audio("audio/" + source);
+        var sound = new Audio();
             paused = true;
+            extension = "";
+        if(sound.canPlayType('audio/ogg') !== "") {
+        	extension = ".ogg";
+        } else if(sound.canPlayType('audio/mp3') !== "") {
+        	extension = ".mp3"
+        }
+        
+        sound.src = "audio/" + source + extension;
         sound.loop = loop;
         sound.preload = "auto";
 	    
@@ -94,15 +102,15 @@ $(function() {
             },
             
             music: {
-            	monkeys: soundFromSource("music/monkeys.ogg", true)
+            	monkeys: soundFromSource("music/monkeys", true)
             },
             
             sfx: {
             	//from ilovewavs.com
-            	monkeyScream: soundFromSource("effects/monkey_scream.ogg", false),
-            	monkeyGrunt:  soundFromSource("effects/monkey_grunt.ogg"), 
+            	monkeyScream: soundFromSource("effects/monkey_scream", false),
+            	monkeyGrunt:  soundFromSource("effects/monkey_grunt"), 
                 //from partnersinrhyme.com
-                explosion: soundFromSource("effects/explosion.ogg", false)
+                explosion: soundFromSource("effects/explosion", false)
             }
         };
     }();
