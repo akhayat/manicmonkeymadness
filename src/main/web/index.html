@@ -8,22 +8,57 @@
     <body>
         <h1 id="page_header">Manic Monkey Madness</h1>
         
-        <div id="game_description">
-            <p>The game description, maybe instructions for how to play the game, etc. should go here.</p>
-            <div class="links">
-                Links: 
-                <ul>
-                    <li><a href="http://code.google.com/p/manicmonkeymadness/">Google Code Project Page</a></li>
-                    <li><a href="../../test/index.html">QUnit Tests</a></li>
-                </ul>
-            </div>
-            P TURNS THE MUSIC OFF for now.  I know it might get on your nerves so I'm making this clear...
+        <div id="middle" class="fade">
         </div>
+        
+        <div id="top" class="help">
+            <div>
+                <center><h2>Manic Monkey Madness (M3) <br> Help Page</h2></center>
+                <br>
+                <br>
+                <h4>How to Play</h4>
+                <ul>
+                    <li>Select a weapon type by pressing the 'W' key, the rock is selected by default.</li>
+                    <li>Click and drag to see the angle at which the cannon will shoot, release to fire.</li>
+                    <li>Destroying enemy fortress pieces and monkeys will award points.</li>
+                    <li>Eliminate all the enemy monkeys to win!</li>
+                </ul>
+                <h4>Projectile Types</h4>
+                <ul>
+                    <li>Rock - The rock is a heavy projectile, it moves slow but is extremely destructive.</li>
+                    <li>Banana - The banana is a light projectile, it moves extremely fast and is useful for direct shots.</li>
+                </ul>
+                <h4>Tips and Tricks</h4>
+                <ul>
+                    <li>The "W" key changes weapon types.</li>
+                    <li>The "P" key turns off sounds.</li>
+                    <li>The "C" key toggles the console.</li>
+                </ul>
+                    
+                <div class="close">
+                    <input type=button value="Return to Game" onClick="toggleHelp();">
+                </div>
+            </div>          
+        </div>
+        
+
         
         <div id="game">
             <canvas id="game_canvas" height="450px" width="900px">
                 Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.
             </canvas>
+        </div>
+ 
+         <div id="game_description">
+            <p>Useful Links:</p>
+            <div class="links">
+                <ul>
+                    <li><a href="#" onclick="toggleHelp();">HELP ME!</a>  
+                    <input type="image" class="help_button" src="images/resource/help.png" alt="Submit" onclick="toggleHelp();"/>
+                    <li><a href="../../test/index.html">QUnit Tests</a>
+                    <li><a href="http://code.google.com/p/manicmonkeymadness/">Google Code Project Page</a></li>
+                </ul>
+            </div>
         </div>
         
         <div id="console">
@@ -70,6 +105,8 @@
         <script src="scripts/modules/ui/weapon.js" type="text/javascript"></script>
         <script src="scripts/modules/world.js" type="text/javascript"></script>
         <script src="scripts/modules/sound.js" type="text/javascript"></script>
+        <script src="scripts/modules/buttons.js" type="text/javascript"></script>
+        
         
         <!-- States -->
         <script src="scripts/states/main_menu_state.js" type="text/javascript"></script>
