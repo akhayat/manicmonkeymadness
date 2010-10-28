@@ -5,30 +5,56 @@
  */
 
 $(function() {
+    
     m3.sound = function() {
-        var on = true;
+        
+        var isOn = true;
+            currentSong = null;
     	
         return {
-        	currentSong: m3.assets.music.monkeys,
+        	
+        	/*
+        	 * Changes the current song and plays it
+        	 */
+        	changeMusic: function(sound, play) {
+        	    if(currentSong !== null) currentSong.pause();
+        	    currentSong = sound;
+        	    if(play) currentSong.play();
+        	},
+        
+        	pauseMusic: function() {
+        	    currentSong.pause();
+        	},
+        	
+        	playMusic: function() {
+        	    currentSong.play();
+        	},
+        	
+        	toggleMusic: function() {
+        		currentSong.toggle();
+        	},
         	
         	soundOn: function() {
-        	    return on;
+        	    return isOn;
             },
             
+            /*
+             * Toggles ALL sound, effects AND music
+             */
         	toggleSound: function() {
-        	    if(on) {
-        	    	on = false;
-        	        this.currentSong.pause();
+        	    if(isOn) {
+        	    	isOn = false;
+        	        currentSong.pause();
         	    }
         	    else{
-        	    	on = true;
-        	    	this.currentSong.play();
+        	    	isOn = true;
+        	    	currentSong.play();
         	    }
             }
             
         	//use the toggle method in the audio wrapper in assets.js
         	
-            /*toggle: function(music) {
+            /*toggleMusic: function(music) {
                 music.paused ? music.sound.play() : music.sound.pause();
                 music.paused = !music.paused;
             }*/

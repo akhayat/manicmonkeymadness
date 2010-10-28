@@ -25,6 +25,12 @@ $(function () {
                     down: function() {
                         $('#console').toggle();
                     }
+                },
+                
+                P: {
+                	down: function() {
+                	    m3.sound.toggleMusic();
+                    }
                 }
             },
             
@@ -37,6 +43,7 @@ $(function () {
             
             // Main update function for the main menu state.
             update: function() {
+            	//m(m3.assets.music.rideTheLightning);
                 var context     = m3.game.context,
                     half_width  = m3.game.width / 2,
                     half_height = m3.game.height / 2;
@@ -57,6 +64,7 @@ $(function () {
             
             // "Constructor".
             create: function() {
+            	m3.sound.changeMusic(m3.assets.music.monkeys, true);
                 return Object.create(this);
             }
         };

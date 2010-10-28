@@ -46,7 +46,7 @@ $(function() {
                 
                 P: {
                     down: function() {
-                        m3.sound.currentSong.toggle();
+                        m3.sound.toggleMusic();
                     }
                 },
                 
@@ -121,8 +121,6 @@ $(function() {
             
             // This is the update function for the starting state.
             updateStarting: function() {
-                var music = m3.sound.currentSong;
-                music.play();
                 if (this.state_time >= 0.5) {
                     this.setState("waiting");
                 }
@@ -209,7 +207,7 @@ $(function() {
             // "Constructor".
             create: function() {
                 var state = Object.create(this);
-                
+            	m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
                 m3.score.reset();
                 m3.world.clear();
                 m3.world.init();

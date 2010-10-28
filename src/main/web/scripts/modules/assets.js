@@ -102,7 +102,8 @@ $(function() {
             },
             
             music: {
-            	monkeys: soundFromSource("music/monkeys", true)
+            	monkeys: soundFromSource("music/monkeys", true),
+            	rideTheLightning: soundFromSource("music/Ride the Lightning", true)
             },
             
             sfx: {
