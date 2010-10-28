@@ -17,18 +17,18 @@ $(function() {
         var enemies = {
             monkey: {
                 small: { s: assets.monkey, h: 49, w: 41 },
-                medium:{ s: assets.monkey_hemlet, h: 51, w: 41 }
+                medium:{ s: assets.monkey_helmet, h: 51, w: 41 }
             }
         };
         
         var details = {
-                small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 2 },
-                medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.75 }
+            small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 1.75 },
+            medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.0 }
         };
         
         // Collision callback.
         Enemy.contact = function(other, velocity) {
-        	m3.assets.sfx.monkeyGrunt.play();
+            m3.assets.sfx.monkeyGrunt.play();
             if (other.type === 'fort_piece') {
                 if (velocity > this.minImpactVelocity) {
                     m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
@@ -51,7 +51,7 @@ $(function() {
             }
             else if (other.type === 'enemy') {
                 if (velocity > other.minImpactVelocity) {
-                	
+                    
                     m3.util.log('enemy hit enemy at: ' + velocity.toFixed(2) + ' m/s');
                     other.damage += (velocity * this.mass) / m3.config.damage_factor;
                     m3.util.log('enemy damage: ' + this.damage.toFixed(2));

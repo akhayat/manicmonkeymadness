@@ -77,11 +77,11 @@ $(function() {
             },
             
             sprites: {
-                cannon:       imageFromSource("sprites/cannon.png"),
-                rock:         imageFromSource("sprites/rock.png"),
-                banana:       imageFromSource("sprites/banana.png"),
-                monkey:       imageFromSource("sprites/monkey.png"),
-                monkey_hemlet: imageFromSource("sprites/monkey_helmet.png"),
+                cannon:        imageFromSource("sprites/cannon.png"),
+                rock:          imageFromSource("sprites/rock.png"),
+                banana:        imageFromSource("sprites/banana.png"),
+                monkey:        imageFromSource("sprites/monkey.png"),
+                monkey_helmet: imageFromSource("sprites/monkey_helmet.png"),
                 
                 fort_pieces: {
                     box_long_wood: {

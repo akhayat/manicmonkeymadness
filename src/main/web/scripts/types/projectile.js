@@ -29,8 +29,19 @@ $(function() {
             single: { density: 1.5, restitution: 0,   friction: 1.0 }
         };
         
+        // Override PhysicsObject update function to keep track of how long we've been alive.
+        Projectile.update = function() {
+            this.PhysicsObject.update.call(this);
+            this.life_time += m3.game.elapsed;
+        };
+        
         // Collision callback.
         Projectile.contact = function(other, velocity) {
+            // We want to stop following the projectile when it hits something.
+            if (this.life_time > 1.0) {
+                m3.camera.stopFollowing();
+            }
+            
             if (other.type === 'fort_piece') {
                 if (velocity > other.minImpactVelocity) {
                     m3.util.log('projectile hit fort piece at: ' + velocity.toFixed(2) + ' m/s');
@@ -74,12 +85,13 @@ $(function() {
                 piece = m3.world.createBall(x / scale, y / scale, t.radius / scale, false, d.density, d.restitution, d.friction, false);
             
             piece.body.SetUserData(p);
-            p.contact = this.contact;
-            p.type    = "projectile";
-            p.body    = piece.body;
-            p.shape   = piece.shape;
-            p.alive   = true;
-            p.sprite  = Sprite.create(t.s, t.h, t.w);
+            p.contact   = this.contact;
+            p.type      = "projectile";
+            p.body      = piece.body;
+            p.shape     = piece.shape;
+            p.alive     = true;
+            p.sprite    = Sprite.create(t.s, t.h, t.w);
+            p.life_time = 0.0;
             
             if (impulse_x !== undefined && impulse_y !== undefined) {
                 p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));

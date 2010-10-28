@@ -87,14 +87,14 @@ $(function() {
             f.destroyThreshold  = m.destroyThreshold;
             f.minImpactVelocity = m.minImpactVelocity;
             
-            f.fort    = fort;
-            f.body    = piece.body;
-            f.shape   = piece.shape;
-            f.sprite  = f.sprites.normal;
-            f.angle   = angle;
-            f.type    = "fort_piece";
-            f.alive   = true;
-            f.damage  = 0;
+            f.fort   = fort;
+            f.body   = piece.body;
+            f.shape  = piece.shape;
+            f.sprite = f.sprites.normal;
+            f.angle  = angle;
+            f.type   = "fort_piece";
+            f.alive  = true;
+            f.damage = 0;
             
             return f;
         };

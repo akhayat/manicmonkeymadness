@@ -88,36 +88,36 @@ $(function() {
                 level.background = background;
                 
                 // Set up fortresses.
-                level.fortresses = [m3.types.Fortress.create(0, 40), m3.types.Fortress.create(1, 1860)];
+                level.fortresses = [m3.types.Fortress.create(0), m3.types.Fortress.create(1)];
                 
                 for (var i = 0; i < 2; i++) {
                     var fort = level.fortresses[i];
-                    fort.addPiece("box", "long",  "wood", 0,   370, 0);
-                    fort.addPiece("box", "long",  "wood", 50,  370, 0);
-                    fort.addPiece("box", "long",  "wood", 100, 370, 0);
-                    fort.addPiece("box", "long",  "wood", 0,   270, 0);
-                    fort.addPiece("box", "long",  "wood", 50,  270, 0);
-                    fort.addPiece("box", "long",  "wood", 100, 270, 0);
-                    fort.addPiece("box", "long",  "wood", 50,  215, Math.PI / 2);
-                    fort.addPiece("box", "short", "wood", 10,  185, 0);
-                    fort.addPiece("box", "short", "wood", 50,  185, 0);
-                    fort.addPiece("box", "short", "wood", 90,  185, 0);
-                    fort.addPiece("box", "long",  "wood", 50,  155, Math.PI / 2);
-                    fort.addPiece("box", "long",  "rock", 115, 370, 0);
-                    fort.addPiece("box", "long",  "rock", 112, 270, 0);
-                    fort.addPiece("box", "long",  "rock", -12, 370, 0);
-                    fort.addPiece("box", "long",  "rock", -12, 270, 0);
-                    fort.addPiece("box", "short", "rock", -12, 195, 0);
-                    fort.addPiece("box", "short", "rock", 110, 195, 0);
-                    fort.addPiece("box", "long",  "rock", 50,  145, Math.PI / 2);
-                    fort.addEnemy("monkey", "medium", 20, 400, 0);
-                    fort.addEnemy("monkey", "medium", 70, 400, 0);
-                    fort.addEnemy("monkey", "small", 20, 200, 0);
-                    fort.addEnemy("monkey", "small", 70, 200, 0);
+                    fort.addPiece("box", "long",  "wood", 100, 295, 0);
+                    fort.addPiece("box", "long",  "wood", 150, 295, 0);
+                    fort.addPiece("box", "long",  "wood", 200, 295, 0);
+                    fort.addPiece("box", "long",  "wood", 100, 195, 0);
+                    fort.addPiece("box", "long",  "wood", 150, 195, 0);
+                    fort.addPiece("box", "long",  "wood", 200, 195, 0);
+                    fort.addPiece("box", "long",  "wood", 150, 140, Math.PI / 2);
+                    fort.addPiece("box", "short", "wood", 110, 110, 0);
+                    fort.addPiece("box", "short", "wood", 150, 110, 0);
+                    fort.addPiece("box", "short", "wood", 190, 110, 0);
+                    fort.addPiece("box", "long",  "wood", 150, 80,  Math.PI / 2);
+                    fort.addPiece("box", "long",  "rock", 215, 295, 0);
+                    fort.addPiece("box", "long",  "rock", 212, 195, 0);
+                    fort.addPiece("box", "long",  "rock",  88, 295, 0);
+                    fort.addPiece("box", "long",  "rock",  88, 195, 0);
+                    fort.addPiece("box", "short", "rock",  88, 120, 0);
+                    fort.addPiece("box", "short", "rock", 210, 120, 0);
+                    fort.addPiece("box", "long",  "rock", 150, 70,  Math.PI / 2);
+                    fort.addEnemy("monkey", "medium", 120, 325, 0);
+                    fort.addEnemy("monkey", "medium", 170, 325, 0);
+                    fort.addEnemy("monkey", "small",  120, 125, 0);
+                    fort.addEnemy("monkey", "small",  170, 125, 0);
                 }
                 
-                level.fortresses[0].addLauncher("cannon", "grey", 200, 381, 0, m3.types.Vector.create(-25, 18), m3.types.Vector.create(46,0));
-                level.fortresses[1].addLauncher("cannon", "grey", -120, 381, 0, m3.types.Vector.create(25, 18), m3.types.Vector.create(-46,0));
+                level.fortresses[0].addLauncher("cannon", "grey", 0, m3.types.Vector.create(-25, 18), m3.types.Vector.create(46,0));
+                level.fortresses[1].addLauncher("cannon", "grey", 0, m3.types.Vector.create(25, 18),  m3.types.Vector.create(-46,0));
                 
                 return level;
             }

@@ -9,11 +9,11 @@
 $(function() {
     m3.launcher = function() {
         var mouse_coords = m3.types.Vector.create();
-
+        
         return {
             aiming:  false,
             cannons: [],
-
+            
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
@@ -27,18 +27,17 @@ $(function() {
                 if (this.aiming) {
                     var launcher = this.currentLauncher();
                     
-                    mouse_coords.x = event.pageX - m3.game.x;
-                    mouse_coords.y = event.pageY - m3.game.y;
+                    mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
+                    mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
                     
-                    // Since there is a difference between the width of the actual level, and the 
+                    // Since there is a difference between the width of the actual level and the 
                     // width of the canvas, I had to include this so that the rotation of the launcher
                     // would be smooth.
-                    var right = launcher.facing === "right";
-                    var x = right ? launcher.x + launcher.axisOffset.x : (launcher.x + launcher.axisOffset.x) - m3.game.width;
+                    var x = launcher.x + launcher.axisOffset.x;
                     var y = launcher.y + launcher.axisOffset.y;
                     
                     // Caps the angle at 90 or 0.
-                    if (right) {
+                    if (launcher.facing === "right") {
                         // Calculates the angle using the launcher and the mouse location. Good ole trig.
                         launcher.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
                         if (launcher.angle > 0 && launcher.angle <= Math.PI) {
@@ -68,7 +67,7 @@ $(function() {
                     launchOffset = launcher.launchOffset,
                     power        = launcher.power,
                     pType        = launcher.pType,
-                	pDetails     = launcher.pDetails;
+                    pDetails     = launcher.pDetails;
                 
                 this.aiming = false;
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
@@ -83,7 +82,7 @@ $(function() {
                     impulse.x = -impulse.x;
                     impulse.y = -impulse.y;
                 }
-
+                
                 m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
                 m3.camera.follow(m3.game.state.active_projectile);
             },
@@ -108,19 +107,19 @@ $(function() {
                 
                 // Draws both launchers at the appropriate angles.
                 for (var i = 0; i < 2; i++) {
-                	var fortress = m3.game.state.level.fortresses[i],
+                    var fortress = m3.game.state.level.fortresses[i],
                         launcher = fortress.weapon,
                         axisOffset = launcher.axisOffset,
                         barrelHeight = launcher.barrelHeight,
                         image = launcher.image;
-                	
+                    
                     context.save();
                     
                     // Rotate about the wheel axle
                     context.translate(launcher.x, launcher.y);
                     
                     if (launcher.facing === "left") {
-                    	context.scale(-1, 1);
+                        context.scale(-1, 1);
                         context.translate(-axisOffset.x, axisOffset.y);
                         context.rotate(-launcher.angle);                        
                         context.translate(image.width / -2, 0);                        

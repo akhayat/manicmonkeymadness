@@ -121,8 +121,8 @@ $(function() {
             
             // This is the update function for the starting state.
             updateStarting: function() {
-            	var music = m3.sound.currentSong;
-        	    music.play();
+                var music = m3.sound.currentSong;
+                music.play();
                 if (this.state_time >= 0.5) {
                     this.setState("waiting");
                 }

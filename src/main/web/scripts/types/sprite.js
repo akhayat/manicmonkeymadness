@@ -105,7 +105,6 @@ $(function() {
             // are required. Height and width are the dimensions of the sprite cells,
             // not the sprite sheet itself.
             create: function(sheet, height, width, x, y) {
-            	//console.log(sheet);
                 var s = Object.create(this);
                 s.sheet  = sheet;
                 s.height = height;

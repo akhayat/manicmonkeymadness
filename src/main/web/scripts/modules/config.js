@@ -14,7 +14,16 @@ $(function() {
             
             // Dimensions of the level itself (not the window).
             level_height: 450,
-            level_width:  2000,
+            level_width:  2800,
+            
+            // How much space between each fortress and the edge of the screen.
+            level_padding: 25,
+            
+            // The width of each fortress area.
+            fort_width: 640,
+            
+            // How tall the fortress platform should be.
+            fort_platform_height: 75,
             
             // How high in pixels the base ground is from the bottom of the screen.
             ground_height: 30,

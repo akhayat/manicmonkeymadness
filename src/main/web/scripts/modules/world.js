@@ -9,7 +9,6 @@
 
 $(function() {
     m3.world = function() {
-        
         // create the world
         var worldAABB = new b2AABB();
         worldAABB.lowerBound.Set(-10000.0, -10000.0);
@@ -36,7 +35,7 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw, type: "box"};
+            var object = { body: body, shape: shape, draw: draw, type: "box" };
             objects.push(object);
             return object;
         };
@@ -80,18 +79,20 @@ $(function() {
             var shape = body.CreateShape(shapeDef);
             if (!fixed) body.SetMassFromShapes();
             if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw, type: "poly"};
+            body.SynchronizeShapes();
+            var object = { body: body, shape: shape, draw: draw, type: "ground" };
+            body.SetUserData(object);
             objects.push(object);
             return object;
         };
         
         var createJoint = function(body1, body2, anchorPoint) {
-        	var jointDef = new b2JointDef();
-        	jointDef.body1 = body1;
-        	jointDef.body2 = body2;
-        	jointDef.anchorPoint = anchorPoint;
-        	var joint = world.CreateJoint(jointDef);
-        	return joint;
+            var jointDef = new b2JointDef();
+            jointDef.body1 = body1;
+            jointDef.body2 = body2;
+            jointDef.anchorPoint = anchorPoint;
+            var joint = world.CreateJoint(jointDef);
+            return joint;
         };
         
         /*
@@ -103,12 +104,6 @@ $(function() {
                 if (!objects[i].body.IsSleeping() && objects[i].type !== "ground") {
                     return false;
                 }
-                // Proposed method of detecting whether physics have settled down:
-                // var v = objects[i].body.GetLinearVelocity();
-                // var t = objects[i].body.GetAngularVelocity();
-                // if (Math.abs(v.x) > 0.25 || Math.abs(v.y) > 0.25 || Math.abs(t) > 0.25) {
-                //     return false;
-                // }
             }
             
             return true;
@@ -146,7 +141,27 @@ $(function() {
         };
         
         var init = function() {
-            // create the ground       
+            // // create the ground
+            // var groundBodyDef = new b2BodyDef();
+            // var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
+            // var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
+            // groundBodyDef.position.Set(ground_x, ground_y);
+            // var groundBody = world.CreateBody(groundBodyDef);
+            // var groundShapeDef = new b2PolygonDef();
+            // groundShapeDef.restitution = 0.1;
+            // groundShapeDef.friction = 1;
+            // groundShapeDef.density = 1.0;
+            // groundBody.w = m3.config.level_width / m3.config.scaling_factor;
+            // groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
+            // groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
+            // var groundShape = groundBody.CreateShape(groundShapeDef);
+            // groundBody.SynchronizeShapes();
+            // 
+            // var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
+            // groundBody.SetUserData(object);
+            // objects.push(object);
+            
+            // create the ground
             var groundBodyDef = new b2BodyDef();
             var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
             var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
@@ -159,12 +174,30 @@ $(function() {
             groundBody.w = m3.config.level_width / m3.config.scaling_factor;
             groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
             groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
+            groundShapeDef.vertexCount = 4;
+            groundShapeDef.vertices[0].Set(-groundBody.w, -groundBody.h);
+            groundShapeDef.vertices[1].Set( groundBody.w, -groundBody.h);
+            groundShapeDef.vertices[2].Set( groundBody.w,  groundBody.h);
+            groundShapeDef.vertices[3].Set(-groundBody.w,  groundBody.h);
             var groundShape = groundBody.CreateShape(groundShapeDef);
             groundBody.SynchronizeShapes();
             
             var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
             groundBody.SetUserData(object);
             objects.push(object);
+            
+            // Create platforms.
+            var scale    = m3.config.scaling_factor,
+                p_width  = m3.config.fort_width / scale,
+                p_height = m3.config.fort_platform_height / scale;
+            
+            createPoly(m3.config.level_padding / scale, 
+                       (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
+                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, true);
+            
+            createPoly((m3.config.level_width - m3.config.fort_width - m3.config.level_padding) / scale, 
+                       (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
+                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, true);
         };
         
         return {

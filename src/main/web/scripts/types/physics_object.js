@@ -85,7 +85,7 @@ $(function() {
             var o = Object.create(this);
             o.container = container ? container : null;
             return o;
-        }
+        };
         
         // Getters for x and y (in pixels and meters).
         PhysicsObject.__defineGetter__("x", function() {
