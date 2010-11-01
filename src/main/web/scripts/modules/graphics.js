@@ -38,6 +38,17 @@ $(function() {
                     context.fill();
                     context.restore();
                 }
+            },
+            
+            pixelsToMeters : function(vertices) {            	
+            	var scale = m3.config.scaling_factor,
+            	    verticesInMeters = [];
+            	
+            	$.each(vertices, function(i) {
+            		verticesInMeters[i] = [this[0] / scale, this[1] / scale];
+            	});
+            	
+            	return verticesInMeters;
             }
         };
     }();
