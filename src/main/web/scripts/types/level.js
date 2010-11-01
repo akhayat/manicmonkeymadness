@@ -34,19 +34,6 @@ $(function() {
                 }
             },
             
-            // A level is finished if one of its fortresses is destroyed.
-            finished: function() {
-                var fortresses = this.fortresses;
-                
-                for (var i = 0, n = fortresses.length; i < n; i++) {
-                    if (fortresses[i].isDestroyed()) {
-                        return true;
-                    }
-                }
-                
-                return false;
-            },
-            
             // Update function for the level.
             update: function() {
                 var fortresses = this.fortresses;

@@ -66,6 +66,15 @@ $(function() {
             }
         };
         
+        // When an enemy is destroyed, we check to see if the game has ended.
+        Enemy.destroy = function() {
+            this.PhysicsObject.destroy.call(this);
+            
+            if (this.fort.enemies.length <= 0) {
+                m3.game.state.endRound((this.fort.owner + 1) % 2);
+            }
+        };
+        
         // Constructor.
         Enemy.create = function(fort, character, type, x, y, angle, container) {
             var e     = Object.inherit(m3.types.PhysicsObject.create(x, y, container), this),

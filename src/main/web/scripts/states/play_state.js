@@ -35,13 +35,15 @@ $(function() {
             // This is a reference to the projectile most recently launched.
             active_projectile: null,
             
+            // Keeps track of who won when the game ends.
+            winner: null,
+            
             // Keyboard input handlers for the play state.
             keyHandlers: {
-         
                 C: {
-                	down: function() {
-                		$('#console').toggle();
-                	}
+                    down: function() {
+                        $("#console").toggle();
+                    }
                 },
                 
                 P: {
@@ -51,8 +53,8 @@ $(function() {
                 },
                 
                 S: {
-                	down: function() {
-                	    m3.sound.toggleSound();
+                    down: function() {
+                        m3.sound.toggleSound();
                     }
                 },
                 
@@ -146,15 +148,10 @@ $(function() {
                     this.active_projectile.destroy();
                     this.active_projectile = null;
                     
-                    if (this.level.finished()) {
-                        this.setState("done");
-                    }
-                    else {
-                        var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
-                        m3.camera.slideTo(camera_position, 0, "smooth");
-                        this.active_player = (this.active_player + 1) % 2;
-                        this.setState("transitioning");
-                    }
+                    var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+                    m3.camera.slideTo(camera_position, 0, "smooth");
+                    this.active_player = (this.active_player + 1) % 2;
+                    this.setState("transitioning");
                 }
             },
             
@@ -169,6 +166,12 @@ $(function() {
             // This is the update function for the done state.
             updateDone: function() {
                 // Nothing yet.
+            },
+            
+            // Causes the round to end
+            endRound: function(winner) {
+                this.winner = winner;
+                this.setState("done");
             },
             
             // This is the main update function which mostly just calls other update functions.
@@ -207,7 +210,7 @@ $(function() {
             // "Constructor".
             create: function() {
                 var state = Object.create(this);
-            	m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
+                m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
                 m3.score.reset();
                 m3.world.clear();
                 m3.world.init();

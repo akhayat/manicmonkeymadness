@@ -15,15 +15,13 @@ $(function() {
         
         return {
             update: function() {
-                var winner = m3.game.state.active_player + 1;
-                
                 // Say who won.
                 context.fillStyle   = "rgba(250, 255, 245, 0.95)";
                 context.font        = "60px Tahoma, Geneva, sans-serif";
                 context.textAlign   = "center";
                 context.lineWidth   = 3;
                 context.strokeStyle = "rgba(20, 15, 0, 0.75)";
-                ui.drawStrokedText("Player " + winner + " wins!", camera.x + half_width, camera.y + half_height - 40);
+                ui.drawStrokedText("Player " + (m3.game.state.winner + 1) + " wins!", camera.x + half_width, camera.y + half_height - 40);
                 
                 // Let them continue or quit.
                 context.font      = "30px Tahoma, Geneva, sans-serif";
