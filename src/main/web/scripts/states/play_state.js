@@ -31,6 +31,8 @@ $(function() {
         // This keeps track of how long we've been in the current state.
         PlayState.state_time = 0.0;
         
+        PlayState.old_time = null;
+        
         // This determines whose turn it is. The player who starts is chosen randomly.
         PlayState.active_player = 0;
         
@@ -138,8 +140,19 @@ $(function() {
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
             // Check if the projectile is offscreen.
+        	
             var x = this.active_projectile.body.GetPosition().x * m3.config.scaling_factor;
-            var transition = m3.world.allSettled(0.25) ||
+                settled = false;
+                
+            //This ensures the world is settled for half a second before transitioning
+            if (m3.world.allSettled(0.5)) {
+            	if(this.old_time === null) this.old_time = this.state_time;
+            	else if(this.state_time > this.old_time + 0.5) settled = true;
+            } else {
+            	this.old_time = null;
+            }
+            
+            var transition = settled ||
                              this.state_time > m3.config.max_turn_time ||
                              x < 0 || x > m3.config.level_width;
             
