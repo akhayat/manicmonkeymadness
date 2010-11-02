@@ -8,7 +8,12 @@
 
 $(function() {
     m3.launcher = function() {
-        var mouse_coords = m3.types.Vector.create();
+        var mouse_coords = m3.types.Vector.create(),
+        	projectiles = [];
+        
+        // Fill the projectiles array with data.
+        projectiles.push( {type:"rock", details:"small"});
+    	projectiles.push( {type:"banana", details:"single"});
         
         return {
             aiming:  false,
@@ -89,17 +94,16 @@ $(function() {
             
             changeWeapon: function() {
                 var launcher = this.currentLauncher();
-                
-                if (launcher.weapon < 1) {
-                    launcher.weapon += 1;
-                    launcher.pType = "banana";
-                    launcher.pDetails = "single";
-                }
-                else {
-                    launcher.weapon = 0;
-                    launcher.pType = "rock";
-                    launcher.pDetails = "small";
-                }
+            	
+            	if (launcher.weapon < projectiles.length-1) {
+            		launcher.weapon += 1;
+            	}
+            	else {
+            		launcher.weapon = 0;
+            	}
+            	
+        		launcher.pType = projectiles[launcher.weapon].type;
+        		launcher.pDetails = projectiles[launcher.weapon].details;
             },
             
             update: function() {
