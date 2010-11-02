@@ -139,6 +139,21 @@ $(function() {
             // Nothing yet.
         };
         
+        // This is the update function for the projectiles array that removes the projectiles from the field.
+        PlayState.updateProjectiles = function(state) {
+            for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
+                this.active_projectile[i].destroy();
+                this.active_projectile[i] = null;
+            }
+            
+            if (state === 1) {
+            	this.active_projectile = [];
+            }
+            else {
+            	this.active_projectile.splice(i, this.active_projectile.length);
+            }
+        };
+        
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
         	//changes the music on the first shot
@@ -167,12 +182,7 @@ $(function() {
             
             if (transition) {
                 m3.camera.stopFollowing();
-                for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
-                    this.active_projectile[i].destroy();
-                    this.active_projectile[i] = null;
-                    this.active_projectile.splice(i, 1);
-                }
-                
+            	this.updateProjectiles(0);               
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                 m3.camera.slideTo(camera_position, 0, "smooth");
                 this.active_player = (this.active_player + 1) % 2;
@@ -194,7 +204,8 @@ $(function() {
         };
         
         // Causes the round to end
-        PlayState.endRound = function(winner) {       	
+        PlayState.endRound = function(winner) {
+        	this.updateProjectiles(1);
             this.winner = winner;
             this.setState("done");
         };
