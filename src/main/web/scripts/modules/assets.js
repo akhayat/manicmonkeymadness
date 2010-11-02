@@ -23,7 +23,7 @@ $(function() {
         var sound = new Audio();
             paused = true;
             extension = "";
-        if (sound.canPlayType('audio/mp3') !== "") {
+        if (sound.canPlayType('audio/mpeg') !== "") {
             extension = ".mp3";
         }
         else if (sound.canPlayType('audio/ogg') !== "") {
