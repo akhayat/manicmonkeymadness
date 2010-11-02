@@ -23,11 +23,11 @@ $(function() {
         var sound = new Audio();
             paused = true;
             extension = "";
-        if (sound.canPlayType('audio/ogg') !== "") {
-            extension = ".ogg";
+        if (sound.canPlayType('audio/mp3') !== "") {
+            extension = ".mp3";
         }
-        else if (sound.canPlayType('audio/mp3') !== "") {
-            extension = ".mp3"
+        else if (sound.canPlayType('audio/ogg') !== "") {
+            extension = ".ogg"
         }
         
         sound.src = "audio/" + source + extension;
