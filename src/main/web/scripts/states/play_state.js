@@ -140,13 +140,13 @@ $(function() {
         };
         
         // This is the update function for the projectiles array that removes the projectiles from the field.
-        PlayState.updateProjectiles = function(state) {
+        PlayState.updateProjectiles = function() {
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                 this.active_projectile[i].destroy();
                 this.active_projectile[i] = null;
             }
             
-            if (state === 1) {
+            if (this.game_state === "done") {
             	this.active_projectile = [];
             }
             else {
@@ -182,7 +182,7 @@ $(function() {
             
             if (transition) {
                 m3.camera.stopFollowing();
-            	this.updateProjectiles(0);               
+            	this.updateProjectiles();               
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                 m3.camera.slideTo(camera_position, 0, "smooth");
                 this.active_player = (this.active_player + 1) % 2;
@@ -205,9 +205,9 @@ $(function() {
         
         // Causes the round to end
         PlayState.endRound = function(winner) {
-        	this.updateProjectiles(1);
             this.winner = winner;
             this.setState("done");
+        	this.updateProjectiles();
         };
         
         // This is the main update function which mostly just calls other update functions.
