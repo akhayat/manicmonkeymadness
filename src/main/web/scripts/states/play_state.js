@@ -36,7 +36,7 @@ $(function() {
         PlayState.active_player = 0;
         
         // This is a reference to the projectile most recently launched.
-        PlayState.active_projectile = null;
+        PlayState.active_projectile = [];
         
         //Keeps track of first shot
         PlayState.first = false;
@@ -148,8 +148,10 @@ $(function() {
             }
         	
             // Check if the projectile is offscreen.
-            var x = this.active_projectile.body.GetPosition().x * m3.config.scaling_factor;
+            for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
+                var x = this.active_projectile[i].body.GetPosition().x * m3.config.scaling_factor;
                 settled = false;
+            }
                 
             //This ensures the world is settled for half a second before transitioning
             if (m3.world.allSettled(0.5)) {
@@ -165,8 +167,10 @@ $(function() {
             
             if (transition) {
                 m3.camera.stopFollowing();
-                this.active_projectile.destroy();
-                this.active_projectile = null;
+                for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
+                    this.active_projectile[i].destroy();
+                    this.active_projectile[i] = null;
+                }
                 
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                 m3.camera.slideTo(camera_position, 0, "smooth");
@@ -220,8 +224,10 @@ $(function() {
             m3.world.update();
             m3.launcher.update();
             
-            if (this.active_projectile) {
-                this.active_projectile.update();
+            for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
+                if (this.active_projectile[i]) {
+                    this.active_projectile[i].update();
+                }
             }
             
             m3.ui.update();

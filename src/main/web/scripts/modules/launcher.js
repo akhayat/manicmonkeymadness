@@ -13,7 +13,7 @@ $(function() {
         return {
             aiming:  false,
             cannons: [],           
-        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}],
+        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}, {type:"banana", details:"triple"}],
             
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {
@@ -84,17 +84,16 @@ $(function() {
                     impulse.y = -impulse.y;
                 }
                 
-                if (launcher.pType === "triple") {
-                	alert("hello");
-                	m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
-                	m3.types.Projectile.create(launchPoint.x, launchPoint.y + 5, impulse.x, impulse.y, pType, pDetails);
-                	m3.types.Projectile.create(launchPoint.x, launchPoint.y - 5, impulse.x, impulse.y, pType, pDetails);
+                if (launcher.pDetails === "triple") {
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.game.state.active_projectile[1] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
                 }
                 else {
-                	m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
                 }
                 
-                m3.camera.follow(m3.game.state.active_projectile);
+                m3.camera.follow(m3.game.state.active_projectile[0]);
             },
             
             changeWeapon: function() {
