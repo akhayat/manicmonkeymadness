@@ -170,6 +170,7 @@ $(function() {
                 for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                     this.active_projectile[i].destroy();
                     this.active_projectile[i] = null;
+                    this.active_projectile.splice(i, 1);
                 }
                 
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
@@ -193,7 +194,7 @@ $(function() {
         };
         
         // Causes the round to end
-        PlayState.endRound = function(winner) {
+        PlayState.endRound = function(winner) {       	
             this.winner = winner;
             this.setState("done");
         };
