@@ -12,7 +12,8 @@ $(function() {
         
         var FortPiece = m3.types.FortPiece,
             Enemy     = m3.types.Enemy,
-            Weapon    = m3.types.Weapon;
+            Weapon    = m3.types.Weapon,
+            Vector    = m3.types.Vector;
         
         // Adds a fortress piece to the fortress. x and y are in local coordinate
         // space -- they are relative to the fortress's position.
@@ -59,9 +60,9 @@ $(function() {
         };
         
         // Constructor.
-        Fortress.create = function(owner) {
-            var f      = Object.create(this);
-            f.owner    = owner;
+        Fortress.create = function(owner, json) {
+            var f   = Object.create(this);
+            f.owner = owner;
             
             if (owner == 0) {
                 f.side     = "left";
@@ -72,9 +73,32 @@ $(function() {
                 f.position = m3.config.level_width - m3.config.fort_width - 40;
             }
             
-            f.pieces   = [];
-            f.enemies  = [];
-            f.weapon   = null;
+            f.pieces  = [];
+            f.enemies = [];
+            
+            // Add fort pieces.
+            for (var i = 0, n = json.pieces.length; i < n; i++) {
+                var p = json.pieces[i];
+                f.addPiece(p.shape, p.size, p.type, p.x, p.y, p.angle);
+            }
+            
+            // Add enemies.
+            for (var i = 0, n = json.enemies.length; i < n; i++) {
+                var e = json.enemies[i];
+                f.addEnemy(e.type, e.size, e.x, e.y, e.angle);
+            }
+            
+            // Add launchers.
+            var axis_offset   = Vector.create(-25, 18),
+                launch_offset = Vector.create(46, 0);
+            
+            if (owner === 1) {
+                axis_offset.x   *= -1;
+                launch_offset.x *= -1;
+            }
+            
+            f.addLauncher("cannon", "grey", 0, axis_offset, launch_offset);
+            
             return f;
         };
         
