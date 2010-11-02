@@ -146,11 +146,10 @@ $(function() {
                 this.active_projectile[i] = null;
             }
             
+        	this.active_projectile.splice(0, this.active_projectile.length);
+            
             if (this.game_state === "done") {
             	this.active_projectile = [];
-            }
-            else {
-            	this.active_projectile.splice(0, this.active_projectile.length);
             }
         };
         
