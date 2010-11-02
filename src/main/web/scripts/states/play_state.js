@@ -30,7 +30,6 @@ $(function() {
         
         // This keeps track of how long we've been in the current state.
         PlayState.state_time = 0.0;
-        
         PlayState.old_time = null;
         
         // This determines whose turn it is. The player who starts is chosen randomly.
@@ -38,6 +37,9 @@ $(function() {
         
         // This is a reference to the projectile most recently launched.
         PlayState.active_projectile = null;
+        
+        //Keeps track of first shot
+        PlayState.first = false;
         
         // Keeps track of who won when the game ends.
         PlayState.winner = null;
@@ -139,8 +141,13 @@ $(function() {
         
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
-            // Check if the projectile is offscreen.
+        	//changes the music on the first shot
+            if(!this.first) {
+            	m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
+            	this.first = true;
+            }
         	
+            // Check if the projectile is offscreen.
             var x = this.active_projectile.body.GetPosition().x * m3.config.scaling_factor;
                 settled = false;
                 
@@ -223,7 +230,6 @@ $(function() {
         // "Constructor".
         PlayState.create = function() {
             var s = Object.create(this);
-            m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
             m3.score.reset();
             m3.world.clear();
             m3.world.init();

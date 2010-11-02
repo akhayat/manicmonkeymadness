@@ -8,7 +8,8 @@ $(function() {
     
     m3.sound = function() {
         
-        var isOn = true;
+        var soundOn = true;
+            musicOn = true;
             currentSong = null;
     	
         return {
@@ -19,7 +20,7 @@ $(function() {
         	changeMusic: function(sound, play) {
         	    if(currentSong !== null) currentSong.pause();
         	    currentSong = sound;
-        	    if(play) currentSong.play();
+        	    if(play && musicOn) currentSong.play();
         	},
         
         	pauseMusic: function() {
@@ -27,37 +28,45 @@ $(function() {
         	},
         	
         	playMusic: function() {
-        	    currentSong.play();
-        	},
-        	
-        	toggleMusic: function() {
-        		currentSong.toggle();
+        	    if(musicOn) currentSong.play();
         	},
         	
         	soundOn: function() {
-        	    return isOn;
+        	    return soundOn;
+            },
+            
+            musicOn: function() {
+            	return musicOn;
             },
             
             /*
              * Toggles ALL sound, effects AND music
              */
         	toggleSound: function() {
-        	    if(isOn) {
-        	    	isOn = false;
+        	    if(soundOn) {
+        	    	soundOn = false;
         	        currentSong.pause();
         	    }
-        	    else{
-        	    	isOn = true;
+        	    else {
+        	    	soundOn = true;
         	    	currentSong.play();
         	    }
+            },
+            
+            /*
+             * Master switch for music
+             */
+            toggleMusic: function() {
+            	if(musicOn) {
+            		musicOn = false;
+            		currentSong.pause();
+            	}
+            	else {
+            		musicOn = true;
+            		currentSong.play();
+            	}
             }
             
-        	//use the toggle method in the audio wrapper in assets.js
-        	
-            /*toggleMusic: function(music) {
-                music.paused ? music.sound.play() : music.sound.pause();
-                music.paused = !music.paused;
-            }*/
         }
 		
     }();
