@@ -9,7 +9,7 @@ $(function() {
     m3.sound = function() {
         
         var soundOn = true;
-            musicOn = true;
+            musicOn = false;
             currentSong = null;
     	
         return {
