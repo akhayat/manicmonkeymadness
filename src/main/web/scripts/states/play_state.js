@@ -36,7 +36,7 @@ $(function() {
         PlayState.active_player = 0;
         
         // This is a reference to the projectile most recently launched.
-        PlayState.active_projectile = [];
+//        PlayState.active_projectile = [];
         
         //Keeps track of first shot
         PlayState.first = false;
@@ -147,10 +147,6 @@ $(function() {
             }
             
         	this.active_projectile.splice(0, this.active_projectile.length);
-            
-            if (this.game_state === "done") {
-            	this.active_projectile = [];
-            }
         };
         
         // This is the update function for the attacking state.
@@ -251,8 +247,9 @@ $(function() {
             m3.world.clear();
             m3.world.init();
             
-            s.level         = m3.types.Level.create();
-            s.active_player = m3.math.randomInteger(0, 1);
+            s.level         	= m3.types.Level.create();
+            s.active_player 	= m3.math.randomInteger(0, 1);
+            s.active_projectile = [];
             
             // If the second player is starting, we need to warp the camera to their side.
             if (s.active_player === 1) {
