@@ -150,7 +150,7 @@ $(function() {
             	this.active_projectile = [];
             }
             else {
-            	this.active_projectile.splice(i, this.active_projectile.length);
+            	this.active_projectile.splice(0, this.active_projectile.length);
             }
         };
         
