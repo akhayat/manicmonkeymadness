@@ -9,6 +9,9 @@ $(function () {
         var EditLevelState = {};
         EditLevelState.EditLevelState = EditLevelState;
         
+        // This is the
+        EditLevelState.level = null;
+        
         // Keyboard input handlers for the edit level state.
         EditLevelState.keyHandlers = {
             
@@ -21,24 +24,26 @@ $(function () {
         
         // Main update function for the edit level state.
         EditLevelState.update = function() {
-            var context     = m3.game.context,
-                half_width  = m3.game.width / 2,
-                half_height = m3.game.height / 2;
+            var context = m3.game.context;
             
-            // Draw the background.
-            context.fillStyle = "rgb(250, 170, 160)";
-            context.fillRect(0, 0, m3.game.width, m3.game.height);
+            this.level.update();
+            m3.world.update();
             
-            // Draw the text.
-            context.fillStyle = "rgba(0, 0, 0, 0.8)";
-            context.font      = "bold 48px sans-serif";
-            context.textAlign = "center";
-            context.fillText("Psych! Nothing here yet...", half_width, half_height);
+            // Render some transparent red rectangles to show the fortress boundaries.
+            context.fillStyle = "rgba(255, 0, 0, 0.2)";
+            context.fillRect(0, 0, m3.config.level_padding + 40, m3.game.height);
+            context.fillRect(m3.config.level_padding + m3.config.fort_width - 40, 0, m3.game.width, m3.game.height);
         };
         
         // Constructor.
         EditLevelState.create = function() {
-            return Object.create(this);
+            var s = Object.create(this);
+            m3.world.clear();
+            m3.world.init();
+            
+            s.level = m3.types.Level.create();
+            
+            return s;
         };
         
         return EditLevelState;
