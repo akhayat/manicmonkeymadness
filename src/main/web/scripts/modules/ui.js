@@ -27,6 +27,7 @@ $(function() {
                 }
                 
                 this.score.update();
+                this.monkey_count.update();
             }
         };
     }();

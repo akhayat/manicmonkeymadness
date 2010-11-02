@@ -23,51 +23,50 @@ $(function() {
         var sound = new Audio();
             paused = true;
             extension = "";
-        if(sound.canPlayType('audio/ogg') !== "") {
-        	extension = ".ogg";
-        } else if(sound.canPlayType('audio/mp3') !== "") {
-        	extension = ".mp3"
+        if (sound.canPlayType('audio/ogg') !== "") {
+            extension = ".ogg";
+        }
+        else if (sound.canPlayType('audio/mp3') !== "") {
+            extension = ".mp3"
         }
         
         sound.src = "audio/" + source + extension;
         sound.loop = loop;
         sound.preload = "auto";
-	    
+        
         /*
-         * Had to make  wrapper around the javascript Audio object
-         * in order for toggling the sound on and off to work properly
+         * Had to make a wrapper around the javascript Audio object
+         * in order for toggling the sound on and off to work properly.
          */
         return {
-		    play: function() {
-		        if(m3.sound.soundOn()) {
-		    	    sound.play();
-		            paused = false;
-		        }
-	        },
-	        
-	        pause: function() {
-	    	    sound.pause();
-	    	    paused = true;
-	        },
-	        
-	        toggle: function() {
-	    	    if(m3.sound.soundOn() && paused) {
-	    		    paused = false;
-	        		sound.play();
-	    	    }
-	    	    else {
-	    		    paused = true;
-	    		    sound.pause();
-	        	}
-	        }
+            play: function() {
+                if (m3.sound.soundOn()) {
+                    sound.play();
+                    paused = false;
+                }
+            },
+            
+            pause: function() {
+                sound.pause();
+                paused = true;
+            },
+            
+            toggle: function() {
+                if (m3.sound.soundOn() && paused) {
+                    paused = false;
+                    sound.play();
+                }
+                else {
+                    paused = true;
+                    sound.pause();
+                }
+            }
         }
     };
     
     m3.assets = function() {
         return {
-            /**
-             * Images.
-             */
+            // Images.
             backgrounds: {
                 temp: {
                     layer_0: imageFromSource("backgrounds/layer_0.png"),
@@ -101,15 +100,17 @@ $(function() {
                 }
             },
             
+            // Music.
             music: {
-            	monkeys: soundFromSource("music/monkeys", true),
-            	rideTheLightning: soundFromSource("music/Ride the Lightning", true)
+                monkeys: soundFromSource("music/monkeys", true),
+                rideTheLightning: soundFromSource("music/Ride the Lightning", true)
             },
             
+            // Sounds.
             sfx: {
-            	//from ilovewavs.com
-            	monkeyScream: soundFromSource("effects/monkey_scream", false),
-            	monkeyGrunt:  soundFromSource("effects/monkey_grunt"), 
+                //from ilovewavs.com
+                monkeyScream: soundFromSource("effects/monkey_scream", false),
+                monkeyGrunt:  soundFromSource("effects/monkey_grunt"), 
                 //from partnersinrhyme.com
                 explosion: soundFromSource("effects/explosion", false)
             }
