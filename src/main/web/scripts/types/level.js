@@ -31,6 +31,9 @@ $(function() {
                 
                 context.drawImage(image, x, y - m3.config.ground_height);
             }
+            
+            var ground = m3.assets.backgrounds.ground;
+            context.drawImage(ground, 0, m3.game.height - ground.height);
         };
         
         // Update function for the level.
@@ -103,6 +106,7 @@ $(function() {
             background.layers[0].offset = 120;
             background.layers[1].scroll_factor = 0.5;
             background.layers[1].offset = 60;
+            background.layers[2].offset = -2;
             
             l.background = background;
             

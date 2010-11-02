@@ -68,6 +68,8 @@ $(function() {
         return {
             // Images.
             backgrounds: {
+        	    ground : imageFromSource("backgrounds/ground.png"),
+        	    
                 temp: {
                     layer_0: imageFromSource("backgrounds/layer_0.png"),
                     layer_1: imageFromSource("backgrounds/layer_1.png"),

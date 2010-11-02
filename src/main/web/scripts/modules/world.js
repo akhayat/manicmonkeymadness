@@ -86,14 +86,28 @@ $(function() {
             return object;
         };
         
-        var createJoint = function(body1, body2, anchorPoint) {
-            var jointDef = new b2JointDef();
-            jointDef.body1 = body1;
-            jointDef.body2 = body2;
-            jointDef.anchorPoint = anchorPoint;
-            var joint = world.CreateJoint(jointDef);
-            return joint;
+        var createRevoluteJoint = function(body1, body2, anchor) {
+            var revoluteJointDef = new b2RevoluteJointDef();
+            revoluteJointDef.Initialize(body1, body2, anchor);
+            revoluteJointDef.motorSpeed = 0;
+            revoluteJointDef.maxMotorTorque = 10000000;
+            revoluteJointDef.enableMotor = true;
+            revoluteJointDef.enableLimit = false;
+            var revoluteJoint = world.CreateJoint(revoluteJointDef);
+            return revoluteJoint;
         };
+        
+        var createMouseJoint = function(body, mouse_coords) {
+        	var mouseJointDef = new b2MouseJointDef();
+        	mouseJointDef.body1 = world.GetGroundBody();
+        	mouseJointDef.body2 = body;
+        	mouseJointDef.target.Set(mouse_coords.x, mouse_coords.y);
+        	mouseJointDef.maxForce = 4500.0 * body.mass;
+        	mouseJointDef.timeStep = 1 / m3.config.fps;
+    		var mouseJoint = world.CreateJoint(mouseJointDef);
+    		return mouseJoint;
+        };
+
         
         /*
          * Returns true if all of the objects in the world 
@@ -182,7 +196,7 @@ $(function() {
             var groundShape = groundBody.CreateShape(groundShapeDef);
             groundBody.SynchronizeShapes();
             
-            var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
+            var object = {body: groundBody, shape: groundShape, draw: false, type: 'ground'};
             groundBody.SetUserData(object);
             objects.push(object);
             
@@ -193,11 +207,12 @@ $(function() {
             
             createPoly(m3.config.level_padding / scale, 
                        (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
-                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, true);
+                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, false);
             
             createPoly((m3.config.level_width - m3.config.fort_width - m3.config.level_padding) / scale, 
                        (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
-                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, true);
+                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, false);
+            
         };
         
         return {
@@ -206,7 +221,8 @@ $(function() {
             createBox: createBox,
             createBall: createBall,
             createPoly: createPoly,
-            createJoint: createJoint,
+            createRevoluteJoint: createRevoluteJoint,
+            createMouseJoint: createMouseJoint,
             allSleeping: allSleeping,
             allSettled: allSettled,
             removeObject: removeObject,
