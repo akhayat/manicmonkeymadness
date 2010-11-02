@@ -9,23 +9,19 @@ $(function() {
     m3.ui.weapon = function() {
         var context = m3.game.context,
             ui      = m3.ui,
-            cannons = m3.launcher.cannons
+            cannons = m3.launcher.cannons,
             camera  = m3.camera.position;
         
         return {
             update: function() {
                 var active_player = m3.game.state.active_player,
                     cannon        = m3.game.state.level.fortresses[active_player].weapon,
-                    game_width    = m3.game.width
-                    icon          = null;
+                    game_width    = m3.game.width,
+                    icon          = null,
+                    launcher	  = m3.launcher.currentLauncher(),
+                    projectile	  = m3.types.Projectile;
                 
-                // Temporary until we have a weapon type data structure set up.
-                if (cannon.weapon === 1) {
-                    icon = m3.assets.sprites.banana;
-                }
-                else {
-                    icon = m3.assets.sprites.rock;
-                }
+                icon = m3.types.Projectile.sprite(launcher.pType, launcher.pDetails);
                 
                 var w = icon.width,
                     h = icon.height;

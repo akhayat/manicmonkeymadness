@@ -8,16 +8,12 @@
 
 $(function() {
     m3.launcher = function() {
-        var mouse_coords = m3.types.Vector.create(),
-        	projectiles = [];
-        
-        // Fill the projectiles array with data.
-        projectiles.push( {type:"rock", details:"small"});
-    	projectiles.push( {type:"banana", details:"single"});
+        var mouse_coords = m3.types.Vector.create();
         
         return {
             aiming:  false,
-            cannons: [],
+            cannons: [],           
+        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}],
             
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {
@@ -88,22 +84,31 @@ $(function() {
                     impulse.y = -impulse.y;
                 }
                 
-                m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                if (launcher.pType === "triple") {
+                	alert("hello");
+                	m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.types.Projectile.create(launchPoint.x, launchPoint.y + 5, impulse.x, impulse.y, pType, pDetails);
+                	m3.types.Projectile.create(launchPoint.x, launchPoint.y - 5, impulse.x, impulse.y, pType, pDetails);
+                }
+                else {
+                	m3.game.state.active_projectile = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                }
+                
                 m3.camera.follow(m3.game.state.active_projectile);
             },
             
             changeWeapon: function() {
                 var launcher = this.currentLauncher();
             	
-            	if (launcher.weapon < projectiles.length-1) {
+            	if (launcher.weapon < this.projectiles.length-1) {
             		launcher.weapon += 1;
             	}
             	else {
             		launcher.weapon = 0;
             	}
             	
-        		launcher.pType = projectiles[launcher.weapon].type;
-        		launcher.pDetails = projectiles[launcher.weapon].details;
+        		launcher.pType = this.projectiles[launcher.weapon].type;
+        		launcher.pDetails = this.projectiles[launcher.weapon].details;
             },
             
             update: function() {

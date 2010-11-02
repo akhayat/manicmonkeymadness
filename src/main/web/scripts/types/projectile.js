@@ -19,20 +19,28 @@ $(function() {
                 small: { s: assets.rock, h: 38, w: 38, radius: 19 }
             },
             banana: {
-                single: { s: assets.banana, h: 27, w: 34, radius: 19 }
+                single: { s: assets.banana, h: 27, w: 34, radius: 19 },
+                triple: { s: assets.banana, h: 27, w: 34, radius: 19 }
             }
         
         };
         
         var details = {
             small:  { density: 2.0, restitution: 0.1, friction: 1.25 },
-            single: { density: 1.5, restitution: 0,   friction: 1.0 }
+            single: { density: 1.5, restitution: 0,   friction: 1.0 },
+            triple: { density: 1.5, restitution: 0,   friction: 1.0 }
         };
         
         // Override PhysicsObject update function to keep track of how long we've been alive.
         Projectile.update = function() {
             this.PhysicsObject.update.call(this);
             this.life_time += m3.game.elapsed;
+        };
+        
+        Projectile.sprite = function(ammo, type) {
+        	var t = ammunition[ammo][type];
+
+        	return t.s;
         };
         
         // Collision callback.
@@ -81,7 +89,7 @@ $(function() {
             var p     = Object.inherit(m3.types.PhysicsObject.create(x, y), this),
                 t     = ammunition[ammo][type],
                 d     = details[type],
-                scale = m3.config.scaling_factor;
+                scale = m3.config.scaling_factor,
                 piece = m3.world.createBall(x / scale, y / scale, t.radius / scale, false, d.density, d.restitution, d.friction, false);
             
             piece.body.SetUserData(p);
