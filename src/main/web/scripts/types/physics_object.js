@@ -87,13 +87,21 @@ $(function() {
             return o;
         };
         
-        // Getters for x and y (in pixels and meters).
+        // Getters and setters for x and y (in pixels and meters).
         PhysicsObject.__defineGetter__("x", function() {
             return this.x_in_meters * m3.config.scaling_factor;
         });
         
         PhysicsObject.__defineGetter__("y", function() {
             return this.y_in_meters * m3.config.scaling_factor;
+        });
+        
+        PhysicsObject.__defineSetter__("x", function(x) {
+            return this.body.m_xf.position.x = x / m3.config.scaling_factor;
+        });
+        
+        PhysicsObject.__defineSetter__("y", function(y) {
+            return this.body.m_xf.position.y = y / m3.config.scaling_factor;
         });
         
         PhysicsObject.__defineGetter__("x_in_meters", function() {

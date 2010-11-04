@@ -70,14 +70,27 @@ $(function() {
             }
         };
         
+        // Override update so we can draw a circle on the piece if we're in the edit level state.
+        FortPiece.update = function() {
+            this.PhysicsObject.update.call(this);
+            
+            var context = m3.game.context;
+            
+            context.fillStyle = "rgba(100, 180, 255, 0.6)";
+            context.beginPath();
+            context.arc(this.x, this.y, m3.config.grabber_radius, 0.0, Math.PI * 2, false);
+            context.fill();
+            context.closePath();
+        }
+        
         // Constructor.
-        FortPiece.create = function(fort, shape, size, material, x, y, angle, container) {
+        FortPiece.create = function(fort, shape, size, material, x, y, angle, container, fixed) {
             var f     = Object.inherit(m3.types.PhysicsObject.create(x, y, container), this),
                 t     = pieces[shape][size][material],
                 m     = materials[material],
                 scale = m3.config.scaling_factor,
                 piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale,
-                                           false, m.density, m.restitution, m.friction, false);
+                                           fixed, m.density, m.restitution, m.friction, false);
             
             piece.body.SetUserData(f);
             f.sprites = {};
@@ -87,14 +100,17 @@ $(function() {
             f.destroyThreshold  = m.destroyThreshold;
             f.minImpactVelocity = m.minImpactVelocity;
             
-            f.fort   = fort;
-            f.body   = piece.body;
-            f.shape  = piece.shape;
-            f.sprite = f.sprites.normal;
-            f.angle  = angle;
-            f.type   = "fort_piece";
-            f.alive  = true;
-            f.damage = 0;
+            f.piece_shape    = shape;
+            f.piece_size     = size;
+            f.piece_material = material;
+            f.fort           = fort;
+            f.body           = piece.body;
+            f.shape          = piece.shape;
+            f.sprite         = f.sprites.normal;
+            f.angle          = angle;
+            f.type           = "fort_piece";
+            f.alive          = true;
+            f.damage         = 0;
             
             return f;
         };

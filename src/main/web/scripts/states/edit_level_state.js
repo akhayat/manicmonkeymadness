@@ -9,14 +9,21 @@ $(function () {
         var EditLevelState = {};
         EditLevelState.EditLevelState = EditLevelState;
         
-        var FortPiece = m3.types.FortPiece;
+        var FortPiece = m3.types.FortPiece,
+            Vector    = m3.types.Vector;
+        
+        // Tracks whether we're dragging something or not.
+        EditLevelState.dragging = false;
+        
+        // Which piece are we currently dragging?
+        EditLevelState.active_piece = null;
         
         // This is an array that holds all the fort pieces that can be used to construct a fort.
         EditLevelState.pieces = [
-            FortPiece.create(0, "box", "long",  "wood", 650, 60, 0, []),
-            FortPiece.create(0, "box", "short", "wood", 670, 60, 0, []),
-            FortPiece.create(0, "box", "long",  "rock", 690, 60, 0, []),
-            FortPiece.create(0, "box", "short", "rock", 710, 60, 0, [])
+            FortPiece.create(0, "box", "long",  "wood", 650, 60, 0, null, true),
+            FortPiece.create(0, "box", "short", "wood", 670, 60, 0, null, true),
+            FortPiece.create(0, "box", "long",  "rock", 690, 60, 0, null, true),
+            FortPiece.create(0, "box", "short", "rock", 710, 60, 0, null, true)
         ];
         
         // This array holds all the fort pieces that actually make up the fort being constructed.
@@ -32,21 +39,56 @@ $(function () {
         
         // Mouse input handlers for the edit level state.
         EditLevelState.mouseHandlers = {
-            move: function(event) {
-                var mouse = m3.types.Vector.create();
+            down: function(event) {
+                var state = m3.game.state,
+                    mouse = m3.types.Vector.create();
+                
                 mouse.x = event.pageX - m3.game.x + m3.camera.position.x;
                 mouse.y = event.pageY - m3.game.y + m3.camera.position.y;
+                
+                var clicked_piece = state.firstGrabbable(mouse.x, mouse.y);
+                
+                if (clicked_piece) {
+                    state.dragging     = true;
+                    state.active_piece = (clicked_piece.is_fort_piece) ? clicked_piece : state.addPiece(clicked_piece);
+                }
+            },
+            
+            up: function(event) {
+                var state = m3.game.state;
+                
+                state.dragging     = false;
+                state.active_piece = null;
+            },
+            
+            move: function(event) {
+                if (m3.game.state.dragging) {
+                    var state = m3.game.state;
+                    
+                    state.active_piece.x = event.pageX - m3.game.x + m3.camera.position.x;
+                    state.active_piece.y = event.pageY - m3.game.y + m3.camera.position.y;
+                }
             }
         };
         
-        // Returns the first fort piece on the stage that the given x and y coordinates overlap.
-        EditLevelState.firstOverlap = function(x, y) {
-            var pieces = this.pieces,
-                fort   = this.fort;
+        // Adds a new piece to the level based on a "template" piece -- one of the pieces in the palette.
+        EditLevelState.addPiece = function(t) {
+            var piece = m3.types.FortPiece.create(0, t.piece_shape, t.piece_size, t.piece_material, t.x, t.y, t.angle, null, true);
+            piece.is_fort_piece = true;
+            this.fort.push(piece);
+            return piece;
+        };
+        
+        // Returns the first fort piece on the stage for which the given x and y coordinates overlap
+        // the piece's grabber.
+        EditLevelState.firstGrabbable = function(x, y) {
+            var pieces         = this.pieces,
+                fort           = this.fort,
+                radius_squared = m3.config.grabber_radius * m3.config.grabber_radius;
             
             var overlaps = function(piece) {
-                return (x >= piece.x - piece.width  && y >= piece.y - piece.height &&
-                        x <= piece.x  + piece.width && y <= piece.y + piece.height);
+                var distance_squared = Vector.create(x - piece.x, y - piece.y).lengthSquared();
+                return (distance_squared <= radius_squared);
             }
             
             for (var i = 0, n = pieces.length; i < n; i++) {
@@ -56,8 +98,8 @@ $(function () {
             }
             
             for (var i = 0, n = fort.length; i < n; i++) {
-                if (overlaps(pieces[i])) {
-                    return pieces[i];
+                if (overlaps(fort[i])) {
+                    return fort[i];
                 }
             }
             
@@ -67,7 +109,8 @@ $(function () {
         // Main update function for the edit level state.
         EditLevelState.update = function() {
             var context = m3.game.context,
-                pieces  = this.pieces;
+                pieces  = this.pieces,
+                fort    = this.fort;
             
             this.level.update();
             m3.world.update();
@@ -80,6 +123,10 @@ $(function () {
             // Render the pieces.
             for (var i = 0, n = pieces.length; i < n; i++) {
                 pieces[i].update();
+            }
+            
+            for (var i = 0, n = fort.length; i < n; i++) {
+                fort[i].update();
             }
         };
         

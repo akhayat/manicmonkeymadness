@@ -41,7 +41,11 @@ $(function() {
             iterations: 10,
             
             // damage conversion factor given impact velocity (m/s per damage unit)
-            damage_factor: 70
+            damage_factor: 70,
+            
+            // The radius of the circles drawn on the fort pieces in edit level mode used to drag
+            // and drop the pieces.
+            grabber_radius: 9.0
         };
     }();
 });
