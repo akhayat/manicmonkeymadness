@@ -11,6 +11,15 @@ $(function() {
         var soundOn = true;
             musicOn = false;
             currentSong = null;
+            soundSrc = "images/resource/audio.png";
+            noSoundSrc = "images/resource/no_audio.png";
+            musicSrc = "images/resource/music.png";
+            noMusicSrc = "images/resource/no_music.png";
+            soundButton = $("#sound").get(0);
+            musicButton = $("#music").get(0);
+            
+            soundButton.src = soundSrc;
+            musicButton.src = noMusicSrc;
     	
         return {
         	
@@ -45,11 +54,13 @@ $(function() {
         	toggleSound: function() {
         	    if(soundOn) {
         	    	soundOn = false;
-        	        currentSong.pause();
+        	        soundButton.src = noSoundSrc;
+        	        this.pauseMusic();
         	    }
         	    else {
         	    	soundOn = true;
-        	    	currentSong.play();
+        	    	soundButton.src = soundSrc;
+        	    	if(musicOn) this.playMusic();
         	    }
             },
             
@@ -60,12 +71,15 @@ $(function() {
             	if(musicOn) {
             		musicOn = false;
             		currentSong.pause();
+            		musicButton.src = noMusicSrc;
             	}
             	else {
             		musicOn = true;
             		currentSong.play();
+            		musicButton.src = musicSrc;
+            		
             	}
-            }
+            },
             
         }
 		

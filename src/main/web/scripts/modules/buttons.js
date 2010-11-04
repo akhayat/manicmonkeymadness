@@ -1,6 +1,6 @@
 function toggleHelp() {
-	var help = document.getElementById("top");
-	var middle = document.getElementById("middle");
+	var help = $("#top").get(0);
+	var middle = $("#middle").get(0);
 	
 	if (help.style.display === "block") {
 		help.style.display = "none";
