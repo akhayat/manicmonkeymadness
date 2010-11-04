@@ -82,8 +82,6 @@ $(function() {
     }();
     
     m3.input.processKeyDown = function(event) {
-        // event.preventDefault();
-        
         var key = m3.input[event.which];
         
         if (!m3.input.keys[key]) {
@@ -95,8 +93,6 @@ $(function() {
     };
     
     m3.input.processKeyUp = function(event) {
-        // event.preventDefault();
-        
         var key = m3.input[event.which];
         
         m3.input.keys[key] = false;

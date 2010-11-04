@@ -146,29 +146,29 @@ $(function() {
                 this.active_projectile[i] = null;
             }
             
-        	this.active_projectile.splice(0, this.active_projectile.length);
+            this.active_projectile.splice(0, this.active_projectile.length);
         };
         
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
-        	//changes the music on the first shot
+            // Changes the music on the first shot.
             if(!this.first) {
-            	m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
-            	this.first = true;
+                m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
+                this.first = true;
             }
-        	
+            
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                 var x = this.active_projectile[i].body.GetPosition().x * m3.config.scaling_factor;
                 settled = false;
             }
-                
-            //This ensures the world is settled for half a second before transitioning
+            
+            // This ensures the world is settled for half a second before transitioning.
             if (m3.world.allSettled(0.5)) {
-            	if(this.old_time === null) this.old_time = this.state_time;
-            	else if(this.state_time > this.old_time + 0.5) settled = true;
+                if(this.old_time === null) this.old_time = this.state_time;
+                else if(this.state_time > this.old_time + 0.5) settled = true;
             } else {
-            	this.old_time = null;
+                this.old_time = null;
             }
             
             var transition = settled ||
@@ -177,7 +177,7 @@ $(function() {
             
             if (transition) {
                 m3.camera.stopFollowing();
-            	this.updateProjectiles();               
+                this.updateProjectiles();
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
                 m3.camera.slideTo(camera_position, 0, "smooth");
                 this.active_player = (this.active_player + 1) % 2;
@@ -198,11 +198,11 @@ $(function() {
             // Nothing yet.
         };
         
-        // Causes the round to end
+        // Causes the round to end.
         PlayState.endRound = function(winner) {
             this.winner = winner;
             this.setState("done");
-        	this.updateProjectiles();
+            this.updateProjectiles();
         };
         
         // This is the main update function which mostly just calls other update functions.
@@ -247,8 +247,9 @@ $(function() {
             m3.world.clear();
             m3.world.init();
             
-            s.level         	= m3.types.Level.create();
-            s.active_player 	= m3.math.randomInteger(0, 1);
+            s.level             = m3.types.Level.create(true);
+            s.level             = m3.types.Level.create();
+            s.active_player     = m3.math.randomInteger(0, 1);
             s.active_projectile = [];
             
             // If the second player is starting, we need to warp the camera to their side.

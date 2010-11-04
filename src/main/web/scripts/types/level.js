@@ -48,7 +48,7 @@ $(function() {
         };
         
         // "Constructor".
-        Level.create = function() {
+        Level.create = function(create_forts) {
             var l = Object.create(this);
             
             // This is a temporarily hard-coded JSON object representing the fort to be created.
@@ -103,15 +103,21 @@ $(function() {
             
             // Configure each layer's scroll factor and offset.
             background.layers[0].scroll_factor = 0.3;
-            background.layers[0].offset = 120;
+            background.layers[0].offset        = 120;
             background.layers[1].scroll_factor = 0.5;
-            background.layers[1].offset = 60;
-            background.layers[2].offset = -2;
+            background.layers[1].offset        = 60;
+            background.layers[2].scroll_factor = 0.75;
+            background.layers[2].offset        = -2;
             
             l.background = background;
             
             // Set up fortresses.
-            l.fortresses = [m3.types.Fortress.create(0, test_json_fort), m3.types.Fortress.create(1, test_json_fort)];
+            l.fortresses = [];
+            
+            if (create_forts) {
+                l.fortresses.push(m3.types.Fortress.create(0, test_json_fort));
+                l.fortresses.push(m3.types.Fortress.create(1, test_json_fort));
+            }
             
             return l;
         }
