@@ -103,7 +103,7 @@ $(function() {
         
         // Constructor.
         Projectile.create = function(x, y, impulse_x, impulse_y, ammo, type) {
-            var p     = Object.inherit(m3.types.PhysicsObject.create(x, y), this),
+            var p     = m3.types.PhysicsObject.create(x, y, null, this),
                 t     = ammunition[ammo][type],
                 piece = t.spawn(x,y);
             
@@ -122,6 +122,8 @@ $(function() {
                 var torque = (impulse_x < 0) ? -1 * t.torque : t.torque;
                 //p.body.ApplyTorque(torque);
             }
+            
+            console.log(p);
             
             return p;
         };

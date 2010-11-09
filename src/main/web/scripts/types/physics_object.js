@@ -89,8 +89,8 @@ $(function() {
         };
         
         // Constructor.
-        PhysicsObject.create = function(x, y, container) {
-            var o = Object.create(this);
+        PhysicsObject.create = function(x, y, container, prototype) {
+            var o = Object.create(prototype || this);
             o.container = container ? container : null;
             return o;
         };

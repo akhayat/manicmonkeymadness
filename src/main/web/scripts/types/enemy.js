@@ -77,7 +77,7 @@ $(function() {
         
         // Constructor.
         Enemy.create = function(fort, character, type, x, y, angle, container) {
-            var e     = Object.inherit(m3.types.PhysicsObject.create(x, y, container), this),
+            var e     = m3.types.PhysicsObject.create(x, y, container, this),
                 t     = enemies[character][type],
                 d     = details[type],
                 scale = m3.config.scaling_factor,

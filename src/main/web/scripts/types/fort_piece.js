@@ -87,7 +87,7 @@ $(function() {
         
         // Constructor.
         FortPiece.create = function(fort, shape, size, material, x, y, angle, container, fixed) {
-            var f     = Object.inherit(m3.types.PhysicsObject.create(x, y, container), this),
+            var f     = m3.types.PhysicsObject.create(x, y, container, this),
                 t     = pieces[shape][size][material],
                 m     = materials[material],
                 scale = m3.config.scaling_factor,

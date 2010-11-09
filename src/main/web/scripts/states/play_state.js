@@ -161,19 +161,18 @@ $(function() {
             
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
-            	var position = this.active_projectile[i].body.GetPosition();
+                var position = this.active_projectile[i].body.GetPosition();
                     x = position.x * m3.config.scaling_factor;
-            	    y = position.y * m3.config.scaling_factor;
-                    
-                    console.log(x);    
+                    y = position.y * m3.config.scaling_factor;
+                
                 settled = false;
                 y < 0 ? m3.ui.marker.mark(x) : m3.ui.marker.clearMark(); 
             }
-
+            
             // This ensures the world is settled for half a second before transitioning.
             if (m3.world.allSettled(0.5)) {
-                if(this.old_time === null) this.old_time = this.state_time;
-                else if(this.state_time > this.old_time + 0.5) settled = true;
+                if (this.old_time === null) this.old_time = this.state_time;
+                else if (this.state_time > this.old_time + 0.5) settled = true;
             } else {
                 this.old_time = null;
             }
