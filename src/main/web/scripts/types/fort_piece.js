@@ -76,11 +76,13 @@ $(function() {
             
             var context = m3.game.context;
             
-            context.fillStyle = "rgba(100, 180, 255, 0.6)";
-            context.beginPath();
-            context.arc(this.x, this.y, m3.config.grabber_radius, 0.0, Math.PI * 2, false);
-            context.fill();
-            context.closePath();
+            if (m3.game.state.EditLevelState) {
+                context.fillStyle = "rgba(100, 180, 255, 0.6)";
+                context.beginPath();
+                context.arc(this.x, this.y, m3.config.grabber_radius, 0.0, Math.PI * 2, false);
+                context.fill();
+                context.closePath();
+            }
         }
         
         // Constructor.
