@@ -33,7 +33,9 @@ $(function() {
         PlayState.old_time = null;
         
         // This determines whose turn it is. The player who starts is chosen randomly.
-        PlayState.active_player = 0;
+        PlayState.active_player = m3.math.randomInteger(0, 1);
+        
+        PlayState.active_projectile = [];
         
         // This is a reference to the projectile most recently launched.
 //        PlayState.active_projectile = [];
@@ -159,10 +161,15 @@ $(function() {
             
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
-                var x = this.active_projectile[i].body.GetPosition().x * m3.config.scaling_factor;
+            	var position = this.active_projectile[i].body.GetPosition();
+                    x = position.x * m3.config.scaling_factor;
+            	    y = position.y * m3.config.scaling_factor;
+                    
+                    console.log(x);    
                 settled = false;
+                y < 0 ? m3.ui.marker.mark(x) : m3.ui.marker.clearMark(); 
             }
-            
+
             // This ensures the world is settled for half a second before transitioning.
             if (m3.world.allSettled(0.5)) {
                 if(this.old_time === null) this.old_time = this.state_time;
@@ -248,7 +255,7 @@ $(function() {
             m3.world.init();
             
             s.level             = m3.types.Level.create(true);
-            s.active_player     = m3.math.randomInteger(0, 1);
+            //s.active_player     = m3.math.randomInteger(0, 1);
             s.active_projectile = [];
             
             // If the second player is starting, we need to warp the camera to their side.

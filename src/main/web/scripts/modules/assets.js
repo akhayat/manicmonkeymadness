@@ -102,6 +102,10 @@ $(function() {
                 }
             },
             
+            resources: {
+            	arrow: imageFromSource("resource/arrow.png")
+            },
+            
             // Music.
             music: {
                 monkeys: soundFromSource("music/monkeys", true),
@@ -112,7 +116,7 @@ $(function() {
             sfx: {
                 //from ilovewavs.com
                 monkeyScream: soundFromSource("effects/monkey_scream", false),
-                monkeyGrunt:  soundFromSource("effects/monkey_grunt"), 
+                monkeyGrunt:  soundFromSource("effects/monkey_grunt", false), 
                 //from partnersinrhyme.com
                 explosion: soundFromSource("effects/explosion", false)
             }

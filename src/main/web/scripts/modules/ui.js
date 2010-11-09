@@ -24,6 +24,7 @@ $(function() {
                 else {
                     this.turn.update();
                     this.weapon.update();
+                    this.marker.update();
                 }
                 
                 this.score.update();
