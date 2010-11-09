@@ -45,7 +45,10 @@ $(function() {
             
             // The radius of the circles drawn on the fort pieces in edit level mode used to drag
             // and drop the pieces.
-            grabber_radius: 9.0
+            grabber_radius: 9.0,
+            
+            // How fast the fort pieces should be rotated in edit level mode.
+            rotation_speed: 2.5
         };
     }();
 });

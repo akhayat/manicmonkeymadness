@@ -108,9 +108,21 @@ $(function () {
         
         // Main update function for the edit level state.
         EditLevelState.update = function() {
-            var context = m3.game.context,
-                pieces  = this.pieces,
-                fort    = this.fort;
+            var context      = m3.game.context,
+                active_piece = this.active_piece,
+                pieces       = this.pieces,
+                fort         = this.fort;
+            
+            // Rotate the currently-held piece with the arrow keys.
+            if (active_piece) {
+                if (m3.input.keys.LEFT || m3.input.keys.DOWN) {
+                    active_piece.angle -= m3.config.rotation_speed * m3.game.elapsed;
+                }
+                
+                if (m3.input.keys.RIGHT || m3.input.keys.UP) {
+                    active_piece.angle += m3.config.rotation_speed * m3.game.elapsed;
+                }
+            }
             
             this.level.update();
             m3.world.update();
