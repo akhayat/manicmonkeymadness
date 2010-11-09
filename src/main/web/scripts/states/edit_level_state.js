@@ -32,9 +32,41 @@ $(function () {
         // This state uses a regular level just like the play state does.
         EditLevelState.level = null;
         
+        // This is a dummy object that contains a toJSON method that will be called by JSON.stringify
+        // to create the JSON output.
+        EditLevelState.output = {
+            toJSON: function() {
+                var output = {
+                    pieces:  [],
+                    enemies: []
+                };
+                
+                var fort = m3.game.state.fort;
+                
+                for (var i = 0, n = fort.length; i < n; i++) {
+                    var p = fort[i];
+                    
+                    output.pieces.push({
+                        shape: p.piece_shape,
+                        size:  p.piece_size,
+                        type:  p.piece_material,
+                        x:     p.x,
+                        y:     p.y,
+                        angle: p.angle
+                    });
+                }
+                
+                return output;
+            }
+        };
+        
         // Keyboard input handlers for the edit level state.
         EditLevelState.keyHandlers = {
-            
+            ENTER: {
+                down: function(event) {
+                    console.log(JSON.stringify(m3.game.state.output));
+                }
+            }
         };
         
         // Mouse input handlers for the edit level state.
