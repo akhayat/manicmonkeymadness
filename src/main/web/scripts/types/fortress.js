@@ -75,6 +75,7 @@ $(function() {
             
             f.pieces  = [];
             f.enemies = [];
+            f.weapon = null;
             
             // Add fort pieces.
             for (var i = 0, n = json.pieces.length; i < n; i++) {

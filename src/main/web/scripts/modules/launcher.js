@@ -8,11 +8,13 @@
 
 $(function() {
     m3.launcher = function() {
-        var mouse_coords = m3.types.Vector.create();
+        var mouseJoint, 
+            mouse_coords = m3.types.Vector.create(0,0),
+            mouse_coords_physics = m3.types.Vector.create(0,0);
         
         return {
             aiming:  false,
-            cannons: [],           
+            cannons: [],
         	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}, {type:"banana", details:"triple"}],
             
             // Returns the current launcher based on whose turn it is.
@@ -20,50 +22,43 @@ $(function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
             },
             
+            updateMouseCoords: function() {
+            	var scale = m3.config.scaling_factor;
+            	
+                mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
+                mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
+                
+                mouse_coords_physics.x = mouse_coords.x / scale;
+                mouse_coords_physics.y = mouse_coords.y / scale;            	
+            },
+            
             prepareLaunch: function(event) {
-                this.aiming = true;
+            	var launcher = this.currentLauncher();
+                
+            	this.aiming = true;
+                
+                this.updateMouseCoords();
+                
+                if (!mouseJoint) 
+                	mouseJoint = m3.world.createMouseJoint(launcher.barrel, mouse_coords_physics);
             },
             
             aim: function(event) {
                 if (this.aiming) {
                     var launcher = this.currentLauncher();
                     
-                    mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
-                    mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
+                    this.updateMouseCoords();
                     
-                    // Since there is a difference between the width of the actual level and the 
-                    // width of the canvas, I had to include this so that the rotation of the launcher
-                    // would be smooth.
-                    var x = launcher.x + launcher.axisOffset.x;
-                    var y = launcher.y + launcher.axisOffset.y;
+                    console.log((launcher.joint.GetJointAngle() * (180 / Math.PI)).toFixed(2));
                     
-                    // Caps the angle at 90 or 0.
-                    if (launcher.facing === "right") {
-                        // Calculates the angle using the launcher and the mouse location. Good ole trig.
-                        launcher.angle = Math.atan2((mouse_coords.y - y),(mouse_coords.x - x));
-                        if (launcher.angle > 0 && launcher.angle <= Math.PI) {
-                            launcher.angle = 0;
-                        }
-                        else if (launcher.angle < -1 * Math.PI / 2) {
-                            launcher.angle = -1 * Math.PI / 2;
-                        }
-                    }
-                    else {
-                        // I have to negate the x and y values so it fires in the correct direction.
-                        launcher.angle = Math.atan2((y - mouse_coords.y),(x - mouse_coords.x));
-                        if (launcher.angle < 0) {
-                            launcher.angle = 0;
-                        }
-                        else if (launcher.angle > Math.PI / 2) {
-                            launcher.angle = Math.PI / 2;
-                        }
-                    }
+                    if (!!mouseJoint) 
+                    	mouseJoint.SetTarget(mouse_coords_physics);
                 }
             },
             
             launch: function(event) {
                 var launcher     = this.currentLauncher(),
-                    theta        = launcher.angle,
+                    theta        = launcher.barrel.GetAngle(),
                     axisOffset   = launcher.axisOffset,
                     launchOffset = launcher.launchOffset,
                     power        = launcher.power,
@@ -71,12 +66,14 @@ $(function() {
                     pDetails     = launcher.pDetails;
                 
                 this.aiming = false;
-                m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
+                
                 m3.assets.sfx.explosion.play();
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
-                var axislaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
-                var launchPoint = m3.types.Vector.create((launcher.x + axisOffset.x + axislaunchOffset.x), (launcher.y + axisOffset.y + axislaunchOffset.y));
+                var axisLaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
+                
+                var launchPoint = m3.types.Vector.create((launcher.x + axisLaunchOffset.x), (launcher.y + axisLaunchOffset.y));
+                
                 var impulse = m3.types.Vector.create(power * Math.cos(theta), power * Math.sin(theta));
                 
                 if (launcher.facing === "left") {
@@ -94,6 +91,13 @@ $(function() {
                 }
                 
                 m3.camera.follow(m3.game.state.active_projectile[0]);
+                
+                if (!!mouseJoint) {
+                    m3.world.universe.DestroyJoint(mouseJoint);
+                    mouseJoint = null;
+                }
+                
+                m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
             },
             
             changeWeapon: function() {
@@ -128,14 +132,12 @@ $(function() {
                     
                     if (launcher.facing === "left") {
                         context.scale(-1, 1);
-                        context.translate(-axisOffset.x, axisOffset.y);
-                        context.rotate(-launcher.angle);                        
-                        context.translate(image.width / -2, 0);                        
+                        context.rotate(launcher.joint.GetJointAngle());                        
+                        context.translate(image.width / -2, 0);                
                         context.drawImage(image, axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
                     }
                     else {
-                        context.translate(axisOffset.x, axisOffset.y);
-                        context.rotate(launcher.angle);
+                        context.rotate(-launcher.joint.GetJointAngle());
                         context.translate(image.width / -2, 0);
                         context.drawImage(image, -axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
                     }

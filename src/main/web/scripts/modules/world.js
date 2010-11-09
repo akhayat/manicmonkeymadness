@@ -31,9 +31,9 @@ $(function() {
             shapeDef.friction = friction || 0.9;
             body.w = width / 2;
             body.h = height / 2;
-            shapeDef.SetAsBox(body.w, body.h);
+            shapeDef.SetAsOrientedBox(body.w, body.h, new b2Vec2(0,0), 0);
             var shape = body.CreateShape(shapeDef);
-            if (!fixed) body.SetMassFromShapes();
+            body.SetMassFromShapes();
             if (draw === undefined) draw = true;
             var object = { body: body, shape: shape, draw: draw, type: "box" };
             objects.push(object);
@@ -44,7 +44,7 @@ $(function() {
             var bodyDef = new b2BodyDef();
             bodyDef.position.Set(x, y);
             if(!fixed) bodyDef.isBullet = true;
-            bodyDef.angularDamping = 1.0;
+            if(!fixed) bodyDef.angularDamping = 1.0;
             var body = world.CreateBody(bodyDef);
             var shapeDef = new b2CircleDef();
             shapeDef.radius = radius || 1.0;
@@ -54,7 +54,7 @@ $(function() {
             body.w = 1.0;
             body.h = 1.0;
             var shape = body.CreateShape(shapeDef);
-            if (!fixed) body.SetMassFromShapes();
+            body.SetMassFromShapes();
             if (draw === undefined) draw = true;
             var object = { body: body, shape: shape, draw: draw, type: "ball" };
             objects.push(object);
@@ -86,9 +86,9 @@ $(function() {
             return object;
         };
         
-        var createRevoluteJoint = function(body1, body2, anchor) {
+        var createRevoluteJoint = function(body1, body2, anchor, upperAngle, lowerAngle) {
             var revoluteJointDef = new b2RevoluteJointDef();
-            revoluteJointDef.Initialize(body1, body2, anchor);
+            revoluteJointDef.Initialize(body1, body2, new b2Vec2(anchor.x, anchor.y));
             revoluteJointDef.motorSpeed = 0;
             revoluteJointDef.maxMotorTorque = 10000000;
             revoluteJointDef.enableMotor = true;
@@ -102,9 +102,10 @@ $(function() {
         	mouseJointDef.body1 = world.GetGroundBody();
         	mouseJointDef.body2 = body;
         	mouseJointDef.target.Set(mouse_coords.x, mouse_coords.y);
-        	mouseJointDef.maxForce = 4500.0 * body.mass;
-        	mouseJointDef.timeStep = 1 / m3.config.fps;
+        	mouseJointDef.maxForce = m3.config.mouse_joint_force * body.mass;
+        	mouseJointDef.timeStep = 100;
     		var mouseJoint = world.CreateJoint(mouseJointDef);
+    		body.WakeUp();
     		return mouseJoint;
         };
 

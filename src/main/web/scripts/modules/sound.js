@@ -4,8 +4,7 @@
  * Utility functions for sounds
  */
 
-$(function() {
-    
+$(function() {    
     m3.sound = function() {
         
         var soundOn = true;
@@ -79,9 +78,8 @@ $(function() {
             		musicButton.src = musicSrc;
             		
             	}
-            },
+            }
             
-        }
-		
+        };		
     }();
 });

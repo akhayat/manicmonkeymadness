@@ -45,10 +45,15 @@ $(function() {
             
             // The radius of the circles drawn on the fort pieces in edit level mode used to drag
             // and drop the pieces.
+
             grabber_radius: 9.0,
+            
+            // The force applied to the launcher to rotate it when aiming
+            mouse_joint_force: 500,
             
             // How fast the fort pieces should be rotated in edit level mode.
             rotation_speed: 2.5
+
         };
     }();
 });

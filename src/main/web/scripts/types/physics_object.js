@@ -42,7 +42,8 @@ $(function() {
                 switch (this.shape.GetType()) {
                     // Circle
                     case 0:
-                        var r = this.radius;
+                        var r = this.radius,
+                            angle = this.angle;
                         
                         if (type !== "projectile" && (x + r <= 0.0 || x - r >= m3.config.level_width)) {
                             m3.score.playerDestroyed(this);
@@ -52,11 +53,12 @@ $(function() {
                         offset.set(-r, -r);
                         break;
                     
-                    // Box
+                    // Polygon
                     case 1:
                         var width    = this.width,
                             height   = this.height,
                             angle    = this.angle,
+                            spriteOffset = this.spriteOffset;
                             distance = Math.abs(width * Math.cos(angle) + height * Math.sin(angle));
                         
                         if (type !== "projectile" && (x + distance <= 0.0 || x - distance >= m3.config.level_width)) {
@@ -64,13 +66,19 @@ $(function() {
                             this.destroy();
                         }
                         
-                        offset.set(-width, -height);
+                        // Check for offset otherwise assume a rectangle
+                        if (!!spriteOffset) {
+                        	offset.set(-spriteOffset, -spriteOffset);
+                        }
+                        else {
+                            offset.set(-width, -height);
+                        }    
                         break;
                 }
                 
                 context.save();
                 context.translate(this.x, this.y);
-                context.rotate(this.angle);
+                context.rotate(angle);
                 context.translate(offset.x, offset.y);
                 if (!!this.sprite) this.sprite.update();
                 context.restore();
