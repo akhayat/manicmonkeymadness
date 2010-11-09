@@ -28,7 +28,7 @@ $(function() {
         
         // Collision callback.
         Enemy.contact = function(other, velocity) {
-            m3.assets.sfx.monkeyGrunt.play();
+            if(velocity > this.minImpactVelocity) m3.assets.sfx.monkeyGrunt.play();
             if (other.type === 'fort_piece') {
                 if (velocity > this.minImpactVelocity) {
                     m3.util.log('fort piece hit enemy at: ' + velocity.toFixed(2) + ' m/s');
