@@ -26,7 +26,7 @@ $(function() {
     		
     		update: function() {
     			if(offScreen) {
-		            context.drawImage(arrow, x, 0, 10, 10);
+		            context.drawImage(arrow, x, 0);
     			}
     		}
     		
