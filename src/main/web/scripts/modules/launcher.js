@@ -22,7 +22,7 @@ $(function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
             },
             
-            updateMouseCoords: function() {
+            updateMouseCoords: function(event) {
             	var scale = m3.config.scaling_factor;
             	
                 mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
@@ -37,7 +37,7 @@ $(function() {
                 
             	this.aiming = true;
                 
-                this.updateMouseCoords();
+                this.updateMouseCoords(event);
                 
                 if (!mouseJoint) 
                 	mouseJoint = m3.world.createMouseJoint(launcher.barrel, mouse_coords_physics);
@@ -47,7 +47,7 @@ $(function() {
                 if (this.aiming) {
                     var launcher = this.currentLauncher();
                     
-                    this.updateMouseCoords();
+                    this.updateMouseCoords(event);
                     
                     console.log((launcher.joint.GetJointAngle() * (180 / Math.PI)).toFixed(2));
                     
