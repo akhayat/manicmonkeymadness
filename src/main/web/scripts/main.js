@@ -22,6 +22,8 @@ $(function() {
         m3.game.context.save();
         m3.game.state.update();
         m3.game.context.restore();
+        
+        m3.input.reset();
     };
     
     /**

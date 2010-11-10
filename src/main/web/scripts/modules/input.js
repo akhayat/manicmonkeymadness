@@ -12,7 +12,7 @@
 
 $(function() {
     m3.input = function() {
-        return {
+        var input = {
             8:  "BACKSPACE",
             13: "ENTER",
             16: "SHIFT",
@@ -75,44 +75,61 @@ $(function() {
             219: "LEFT_BRACKET",
             220: "BACKSLASH",
             221: "RIGHT_BRACKET",
-            222: "QUOTE",
-            
-            keys: {}
+            222: "QUOTE"
         };
-    }();
-    
-    m3.input.processKeyDown = function(event) {
-        var key = m3.input[event.which];
         
-        if (!m3.input.keys[key]) {
-            m3.input.keys[key] = true;
+        input.keys  = {};
+        input.mouse = { x: 0, y: 0, down: false, just_pressed: false, just_released: true };
+        
+        input.processKeyDown = function(event) {
+            var key = m3.input[event.which];
             
-            if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].down)
-                m3.game.state.keyHandlers[key].down();
-        }
-    };
-    
-    m3.input.processKeyUp = function(event) {
-        var key = m3.input[event.which];
+            if (!m3.input.keys[key]) {
+                m3.input.keys[key] = true;
+                
+                if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].down)
+                    m3.game.state.keyHandlers[key].down();
+            }
+        };
         
-        m3.input.keys[key] = false;
+        input.processKeyUp = function(event) {
+            var key = m3.input[event.which];
+            
+            m3.input.keys[key] = false;
+            
+            if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].up)
+                m3.game.state.keyHandlers[key].up();
+        };
         
-        if (m3.game.state.keyHandlers && m3.game.state.keyHandlers[key] && m3.game.state.keyHandlers[key].up)
-            m3.game.state.keyHandlers[key].up();
-    };
-    
-    m3.input.processMouseDown = function(event) {
-        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.down)
-            m3.game.state.mouseHandlers.down(event);
-    };
-    
-    m3.input.processMouseUp = function(event) {
-        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.up)
-            m3.game.state.mouseHandlers.up(event);
-    };
-    
-    m3.input.processMouseMove = function(event) {
-        if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.move)
-            m3.game.state.mouseHandlers.move(event);
-    };
+        input.processMouseDown = function(event) {
+            var mouse  = m3.input.mouse;
+            mouse.down = mouse.just_pressed = true;
+            
+            if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.down)
+                m3.game.state.mouseHandlers.down(event);
+        };
+        
+        input.processMouseUp = function(event) {
+            var mouse           = m3.input.mouse;
+            mouse.down          = false;
+            mouse.just_released = true;
+            
+            if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.up)
+                m3.game.state.mouseHandlers.up(event);
+        };
+        
+        input.processMouseMove = function(event) {
+            m3.input.mouse.x = event.pageX - m3.game.x;
+            m3.input.mouse.y = event.pageY - m3.game.y;
+            
+            if (m3.game.state.mouseHandlers && m3.game.state.mouseHandlers.move)
+                m3.game.state.mouseHandlers.move(event);
+        };
+        
+        input.reset = function() {
+            this.mouse.just_pressed = this.mouse.just_released = false;
+        };
+        
+        return input;
+    }();
 });
