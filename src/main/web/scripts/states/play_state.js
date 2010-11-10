@@ -163,14 +163,12 @@ $(function() {
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                 var position = this.active_projectile[i].body.GetPosition();
                     x = position.x * m3.config.scaling_factor;
-            	    y = position.y * m3.config.scaling_factor;
-                   
-                settled = false;
-                y < 0 ? m3.ui.marker.mark(x) : m3.ui.marker.clearMark(); 
+                    settled = false;
+                m3.ui.marker.mark(this.active_projectile); 
             }
             
             // This ensures the world is settled for half a second before transitioning.
-            if (m3.world.allSettled(1.0)) {
+            if (m3.world.allSettled(1.5)) {
                 if(this.old_time === null) this.old_time = this.state_time;
                 else if(this.state_time > this.old_time + 0.25) settled = true;
             } else {
