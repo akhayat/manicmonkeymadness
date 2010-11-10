@@ -49,8 +49,6 @@ $(function() {
                     
                     this.updateMouseCoords(event);
                     
-                    console.log((launcher.joint.GetJointAngle() * (180 / Math.PI)).toFixed(2));
-                    
                     if (!!mouseJoint) 
                     	mouseJoint.SetTarget(mouse_coords_physics);
                 }
@@ -102,14 +100,8 @@ $(function() {
             
             changeWeapon: function() {
                 var launcher = this.currentLauncher();
-            	
-            	if (launcher.weapon < this.projectiles.length-1) {
-            		launcher.weapon += 1;
-            	}
-            	else {
-            		launcher.weapon = 0;
-            	}
-            	
+
+            	launcher.weapon = (launcher.weapon + 1) % this.projectiles.length;
         		launcher.pType = this.projectiles[launcher.weapon].type;
         		launcher.pDetails = this.projectiles[launcher.weapon].details;
             },
