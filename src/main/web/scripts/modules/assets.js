@@ -81,6 +81,7 @@ $(function() {
                 cannon:        imageFromSource("sprites/cannon.png"),
                 rock:          imageFromSource("sprites/rock.png"),
                 banana:        imageFromSource("sprites/banana.png"),
+                watermelon:    imageFromSource("sprites/watermelon.png"),
                 monkey:        imageFromSource("sprites/monkey.png"),
                 monkey_helmet: imageFromSource("sprites/monkey_helmet.png"),
                 

@@ -43,7 +43,7 @@ $(function() {
                         }
             },
             watermelon: {
-            	whole: 	{ s: assets.rock, h: 38, w: 38, radius: 19,
+            	whole: 	{ s: assets.watermelon, h: 30, w: 42, radius: 15,
    	             		  density: 2.5, restitution: 0.1, friction: 1.25, torque: 800,
    	             		  spawn: function(x, y) {
 	                 	  return m3.world.createBall(x / scale, y / scale, this.radius / scale, false, this.density, this.restitution, this.friction, false)
