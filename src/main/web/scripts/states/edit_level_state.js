@@ -12,6 +12,12 @@ $(function () {
         var FortPiece = m3.types.FortPiece,
             Vector    = m3.types.Vector;
         
+        EditLevelState.done_button = m3.ui.Button.create(705, 380, 120, 32, "Export", "#550011", "#661122", function() {
+            $("#fort_output textarea").html(JSON.stringify(m3.game.state.output));
+            $(".fade").fadeIn(180);
+            $("#fort_output").fadeIn(180);
+        });
+        
         // Tracks whether we're dragging something or not.
         EditLevelState.dragging = false;
         
@@ -60,23 +66,14 @@ $(function () {
             }
         };
         
-        // Keyboard input handlers for the edit level state.
-        EditLevelState.keyHandlers = {
-            ENTER: {
-                down: function(event) {
-                    console.log(JSON.stringify(m3.game.state.output));
-                }
-            }
-        };
-        
         // Mouse input handlers for the edit level state.
         EditLevelState.mouseHandlers = {
             down: function(event) {
                 var state = m3.game.state,
                     mouse = m3.types.Vector.create();
                 
-                mouse.x = event.pageX - m3.game.x + m3.camera.position.x;
-                mouse.y = event.pageY - m3.game.y + m3.camera.position.y;
+                mouse.x = m3.input.mouse.x + m3.camera.position.x;
+                mouse.y = m3.input.mouse.y + m3.camera.position.y;
                 
                 var clicked_piece = state.firstGrabbable(mouse.x, mouse.y);
                 
@@ -172,6 +169,9 @@ $(function () {
             for (var i = 0, n = fort.length; i < n; i++) {
                 fort[i].update();
             }
+            
+            // Update the done button.
+            this.done_button.update();
         };
         
         // Constructor.
