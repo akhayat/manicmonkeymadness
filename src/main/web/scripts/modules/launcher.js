@@ -15,7 +15,7 @@ $(function() {
         return {
             aiming:  false,
             cannons: [],
-        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}, {type:"banana", details:"triple"}],
+        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}, {type:"banana", details:"triple"}, {type:"watermelon", details:"whole"}],
             
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {
@@ -68,7 +68,9 @@ $(function() {
                 m3.assets.sfx.explosion.play();
                 
                 // Apply an impulse to give the projectile velocity in the x and y directions
-                var axisLaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
+                var axislaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
+                var launchPoint = m3.types.Vector.create((launcher.x + axisOffset.x + axislaunchOffset.x), (launcher.y + axisOffset.y + axislaunchOffset.y));
+                var axisLaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x + 200) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
                 
                 var launchPoint = m3.types.Vector.create((launcher.x + axisLaunchOffset.x), (launcher.y + axisLaunchOffset.y));
                 
@@ -77,6 +79,7 @@ $(function() {
                 if (launcher.facing === "left") {
                     impulse.x = -impulse.x;
                     impulse.y = -impulse.y;
+                    launchPoint.x -= 300;
                 }
                 
                 if (launcher.pDetails === "triple") {

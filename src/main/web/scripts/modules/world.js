@@ -216,6 +216,39 @@ $(function() {
             
         };
         
+        var explode = function(position) {
+        	var shapes 			= [],
+        		xDistance 		= 0,
+        		active_player 	= m3.game.state.active_player,
+        		level			= m3.game.state.level,
+        		scale 			= m3.config.scaling_factor,
+        		level_width		= m3.config.level_width;
+        	
+    		xDistance = position.Copy().x / scale;
+
+        	if (active_player === 0) {
+        		shapes = level.fortresses[1].pieces;
+        	}
+        	else {
+        		shapes = level.fortresses[0].pieces;
+        	}
+        	
+        	for (var i = 0, j = shapes.length; i < j; i+=1) {
+        		var b 	= shapes[i],
+        		 	fv 	= new b2Vec2(b.x, b.y);
+        		
+        		if (Math.abs(xDistance - fv.x/scale) <= 3) {
+        			fv.Subtract(position);
+        			fv.Normalize();
+        			fv.Multiply(100);
+            		b.body.WakeUp();
+            		b.body.ApplyImpulse(fv, new b2Vec2(b.x/scale, b.y/scale));
+        		}
+
+        	}
+        	
+        };
+        
         return {
             universe: world,
             objects: objects,
@@ -229,6 +262,7 @@ $(function() {
             removeObject: removeObject,
             clear: clear,
             init: init,
+            explode: explode,
             update: function() {
                 var context = m3.game.context;
                 context.save();

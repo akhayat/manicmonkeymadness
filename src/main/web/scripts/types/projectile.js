@@ -41,6 +41,14 @@ $(function() {
           	                  return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false);
                           }
                         }
+            },
+            watermelon: {
+            	whole: 	{ s: assets.rock, h: 38, w: 38, radius: 19,
+   	             		  density: 2.5, restitution: 0.1, friction: 1.25, torque: 800,
+   	             		  spawn: function(x, y) {
+	                 	  return m3.world.createBall(x / scale, y / scale, this.radius / scale, false, this.density, this.restitution, this.friction, false)
+                 		  }
+               			}
             }
         };
 
@@ -61,6 +69,17 @@ $(function() {
             // We want to stop following the projectile when it hits something.
             if (this.life_time > 1.0) {
                 m3.camera.stopFollowing();
+            }
+            
+            if (m3.launcher.currentLauncher().pType === "watermelon" && this.type === "projectile") {
+            	this.type = "dead";
+            	setTimeout(function(projectile){
+            		return function () {
+            			m3.world.explode(new b2Vec2(m3.game.state.active_projectile[0].x, m3.game.state.active_projectile[0].y));
+            			projectile.body.SetLinearVelocity(0);
+            		}
+            	}(this), 1000);
+                return;
             }
             
             if (other.type === 'fort_piece') {
@@ -122,9 +141,7 @@ $(function() {
                 var torque = (impulse_x < 0) ? -1 * t.torque : t.torque;
                 //p.body.ApplyTorque(torque);
             }
-            
-            console.log(p);
-            
+                        
             return p;
         };
         
