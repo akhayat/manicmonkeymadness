@@ -10,6 +10,7 @@ $(function () {
         EditLevelState.EditLevelState = EditLevelState;
         
         var FortPiece = m3.types.FortPiece,
+            Enemy     = m3.types.Enemy,
             Vector    = m3.types.Vector;
         
         EditLevelState.done_button = m3.ui.Button.create(705, 380, 120, 32, "Export", "#550011", "#661122", function() {
@@ -32,8 +33,14 @@ $(function () {
             FortPiece.create(0, "box", "short", "rock", 710, 60, 0, null, true)
         ];
         
-        // This array holds all the fort pieces that actually make up the fort being constructed.
-        EditLevelState.fort = [];
+        // These are all the enemies that can be placed in the fort.
+        EditLevelState.enemies = [
+            Enemy.create(0, "monkey", "small",  650, 200, 0, null, true, true),
+            Enemy.create(0, "monkey", "medium", 690, 200, 0, null, true, true)
+        ];
+        
+        // This object contains the lists for the fort's pieces and enemies.
+        EditLevelState.fort = { pieces: [], enemies: [] };
         
         // This state uses a regular level just like the play state does.
         EditLevelState.level = null;
@@ -47,10 +54,11 @@ $(function () {
                     enemies: []
                 };
                 
-                var fort = m3.game.state.fort;
+                var pieces  = m3.game.state.fort.pieces,
+                    enemies = m3.game.state.fort.enemies; 
                 
-                for (var i = 0, n = fort.length; i < n; i++) {
-                    var p = fort[i];
+                for (var i = 0, n = pieces.length; i < n; i++) {
+                    var p = pieces[i];
                     
                     output.pieces.push({
                         shape: p.piece_shape,
@@ -59,6 +67,18 @@ $(function () {
                         x:     p.x,
                         y:     p.y,
                         angle: p.angle
+                    });
+                }
+                
+                for (var i = 0, n = enemies.length; i < n; i++) {
+                    var e = enemies[i];
+                    
+                    output.enemies.push({
+                        type:  e.enemy_type,
+                        size:  e.enemy_size,
+                        x:     e.x,
+                        y:     e.y,
+                        angle: e.angle
                     });
                 }
                 
@@ -79,7 +99,8 @@ $(function () {
                 
                 if (clicked_piece) {
                     state.dragging     = true;
-                    state.active_piece = (clicked_piece.is_fort_piece) ? clicked_piece : state.addPiece(clicked_piece);
+                    var add            = (clicked_piece.type === "enemy") ? state.addEnemy : state.addPiece;
+                    state.active_piece = (clicked_piece.placed) ? clicked_piece : add(clicked_piece);
                 }
             },
             
@@ -103,15 +124,24 @@ $(function () {
         // Adds a new piece to the level based on a "template" piece -- one of the pieces in the palette.
         EditLevelState.addPiece = function(t) {
             var piece = m3.types.FortPiece.create(0, t.piece_shape, t.piece_size, t.piece_material, t.x, t.y, t.angle, null, true);
-            piece.is_fort_piece = true;
-            this.fort.push(piece);
+            piece.placed = true;
+            m3.game.state.fort.pieces.push(piece);
             return piece;
         };
         
-        // Returns the first fort piece on the stage for which the given x and y coordinates overlap
-        // the piece's grabber.
+        // Adds a new enemy to the level based on a "template" enemy -- one of the enemies in the palette.
+        EditLevelState.addEnemy = function(t) {
+            var enemy = m3.types.Enemy.create(0, t.enemy_type, t.enemy_size, t.x, t.y, t.angle, null, true);
+            enemy.placed = true;
+            m3.game.state.fort.enemies.push(enemy);
+            return enemy;
+        };
+        
+        // Returns the first fort piece or enemy on the stage for which the given x and y coordinates
+        // overlap the piece's grabber.
         EditLevelState.firstGrabbable = function(x, y) {
             var pieces         = this.pieces,
+                enemies        = this.enemies,
                 fort           = this.fort,
                 radius_squared = m3.config.grabber_radius * m3.config.grabber_radius;
             
@@ -126,9 +156,21 @@ $(function () {
                 }
             }
             
-            for (var i = 0, n = fort.length; i < n; i++) {
-                if (overlaps(fort[i])) {
-                    return fort[i];
+            for (var i = 0, n = enemies.length; i < n; i++) {
+                if (overlaps(enemies[i])) {
+                    return enemies[i];
+                }
+            }
+            
+            for (var i = 0, n = fort.pieces.length; i < n; i++) {
+                if (overlaps(fort.pieces[i])) {
+                    return fort.pieces[i];
+                }
+            }
+            
+            for (var i = 0, n = fort.enemies.length; i < n; i++) {
+                if (overlaps(fort.enemies[i])) {
+                    return fort.enemies[i];
                 }
             }
             
@@ -140,6 +182,7 @@ $(function () {
             var context      = m3.game.context,
                 active_piece = this.active_piece,
                 pieces       = this.pieces,
+                enemies      = this.enemies,
                 fort         = this.fort;
             
             // Rotate the currently-held piece with the arrow keys.
@@ -161,13 +204,21 @@ $(function () {
             context.fillRect(0, 0, m3.config.level_padding + 45, m3.game.height);
             context.fillRect(m3.config.level_padding + m3.config.fort_width - 35, 0, m3.game.width, m3.game.height);
             
-            // Render the pieces.
+            // Render the pieces and enemies.
             for (var i = 0, n = pieces.length; i < n; i++) {
                 pieces[i].update();
             }
             
-            for (var i = 0, n = fort.length; i < n; i++) {
-                fort[i].update();
+            for (var i = 0, n = fort.pieces.length; i < n; i++) {
+                fort.pieces[i].update();
+            }
+            
+            for (var i = 0, n = enemies.length; i < n; i++) {
+                enemies[i].update();
+            }
+            
+            for (var i = 0, n = fort.enemies.length; i < n; i++) {
+                fort.enemies[i].update();
             }
             
             // Update the done button.

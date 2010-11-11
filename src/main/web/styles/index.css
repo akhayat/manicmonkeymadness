@@ -127,9 +127,9 @@ a:hover {
 #fort_output {
 	position: fixed;
 	left: 20%;
-	top: 35%;
+	top: 25%;
 	width: 60%;
-	height: 30%;
+	height: 320px;
 	padding: 0px 8px;
 	background: #EEFFEE;
 	border: 4px solid #112211;
@@ -147,7 +147,7 @@ a:hover {
 
 #fort_output textarea {
 	width: 100%;
-	height: 100px;
+	height: 140px;
 }
 
 .done_link {

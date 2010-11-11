@@ -36,7 +36,7 @@ $(function () {
         };
         
         // Buttons to progress from the menu.
-        var button_y = m3.game.height - 85;
+        var button_y = m3.game.height - 145;
         
         MainMenuState.play_button = m3.ui.Button.create(230, button_y, 200, 32, "Play", "#003322", "#225544", function() {
             m3.game.state = m3.states.PlayState.create();
@@ -61,9 +61,6 @@ $(function () {
             context.font      = "bold 48px sans-serif";
             context.textAlign = "center";
             context.fillText("Manic Monkey Madness!!!", half_width, half_height);
-            
-            context.font = "bold 30px sans-serif";
-            context.fillText("Click to play, or press E to create a fortress!", half_width, half_height + 80);
             
             // Update the buttons.
             this.play_button.update();

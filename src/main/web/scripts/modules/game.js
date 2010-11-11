@@ -52,7 +52,7 @@ $(function() {
                 document.onmouseup   = m3.input.processMouseUp;
                 document.onmousemove = m3.input.processMouseMove;
                 
-                $("#fort_output .done_link").click(function(event) {
+                $("#fort_output .done_link a").click(function(event) {
                     event.preventDefault();
                     $("#fort_output").fadeOut(200);
                     $(".fade").fadeOut(200);

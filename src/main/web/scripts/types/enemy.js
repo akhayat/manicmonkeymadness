@@ -70,22 +70,40 @@ $(function() {
         Enemy.destroy = function() {
             this.PhysicsObject.destroy.call(this);
             
-            if (this.fort.enemies.length <= 0) {
+            if (this.fort && this.fort.enemies.length <= 0) {
                 m3.game.state.endRound((this.fort.owner + 1) % 2);
             }
         };
         
+        Enemy.update = function() {
+            this.PhysicsObject.update.call(this);
+            
+            var context = m3.game.context;
+            
+            if (m3.game.state.EditLevelState) {
+                context.fillStyle = "rgba(100, 180, 255, 0.6)";
+                context.beginPath();
+                context.arc(this.x, this.y, m3.config.grabber_radius, 0.0, Math.PI * 2, false);
+                context.fill();
+                context.closePath();
+            }
+        };
+        
         // Constructor.
-        Enemy.create = function(fort, character, type, x, y, angle, container) {
+        Enemy.create = function(fort, character, type, x, y, angle, container, fixed, stop_animation) {
             var e     = m3.types.PhysicsObject.create(x, y, container, this),
                 t     = enemies[character][type],
                 d     = details[type],
                 scale = m3.config.scaling_factor,
-                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale, false, d.density, d.restitution, d.friction, false);
+                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale,
+                                           fixed, d.density, d.restitution, d.friction, false);
                
                 piece.body.SetUserData(e);
                 e.destroyThreshold  = d.destroyThreshold;
                 e.minImpactVelocity = d.minImpactVelocity;
+                
+                e.enemy_type = character;
+                e.enemy_size = type;
                 
                 e.body    = piece.body;
                 e.shape   = piece.shape;
@@ -97,14 +115,16 @@ $(function() {
                 e.damage  = 0;                
                 e.sprite  = Sprite.create(t.s, t.h, t.w);
                 
-                if (type === "small") {
-                    e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+                if (!stop_animation) {
+                    if (type === "small") {
+                        e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+                    }
+                    else if (type === "medium") {
+                        e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3], 0.12);
+                    }
+                    
+                    e.sprite.play(e.subtype);
                 }
-                else if (type === "medium") {
-                    e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3], 0.12);
-                }
-                
-                e.sprite.play(e.subtype);
                 
                 return e;
         };
