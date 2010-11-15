@@ -43,10 +43,12 @@ $(function() {
                         }
             },
             watermelon: {
-            	whole: 	{ s: assets.watermelon, h: 30, w: 42, radius: 15,
+                whole: 	{ s: assets.watermelon, h: 30, w: 42, radius: 15,
    	             		  density: 2.5, restitution: 0.1, friction: 1.25, torque: 800,
+   	             		  vertices: [[8,-15], [21,-5], [21,3], [8,10], [-8,10], [-21,0], [-17,-5], [-8,-15]],
+   	             		  spriteOffset: m3.types.Vector.create(-21,-15),
    	             		  spawn: function(x, y) {
-	                 	  return m3.world.createBall(x / scale, y / scale, this.radius / scale, false, this.density, this.restitution, this.friction, false)
+	                 	      return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false)
                  		  }
                			}
             }
@@ -139,7 +141,7 @@ $(function() {
                 p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));
                 
                 var torque = (impulse_x < 0) ? -1 * t.torque : t.torque;
-                //p.body.ApplyTorque(torque);
+                p.body.ApplyTorque(torque);
             }
                         
             return p;

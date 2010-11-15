@@ -70,7 +70,7 @@ $(function() {
             backgrounds: {
         	    ground_layer :    imageFromSource("backgrounds/ground_layer.png"),
                 background_layer: imageFromSource("backgrounds/background_layer.png"),
-                mountain_layer:    imageFromSource("backgrounds/mountain_layer.png"),
+                mountain_layer:   imageFromSource("backgrounds/mountain_layer.png"),
                 tree_layer:       imageFromSource("backgrounds/tree_layer.png")
             },
             
@@ -101,11 +101,11 @@ $(function() {
             },
             
             icons: {
-            	arrow: imageFromSource("icons/arrow.png"),
-            	help:  imageFromSource("icons/help.png"),
-            	audio: imageFromSource("icons/audio.png"),
+            	arrow:    imageFromSource("icons/arrow.png"),
+            	help:     imageFromSource("icons/help.png"),
+            	audio:    imageFromSource("icons/audio.png"),
             	no_audio: imageFromSource("icons/no_audio.png"),
-            	music: imageFromSource("icons/music.png"),
+            	music:    imageFromSource("icons/music.png"),
             	no_music: imageFromSource("icons/no_music.png")
             },
             

@@ -53,7 +53,7 @@ $(function() {
 	                 ]
                 }
             }
-        }
+        };
         
         // Draws a background consisting of multiple layers with parallax scrolling.
         Level.drawBackground = function() {
@@ -69,8 +69,8 @@ $(function() {
 //            context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
             
             for (var i = 0, n = background.length; i < n; i++) {
-            	
-                var image = background[i].image;
+
+            	var image = background[i].image,
                     x     = m3.camera.position.x * (1.0 - background[i].scroll_factor),
                     y     = m3.game.height - image.height - background[i].offset;
                 
@@ -107,7 +107,7 @@ $(function() {
             }
             
             return l;
-        }
+        };
         
         return Level;
     }();
