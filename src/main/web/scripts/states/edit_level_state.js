@@ -231,7 +231,7 @@ $(function () {
             m3.world.clear();
             m3.world.init();
             
-            s.level = m3.types.Level.create(false);
+            s.level = m3.types.Level.create("demo", false);
             
             return s;
         };
