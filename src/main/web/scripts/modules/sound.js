@@ -8,12 +8,12 @@ $(function() {
     m3.sound = function() {
         
         var soundOn = true;
-            musicOn = false;
-            currentSong = null;
-            soundSrc = "images/resource/audio.png";
-            noSoundSrc = "images/resource/no_audio.png";
-            musicSrc = "images/resource/music.png";
-            noMusicSrc = "images/resource/no_music.png";
+            musicOn = false,
+            currentSong = null
+            soundSrc = "images/icons/audio.png";
+            noSoundSrc = "images/icons/no_audio.png";
+            musicSrc = "images/icons/music.png";
+            noMusicSrc = "images/icons/no_music.png";
             soundButton = $("#sound").get(0);
             musicButton = $("#music").get(0);
             

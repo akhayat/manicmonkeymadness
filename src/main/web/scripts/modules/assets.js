@@ -68,13 +68,10 @@ $(function() {
         return {
             // Images.
             backgrounds: {
-        	    ground : imageFromSource("backgrounds/ground.png"),
-        	    
-                temp: {
-                    layer_0: imageFromSource("backgrounds/layer_0.png"),
-                    layer_1: imageFromSource("backgrounds/layer_1.png"),
-                    layer_2: imageFromSource("backgrounds/layer_2.png")
-                }
+        	    ground_layer :    imageFromSource("backgrounds/ground_layer.png"),
+                background_layer: imageFromSource("backgrounds/background_layer.png"),
+                mountain_layer:    imageFromSource("backgrounds/mountain_layer.png"),
+                tree_layer:       imageFromSource("backgrounds/tree_layer.png")
             },
             
             sprites: {
@@ -103,8 +100,13 @@ $(function() {
                 }
             },
             
-            resources: {
-            	arrow: imageFromSource("resource/arrow.png")
+            icons: {
+            	arrow: imageFromSource("icons/arrow.png"),
+            	help:  imageFromSource("icons/help.png"),
+            	audio: imageFromSource("icons/audio.png"),
+            	no_audio: imageFromSource("icons/no_audio.png"),
+            	music: imageFromSource("icons/music.png"),
+            	no_music: imageFromSource("icons/no_music.png")
             },
             
             // Music.

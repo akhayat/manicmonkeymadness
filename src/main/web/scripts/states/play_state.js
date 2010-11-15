@@ -251,7 +251,7 @@ $(function() {
             m3.world.clear();
             m3.world.init();
             
-            s.level             = m3.types.Level.create(true);
+            s.level             = m3.types.Level.create("demo", true);
             //s.active_player     = m3.math.randomInteger(0, 1);
             s.active_projectile = [];
             

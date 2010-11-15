@@ -10,7 +10,7 @@ $(function() {
    
     	var context = m3.game.context;
             projectile = [];
-            arrow = m3.assets.resources.arrow;
+            arrow = m3.assets.icons.arrow;
     	    
     	return {
     		
