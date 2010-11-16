@@ -79,6 +79,7 @@ $(function() {
                 banana:        imageFromSource("sprites/banana.png"),
                 watermelon:    imageFromSource("sprites/watermelon.png"),
                 monkey:        imageFromSource("sprites/monkey.png"),
+                proj_monkey:   imageFromSource("sprites/projectile_monkey.png"),
                 monkey_helmet: imageFromSource("sprites/monkey_helmet.png"),
                 
                 fort_pieces: {

@@ -15,7 +15,11 @@ $(function() {
         return {
             aiming:  false,
             cannons: [],
-        	projectiles: [{type:"rock", details:"small"}, {type:"banana", details:"single"}, {type:"banana", details:"triple"}, {type:"watermelon", details:"whole"}],
+        	projectiles: [{type:"rock", details:"small"}, 
+        	              {type:"banana", details:"single"}, 
+        	              {type:"banana", details:"triple"}, 
+        	              {type:"watermelon", details:"whole"},
+        	              {type:"monkey", details:"medium"}],
             
             // Returns the current launcher based on whose turn it is.
             currentLauncher: function() {

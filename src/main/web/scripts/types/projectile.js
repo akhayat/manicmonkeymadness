@@ -51,6 +51,15 @@ $(function() {
 	                 	      return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false)
                  		  }
                			}
+            },
+            monkey: { 
+            medium: { s: assets.proj_monkey, h: 56, w: 47,
+            	      density: 2.75, restitution: 0.5, friction: 1.0, torque: 500,
+            	      spawn: function(x, y) {
+            	    	  return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, false, this.density, this.restitution, this.friction, false)
+            	      }
+                     }
+            	
             }
         };
 
