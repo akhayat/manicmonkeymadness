@@ -62,9 +62,41 @@ $(function() {
                     event.preventDefault();
                     $("#fort_select").fadeOut(200);
                     $(".fade").fadeOut(200);
-                    m3.fort_choices.setCustomFort($("#fort_select textarea").val(), 0);
-                    m3.fort_choices.setCustomFort($("#fort_select textarea").val(), 1);
+                    
+                    var choice = $("#fort_select input:checked");
+                    
+                    if (choice.attr("id") === "custom_fort_choice") {
+                        m3.fort_choices.setFortChoice(0, "custom", $("#fort_select textarea").val());
+                        m3.fort_choices.setFortChoice(1, "custom", $("#fort_select textarea").val());
+                    }
+                    else {
+                        m3.fort_choices.setFortChoice(0, "premade", parseInt(choice.attr("data-index")));
+                        m3.fort_choices.setFortChoice(1, "premade", parseInt(choice.attr("data-index")));
+                    }
+                    
                     m3.game.state = m3.states.PlayState.create();
+                });
+                
+                $("#premade_fort_choices").html(function() {
+                    var forts   = m3.fort_choices.premade,
+                        choices = "";
+                    
+                    for (var i = 0, n = forts.length; i < n; i++) {
+                        choices += "<label for='choice_" + i + "'>";
+                        choices += "<input type='radio' name='fort_choices' id='choice_" + i + "' data-index='" + i + "' /> ";
+                        choices +=  forts[i].id + "</label><br />";
+                    }
+                    
+                    return choices;
+                });
+                
+                $("#fort_select input[type=\"radio\"]").change(function(event) {
+                    if ($("#custom_fort_choice").is(":checked")) {
+                        $("#fort_select textarea").removeAttr("disabled");
+                    }
+                    else {
+                        $("#fort_select textarea").attr("disabled", "disabled");
+                    }
                 });
             }
         };

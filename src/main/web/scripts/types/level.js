@@ -12,7 +12,7 @@ $(function() {
         Level.Level = Level;
         
         var backgrounds  = m3.assets.backgrounds,
-            custom_forts = m3.fort_choices.custom_forts;
+            chosen_forts = m3.fort_choices.chosen_forts;
         
         var levels = {
             demo: {
@@ -63,12 +63,8 @@ $(function() {
             l.fortresses = [];
             
             if (create_forts) {
-                var forts = [];
-                forts[0] = (custom_forts[0]) ? custom_forts[0] : m3.fort_choices.premade[0].fort;
-                forts[1] = (custom_forts[1]) ? custom_forts[1] : m3.fort_choices.premade[0].fort;
-                
-                l.fortresses.push(m3.types.Fortress.create(0, forts[0]));
-                l.fortresses.push(m3.types.Fortress.create(1, forts[1]));
+                l.fortresses.push(m3.types.Fortress.create(0, chosen_forts[0]));
+                l.fortresses.push(m3.types.Fortress.create(1, chosen_forts[1]));
             }
             
             return l;
