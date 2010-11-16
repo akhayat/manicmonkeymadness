@@ -20,20 +20,19 @@ $(function() {
     };
     
     var soundFromSource = function(source, loop) {
-        var sound = new Audio();
-            paused = true;
-            extension = "";
-        if (sound.canPlayType('audio/mpeg') !== "") {
-            extension = ".mp3";
-        }
-        else if (sound.canPlayType('audio/ogg') !== "") {
-            extension = ".ogg"
-        }
-        
-        sound.src = "audio/" + source + extension;
-        sound.loop = loop;
-        sound.preload = "auto";
-        
+    	var sound = $('<audio/>', {
+    		loop: loop,
+    		preload: "auto"
+    	});
+    	    paused = true;
+    	    mpegPath = "audio/" + source + "mp3";
+    	    oggPath = "audio/" + source + ".ogg";
+    	
+    	$('<source/>').attr('src', mpegPath).appendTo(sound);
+    	$('<source/>').attr('src', oggPath).appendTo(sound);
+    	sound.appendTo('body');
+    	sound = sound.get(0);
+
         /*
          * Had to make a wrapper around the javascript Audio object
          * in order for toggling the sound on and off to work properly.
