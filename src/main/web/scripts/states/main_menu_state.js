@@ -27,7 +27,6 @@ $(function () {
         var button_y = m3.game.height - 145;
         
         MainMenuState.play_button = m3.ui.Button.create(230, button_y, 200, 32, "Play", "#003322", "#225544", function() {
-            // console.log($("#fort_select textarea").html());
             $(".fade").fadeIn(180);
             $("#fort_select").fadeIn(180);
         });

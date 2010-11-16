@@ -62,6 +62,8 @@ $(function() {
                     event.preventDefault();
                     $("#fort_select").fadeOut(200);
                     $(".fade").fadeOut(200);
+                    m3.fort_choices.setCustomFort($("#fort_select textarea").val(), 0);
+                    m3.fort_choices.setCustomFort($("#fort_select textarea").val(), 1);
                     m3.game.state = m3.states.PlayState.create();
                 });
             }

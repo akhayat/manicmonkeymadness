@@ -11,7 +11,8 @@ $(function() {
         Level = {};
         Level.Level = Level;
         
-        var backgrounds = m3.assets.backgrounds;
+        var backgrounds  = m3.assets.backgrounds,
+            custom_forts = m3.fort_choices.custom_forts;
         
         var levels = {
             demo: {
@@ -20,9 +21,7 @@ $(function() {
                     { image: backgrounds.mountain_layer, offset: 0, scroll_factor: 0.3 },
                     { image: backgrounds.tree_layer, offset: 0, scroll_factor: 0.55 },
                     { image: backgrounds.ground_layer, offset: 0, scroll_factor: 1 }
-                ],
-                
-                fortress: m3.premade_forts[0].fort
+                ]
             },
         };
         
@@ -64,8 +63,12 @@ $(function() {
             l.fortresses = [];
             
             if (create_forts) {
-                l.fortresses.push(m3.types.Fortress.create(0, level_data.fortress));
-                l.fortresses.push(m3.types.Fortress.create(1, level_data.fortress));
+                var forts = [];
+                forts[0] = (custom_forts[0]) ? custom_forts[0] : m3.fort_choices.premade[0].fort;
+                forts[1] = (custom_forts[1]) ? custom_forts[1] : m3.fort_choices.premade[0].fort;
+                
+                l.fortresses.push(m3.types.Fortress.create(0, forts[0]));
+                l.fortresses.push(m3.types.Fortress.create(1, forts[1]));
             }
             
             return l;
