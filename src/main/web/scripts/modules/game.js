@@ -57,6 +57,13 @@ $(function() {
                     $("#fort_output").fadeOut(200);
                     $(".fade").fadeOut(200);
                 });
+                
+                $("#fort_select .done_link a").click(function(event) {
+                    event.preventDefault();
+                    $("#fort_select").fadeOut(200);
+                    $(".fade").fadeOut(200);
+                    m3.game.state = m3.states.PlayState.create();
+                });
             }
         };
     }();

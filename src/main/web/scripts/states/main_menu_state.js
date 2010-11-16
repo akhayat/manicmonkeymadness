@@ -10,18 +10,6 @@ $(function () {
         
         // Key handlers.
         MainMenuState.keyHandlers = {
-            ENTER: {
-                down: function() {
-                    m3.game.state = m3.states.PlayState.create();
-                }
-            },
-            
-            E: {
-                down: function() {
-                    m3.game.state = m3.states.EditLevelState.create();
-                }
-            },
-            
             C: {
                 down: function() {
                     $('#console').toggle();
@@ -39,7 +27,9 @@ $(function () {
         var button_y = m3.game.height - 145;
         
         MainMenuState.play_button = m3.ui.Button.create(230, button_y, 200, 32, "Play", "#003322", "#225544", function() {
-            m3.game.state = m3.states.PlayState.create();
+            // console.log($("#fort_select textarea").html());
+            $(".fade").fadeIn(180);
+            $("#fort_select").fadeIn(180);
         });
         
         MainMenuState.edit_button = m3.ui.Button.create(480, button_y, 200, 32, "Edit Level", "#003322", "#225544", function() {

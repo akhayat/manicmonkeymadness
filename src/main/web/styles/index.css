@@ -124,12 +124,11 @@ a:hover {
 	overflow-y: scroll;
 }
 
-#fort_output {
+#fort_output, #fort_select {
 	position: fixed;
 	left: 20%;
 	top: 25%;
 	width: 60%;
-	height: 320px;
 	padding: 0px 8px;
 	background: #EEFFEE;
 	border: 4px solid #112211;
@@ -141,11 +140,11 @@ a:hover {
 	display: none;
 }
 
-#fort_output p {
+#fort_output p, #fort_select p {
 	margin: 6px 0px;
 }
 
-#fort_output textarea {
+#fort_output textarea, #fort_select textarea {
 	width: 100%;
 	height: 140px;
 }
