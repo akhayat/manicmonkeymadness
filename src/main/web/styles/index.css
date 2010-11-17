@@ -124,7 +124,7 @@ a:hover {
 	overflow-y: scroll;
 }
 
-#fort_output, #fort_select {
+#fort_output, #fort_select, #game_select {
 	position: fixed;
 	left: 20%;
 	top: 25%;
@@ -154,7 +154,26 @@ a:hover {
 	text-align: center;
 }
 
+#game_select p {
+	margin: 6px 0px;
+	text-align: center;
+}
+
 input[disabled], textarea[disabled] {
 	background: #EEEEEE;
 	color: #333333;
+}
+
+.game_lms {
+	width: 140px;
+    margin: auto;
+}
+
+.game_dd {
+    width: 400px;
+    margin: auto;
+}
+
+.dd_button {
+    position: inline;	
 }

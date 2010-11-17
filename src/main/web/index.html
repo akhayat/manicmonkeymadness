@@ -27,6 +27,13 @@
                 <ul>
                     <li>Rock - The rock is a heavy projectile, it moves slow but is extremely destructive.</li>
                     <li>Banana - The banana is a light projectile, it moves extremely fast and is useful for direct shots.</li>
+                    <li>Triple Banana - The triple banana shoots three light projectiles, they move extremely fast and are useful for direct shots.</li>
+                    <li>Watermelon - The watermelon is a heavy projectile, it moves slow and explodes shortly after impact raining sweet seeds about the battlefield.</li>
+                </ul>
+                <h4>Game Modes</h4>
+                <ul>
+                    <li>Last Monkey Standing (LMS) - It's a fight to the finish. Players must fire upon one anothers fortress until one has lost all their monkeys.</li>
+                    <li>Demolition Derby (DB) - Wreck havoc on the enemy fortress. Gain as many points as possible by destroying monkeys and fort pieces with a limited number of shots.</li>
                 </ul>
                 <h4>Tips and Tricks</h4>
                 <ul>
@@ -37,9 +44,30 @@
                 </ul>
                     
                 <div class="close">
-                    <input type=button value="Return to Game" onClick="m3.buttons.toggleHelp();">
+                    <input type=button value="Return to Game" onClick="m3.buttons.toggleHelp();">                    
                 </div>
             </div>
+        </div>
+        
+        <div id="game_select">
+            <p>
+                Select which game mode you wish to play.
+            </p>
+            <p>
+                Last Monkey Standing - Play until either player has lost all their monkeys.
+            </p>
+            <div class="game_lms">
+                <input type=button class="lms" value="Last Monkey Standing">
+            </div>
+            <p>
+                Demolition Derby - Select how many shots (per player) before the game ends and the player with the highest score wins. If the turn limit is exceeded, both players will be given an extra shot until there is a winner.
+            </p>
+            <div class="game_dd">
+                <input type=button class="dd3" value="Demolition Derby (3)">
+                <input type=button class="dd5" value="Demolition Derby (5)">
+                <input type=button class="dd10" value="Demolition Derby (10)">
+            </div>
+                                           
         </div>
         
         <div id="fort_select">
@@ -114,6 +142,7 @@
         <script src="scripts/modules/game.js" type="text/javascript"></script>
         <script src="scripts/modules/config.js" type="text/javascript"></script>
         <script src="scripts/modules/fort_choices.js" type="text/javascript"></script>
+        <script src="scripts/modules/game_choices.js" type="text/javascript"></script>
         
         <!-- Types -->
         <script src="scripts/types/vector.js" type="text/javascript"></script>

@@ -61,7 +61,7 @@ $(function() {
                 $("#fort_select .done_link a").click(function(event) {
                     event.preventDefault();
                     $("#fort_select").fadeOut(200);
-                    $(".fade").fadeOut(200);
+                    $("#game_select").fadeIn(180);
                     
                     var choice = $("#fort_select input:checked");
                     
@@ -72,8 +72,38 @@ $(function() {
                     else {
                         m3.fort_choices.setFortChoice(0, "premade", parseInt(choice.attr("data-index")));
                         m3.fort_choices.setFortChoice(1, "premade", parseInt(choice.attr("data-index")));
-                    }
-                    
+                    }                    
+                });
+                
+                $("#game_select .game_lms .lms").click(function(event) {
+                	event.preventDefault();
+                    $("#game_select").fadeOut(200);
+                    $(".fade").fadeOut(200);
+                    m3.game_choices.setGameLength(0);
+                    m3.game.state = m3.states.PlayState.create();
+                });
+                
+                $("#game_select .game_dd .dd3").click(function(event) {
+                	event.preventDefault();
+                    $("#game_select").fadeOut(200);
+                    $(".fade").fadeOut(200);
+                    m3.game_choices.setGameLength(3);
+                    m3.game.state = m3.states.PlayState.create();
+                });
+                
+                $("#game_select .game_dd .dd5").click(function(event) {
+                	event.preventDefault();
+                    $("#game_select").fadeOut(200);
+                    $(".fade").fadeOut(200);
+                    m3.game_choices.setGameLength(5);
+                    m3.game.state = m3.states.PlayState.create();
+                });
+                
+                $("#game_select .game_dd .dd10").click(function(event) {
+                	event.preventDefault();
+                    $("#game_select").fadeOut(200);
+                    $(".fade").fadeOut(200);
+                    m3.game_choices.setGameLength(10);
                     m3.game.state = m3.states.PlayState.create();
                 });
                 

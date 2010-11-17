@@ -35,14 +35,12 @@ $(function() {
         // This determines whose turn it is. The player who starts is chosen randomly.
         PlayState.active_player = m3.math.randomInteger(0, 1);
         
-        PlayState.active_projectile = [];
-        
-        // This is a reference to the projectile most recently launched.
-//        PlayState.active_projectile = [];
-        
-        //Keeps track of first shot
+        // Keeps track of first shot
         PlayState.first = false;
         
+        // Shot Counter
+        PlayState.shots = 0;
+                
         // Keeps track of who won when the game ends.
         PlayState.winner = null;
         
@@ -89,6 +87,8 @@ $(function() {
             N: {
                 down: function() {
                     if (m3.game.state.game_state === "done") {
+                        $("#game_select").fadeIn(180);
+                        $(".fade").fadeIn(180);
                         m3.game.state = m3.states.PlayState.create();
                     }
                 }
@@ -111,6 +111,8 @@ $(function() {
                 if (state.game_state === "waiting" && m3.launcher.aiming) {
                     m3.launcher.launch(event);
                     state.setState("attacking");
+                    state.shots += 1;
+                    m3.util.log("Shot Number " + state.shots + " of " + state.max_shots);
                 }
             },
             
@@ -194,6 +196,15 @@ $(function() {
             // We're done transitioning when the camera is done sliding.
             if (!m3.camera.sliding) {
                 this.setState("waiting");
+                
+                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0)) {
+                	if (m3.score.getScore(0) > m3.score.getScore(1)) {
+                		this.endRound(0);
+                	}
+                	else if (m3.score.getScore(0) < m3.score.getScore(1)) {
+                		this.endRound(1);
+                	}
+                }
             }
         };
         
@@ -252,8 +263,8 @@ $(function() {
             m3.world.init();
             
             s.level             = m3.types.Level.create("demo", true);
-            //s.active_player     = m3.math.randomInteger(0, 1);
             s.active_projectile = [];
+            s.max_shots 		= m3.game_choices.max_shots * 2;
             
             // If the second player is starting, we need to warp the camera to their side.
             if (s.active_player === 1) {
