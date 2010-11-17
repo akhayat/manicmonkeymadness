@@ -70,6 +70,7 @@ $(function() {
         	    ground_layer :    imageFromSource("backgrounds/ground_layer.png"),
                 background_layer: imageFromSource("backgrounds/background_layer.png"),
                 mountain_layer:   imageFromSource("backgrounds/mountain_layer.png"),
+                mountain_layer2:  imageFromSource("backgrounds/mountain_layer2.png"),
                 tree_layer:       imageFromSource("backgrounds/tree_layer.png")
             },
             
@@ -81,6 +82,8 @@ $(function() {
                 monkey:        imageFromSource("sprites/monkey.png"),
                 proj_monkey:   imageFromSource("sprites/projectile_monkey.png"),
                 monkey_helmet: imageFromSource("sprites/monkey_helmet.png"),
+                banana_bunch:  imageFromSource("sprites/banana_bunch.png"),
+                banana_green:  imageFromSource("sprites/banana_green.png"),
                 
                 fort_pieces: {
                     box_long_wood: {

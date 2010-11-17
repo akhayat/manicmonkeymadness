@@ -21,7 +21,7 @@ $(function() {
                     launcher	  = m3.launcher.currentLauncher(),
                     projectile	  = m3.types.Projectile;
                 
-                icon = m3.types.Projectile.sprite(launcher.pType, launcher.pDetails);
+                icon = m3.types.Projectile.icon(launcher.pType, launcher.pDetails);
                 
                 var w = icon.width,
                     h = icon.height;
@@ -29,10 +29,10 @@ $(function() {
                 context.fillStyle   = "rgba(220, 245, 255, 0.8)";
                 context.strokeStyle = "rgba(0, 10, 30, 0.4)";
                 context.lineWidth   = 2;
-                context.fillRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 40);
-                context.strokeRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 40);
+                context.fillRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 45);
+                context.strokeRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 45);
                 
-                context.drawImage(icon, 0, 0, w, h, camera.x + (game_width - icon.width) / 2, camera.y + 10, w * .75, h * .75);
+                context.drawImage(icon, 0, 0, w, h, camera.x + (game_width - icon.width) / 2, camera.y + 26 - (icon.height * .7 / 2), w * .7, h * .7);
             }
         };
     }();

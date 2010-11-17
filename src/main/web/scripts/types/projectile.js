@@ -26,40 +26,40 @@ $(function() {
             },
             banana: {
                 single: { s: assets.banana, h: 27, w: 34,
-            	          density: 3.5, restitution: 0, friction: 1.0, torque: 10,
-            	          vertices: [[10,-21], [15,-15], [16,-10], [10,0], [0,5], [-11,5], [-18,0]], 
-            	          spriteOffset: m3.types.Vector.create(-18,-22),
+            	          density: 1.5, restitution: 0, friction: 1.0, torque: 10,
+            	          vertices: [[8,-16], [13,-10], [14,-5], [8,5], [-2,10], [-13,10], [-20,5]], 
+            	          spriteOffset: m3.types.Vector.create(20,16),
             	          spawn: function(x, y) {
             	              return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false);
                           }
-                        },
+                },
 
-                triple: { s: assets.banana, h: 27, w: 34, radius: 19,
+                triple: { s: assets.banana_green, h: 25, w: 25, icon: assets.banana_bunch,
                           density: 1.5, restitution: 0, friction: 1.0, torque: 10,
-            	          vertices: [[10,-21], [15,-15], [16,-10], [10,0], [0,5], [-11,5], [-18,0]], 
+                          vertices: [[5,-15], [9,-10], [11,-5], [5,7], [-6,10], [-13,5]],
+                          spriteOffset: m3.types.Vector.create(13,15),
             	          spawn: function(x, y) {
           	                  return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false);
                           }
-                        }
+                }
             },
             watermelon: {
-                whole: 	{ s: assets.watermelon, h: 30, w: 42, radius: 15,
+                whole: 	{ s: assets.watermelon, h: 30, w: 42,
    	             		  density: 2.5, restitution: 0.1, friction: 1.25, torque: 800,
-   	             		  vertices: [[8,-15], [21,-5], [21,3], [8,10], [-8,10], [-21,0], [-17,-5], [-8,-15]],
-   	             		  spriteOffset: m3.types.Vector.create(-21,-15),
+   	             		  vertices: [[8,-12], [20,-5], [20,5], [8,12], [-8,12], [-20,5], [-20,-5], [-8,-12]],
+   	             		  spriteOffset: m3.types.Vector.create(20,15),
    	             		  spawn: function(x, y) {
 	                 	      return m3.world.createPoly(x / scale, y / scale, m3.graphics.pixelsToMeters(this.vertices), false, this.density, this.restitution, this.friction, false)
                  		  }
-               			}
+               	}
             },
             monkey: { 
-            medium: { s: assets.monkey_helmet, h: 51, w: 41,
-            	      density: 1.0, restitution: 0.5, friction: 1.0, torque: 500,
-            	      spawn: function(x, y) {
-            	    	  return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, false, this.density, this.restitution, this.friction, false)
-            	      }
-                     }
-            	
+                medium: { s: assets.monkey_helmet, h: 51, w: 41, icon: assets.proj_monkey,
+            	          density: 1.0, restitution: 0.5, friction: 1.0, torque: 500,
+            	          spawn: function(x, y) {
+            	    	      return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, false, this.density, this.restitution, this.friction, false)
+            	          }
+                }
             }
         };
 
@@ -73,6 +73,12 @@ $(function() {
         	var t = ammunition[ammo][type];
 
         	return t.s;
+        };
+        
+        Projectile.icon = function(ammo, type) {
+        	var t = ammunition[ammo][type];
+        	
+        	return !!t.icon ? t.icon : t.s;
         };
         
         // Collision callback.
@@ -145,6 +151,14 @@ $(function() {
             p.alive     = true;
             p.sprite    = Sprite.create(t.s, t.h, t.w);
             p.life_time = 0.0;
+            
+            if (!!t.spriteOffset) {
+            	p.spriteOffset = t.spriteOffset;
+            }
+            
+            if (!!t.icon) {
+            	p.icon = t.icon;
+            }
             
             if (impulse_x !== undefined && impulse_y !== undefined) {
                 p.body.ApplyImpulse(new b2Vec2(impulse_x, impulse_y), new b2Vec2(p.x_in_meters, p.y_in_meters));

@@ -68,7 +68,7 @@ $(function() {
                         
                         // Check for offset otherwise assume a rectangle
                         if (!!spriteOffset) {
-                        	offset.set(-spriteOffset, -spriteOffset);
+                        	offset.set(-spriteOffset.x, -spriteOffset.y);
                         }
                         else {
                             offset.set(-width, -height);
