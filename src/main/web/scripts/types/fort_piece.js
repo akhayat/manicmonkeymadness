@@ -17,12 +17,12 @@ $(function() {
         var pieces = {
             box: {
                 long: {
-                    wood: { s: assets.box_long_wood, h: 100, w: 10 },
-                    rock: { s: assets.box_long_rock, h: 100, w: 10 }
+                    wood: { s: assets.box_long_wood, h: 100, w: 10, cost: 20 },
+                    rock: { s: assets.box_long_rock, h: 100, w: 10, cost: 40 }
                 },
                 short: {
-                    wood: { s: assets.box_short_wood, h: 50, w: 10 },
-                    rock: { s: assets.box_short_rock, h: 50, w: 10 }
+                    wood: { s: assets.box_short_wood, h: 50, w: 10, cost: 8 },
+                    rock: { s: assets.box_short_rock, h: 50, w: 10, cost: 16 }
                 }
             }
         };
@@ -111,6 +111,7 @@ $(function() {
             f.sprite         = f.sprites.normal;
             f.angle          = angle;
             f.type           = "fort_piece";
+            f.cost           = t.cost;
             f.alive          = true;
             f.damage         = 0;
             

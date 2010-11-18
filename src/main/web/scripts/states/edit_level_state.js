@@ -42,6 +42,9 @@ $(function () {
         // This object contains the lists for the fort's pieces and enemies.
         EditLevelState.fort = { pieces: [], enemies: [] };
         
+        // The player's total amount of points used for creating a fort.
+        EditLevelState.points = m3.config.fort_points;
+        
         // This state uses a regular level just like the play state does.
         EditLevelState.level = null;
         
@@ -98,9 +101,21 @@ $(function () {
                 var clicked_piece = state.firstGrabbable(mouse.x, mouse.y);
                 
                 if (clicked_piece) {
-                    state.dragging     = true;
-                    var add            = (clicked_piece.type === "enemy") ? state.addEnemy : state.addPiece;
-                    state.active_piece = (clicked_piece.placed) ? clicked_piece : add(clicked_piece);
+                    state.dragging = true;
+                    
+                    if (clicked_piece.placed) {
+                        state.active_piece = clicked_piece;
+                    }
+                    else if (clicked_piece.type === "fort_piece" && state.points - clicked_piece.cost >= 0) {
+                        state.active_piece = state.addPiece(clicked_piece);
+                        m3.game.state.points -= clicked_piece.cost;
+                    }
+                    else if (clicked_piece.type === "enemy" && state.fort.enemies.length < m3.config.max_enemies) {
+                        state.active_piece = state.addEnemy(clicked_piece);
+                    }
+                    else {
+                        state.dragging = false;
+                    }
                 }
             },
             
@@ -220,6 +235,13 @@ $(function () {
             for (var i = 0, n = fort.enemies.length; i < n; i++) {
                 fort.enemies[i].update();
             }
+            
+            // Show the remaining fort points and enemies.
+            context.fillStyle   = "rgba(255, 255, 255, 0.95)";
+            context.font        = "16px Tahoma, Geneva, sans-serif";
+            context.textAlign   = "center";
+            context.fillText(this.points + "/" + m3.config.fort_points + " points remaining", m3.game.width - 138, 330);
+            context.fillText((m3.config.max_enemies - fort.enemies.length) + " enemies left", m3.game.width - 138, 350);
             
             // Update the done button.
             this.done_button.update();

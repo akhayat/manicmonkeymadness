@@ -38,33 +38,33 @@ $(function() {
                 id:   "Original",
                 fort: {
                     pieces: [
-                         { shape: "box", size: "long",  type: "rock", x: 258, y: 305, angle: -Math.PI / 4 },
-                         { shape: "box", size: "long",  type: "wood", x: 100, y: 295, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 150, y: 295, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 200, y: 295, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 100, y: 195, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 150, y: 195, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 200, y: 195, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 150, y: 140, angle: Math.PI / 2 },
-                         { shape: "box", size: "short", type: "wood", x: 110, y: 110, angle: 0 },
-                         { shape: "box", size: "short", type: "wood", x: 150, y: 110, angle: 0 },
-                         { shape: "box", size: "short", type: "wood", x: 190, y: 110, angle: 0 },
-                         { shape: "box", size: "long",  type: "wood", x: 150, y: 80,  angle: Math.PI / 2 },
-                         { shape: "box", size: "long",  type: "rock", x: 215, y: 295, angle: 0 },
-                         { shape: "box", size: "long",  type: "rock", x: 215, y: 195, angle: 0 },
-                         { shape: "box", size: "long",  type: "rock", x: 88,  y: 295, angle: 0 },
-                         { shape: "box", size: "long",  type: "rock", x: 88,  y: 195, angle: 0 },
-                         { shape: "box", size: "short", type: "rock", x: 88,  y: 120, angle: 0 },
-                         { shape: "box", size: "short", type: "rock", x: 210, y: 120, angle: 0 },
-                         { shape: "box", size: "long",  type: "rock", x: 150, y: 70,  angle: Math.PI / 2 }
+                        { shape: "box", size: "long",  type: "rock", x: 258, y: 305, angle: -Math.PI / 4 },
+                        { shape: "box", size: "long",  type: "wood", x: 100, y: 295, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 150, y: 295, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 200, y: 295, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 100, y: 195, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 150, y: 195, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 200, y: 195, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 150, y: 140, angle: Math.PI / 2 },
+                        { shape: "box", size: "short", type: "wood", x: 110, y: 110, angle: 0 },
+                        { shape: "box", size: "short", type: "wood", x: 150, y: 110, angle: 0 },
+                        { shape: "box", size: "short", type: "wood", x: 190, y: 110, angle: 0 },
+                        { shape: "box", size: "long",  type: "wood", x: 150, y: 80,  angle: Math.PI / 2 },
+                        { shape: "box", size: "long",  type: "rock", x: 215, y: 295, angle: 0 },
+                        { shape: "box", size: "long",  type: "rock", x: 215, y: 195, angle: 0 },
+                        { shape: "box", size: "long",  type: "rock", x: 88,  y: 295, angle: 0 },
+                        { shape: "box", size: "long",  type: "rock", x: 88,  y: 195, angle: 0 },
+                        { shape: "box", size: "short", type: "rock", x: 88,  y: 120, angle: 0 },
+                        { shape: "box", size: "short", type: "rock", x: 210, y: 120, angle: 0 },
+                        { shape: "box", size: "long",  type: "rock", x: 150, y: 70,  angle: Math.PI / 2 }
                     ],
                           
-                     enemies: [
-                         { type: "monkey", size: "medium", x: 120, y: 325, angle: 0 },
-                         { type: "monkey", size: "medium", x: 170, y: 325, angle: 0 },
-                         { type: "monkey", size: "small",  x: 120, y: 125, angle: 0 },
-                         { type: "monkey", size: "small",  x: 170, y: 125, angle: 0 }
-                     ]
+                    enemies: [
+                        { type: "monkey", size: "medium", x: 120, y: 325, angle: 0 },
+                        { type: "monkey", size: "medium", x: 170, y: 325, angle: 0 },
+                        { type: "monkey", size: "small",  x: 120, y: 125, angle: 0 },
+                        { type: "monkey", size: "small",  x: 170, y: 125, angle: 0 }
+                    ]
                 }
             },
             

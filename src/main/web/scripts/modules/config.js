@@ -19,6 +19,12 @@ $(function() {
             // How much space between each fortress and the edge of the screen.
             level_padding: 25,
             
+            // The maximum number of enemies in a fort.
+            max_enemies: 8,
+            
+            // How many points are allowed to be used to make a fortress in the level editor.
+            fort_points: 1000,
+            
             // The width of each fortress area.
             fort_width: 640,
             
@@ -45,7 +51,6 @@ $(function() {
             
             // The radius of the circles drawn on the fort pieces in edit level mode used to drag
             // and drop the pieces.
-
             grabber_radius: 9.0,
             
             // The force applied to the launcher to rotate it when aiming
@@ -53,7 +58,6 @@ $(function() {
             
             // How fast the fort pieces should be rotated in edit level mode.
             rotation_speed: 2.5
-
         };
     }();
 });
