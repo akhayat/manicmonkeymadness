@@ -28,6 +28,9 @@ $(function() {
         //                    to the main menu.
         PlayState.game_state = "starting";
         
+        // Keeps track of which game mode is being played.
+        PlayState.game_mode = m3.game_choices.game_mode;
+        
         // This keeps track of how long we've been in the current state.
         PlayState.state_time = 0.0;
         PlayState.old_time = null;
@@ -182,6 +185,16 @@ $(function() {
                              x < 0 || x > m3.config.level_width;
             
             if (transition) {
+            	
+                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
+                	if (m3.score.getScore(0) > m3.score.getScore(1)) {
+                		this.endRound(0);
+                	}
+                	else if (m3.score.getScore(0) < m3.score.getScore(1)) {
+                		this.endRound(1);
+                	}
+                }
+            	
                 m3.camera.stopFollowing();
                 this.updateProjectiles();
                 var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
@@ -196,15 +209,6 @@ $(function() {
             // We're done transitioning when the camera is done sliding.
             if (!m3.camera.sliding) {
                 this.setState("waiting");
-                
-                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.max_shots !== 0)) {
-                	if (m3.score.getScore(0) > m3.score.getScore(1)) {
-                		this.endRound(0);
-                	}
-                	else if (m3.score.getScore(0) < m3.score.getScore(1)) {
-                		this.endRound(1);
-                	}
-                }
             }
         };
         

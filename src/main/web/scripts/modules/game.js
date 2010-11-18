@@ -80,6 +80,7 @@ $(function() {
                     $("#game_select").fadeOut(200);
                     $(".fade").fadeOut(200);
                     m3.game_choices.setGameLength(0);
+                    m3.game_choices.setGameMode("last monkey standing");
                     m3.game.state = m3.states.PlayState.create();
                 });
                 
@@ -88,6 +89,7 @@ $(function() {
                     $("#game_select").fadeOut(200);
                     $(".fade").fadeOut(200);
                     m3.game_choices.setGameLength(3);
+                    m3.game_choices.setGameMode("demolition derby");
                     m3.game.state = m3.states.PlayState.create();
                 });
                 
@@ -96,6 +98,7 @@ $(function() {
                     $("#game_select").fadeOut(200);
                     $(".fade").fadeOut(200);
                     m3.game_choices.setGameLength(5);
+                    m3.game_choices.setGameMode("demolition derby");
                     m3.game.state = m3.states.PlayState.create();
                 });
                 
@@ -104,6 +107,7 @@ $(function() {
                     $("#game_select").fadeOut(200);
                     $(".fade").fadeOut(200);
                     m3.game_choices.setGameLength(10);
+                    m3.game_choices.setGameMode("demolition derby");
                     m3.game.state = m3.states.PlayState.create();
                 });
                 
