@@ -197,7 +197,7 @@ $(function() {
             if (!m3.camera.sliding) {
                 this.setState("waiting");
                 
-                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0)) {
+                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.max_shots !== 0)) {
                 	if (m3.score.getScore(0) > m3.score.getScore(1)) {
                 		this.endRound(0);
                 	}
