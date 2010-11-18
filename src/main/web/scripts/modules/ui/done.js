@@ -16,6 +16,7 @@ $(function() {
         return {
             update: function() {
                 // Say who won.
+                context.drawImage(m3.assets.icons.treasure, camera.x, camera.y);
                 context.fillStyle   = "rgba(250, 255, 245, 0.95)";
                 context.font        = "60px Tahoma, Geneva, sans-serif";
                 context.textAlign   = "center";

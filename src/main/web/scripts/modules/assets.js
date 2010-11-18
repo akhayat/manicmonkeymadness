@@ -109,7 +109,9 @@ $(function() {
             	audio:    imageFromSource("icons/audio.png"),
             	no_audio: imageFromSource("icons/no_audio.png"),
             	music:    imageFromSource("icons/music.png"),
-            	no_music: imageFromSource("icons/no_music.png")
+            	no_music: imageFromSource("icons/no_music.png"),
+            	//until Alex draws one
+            	treasure: imageFromSource("resource/treasurchest.png")
             },
             
             // Music.
