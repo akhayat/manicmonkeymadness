@@ -103,9 +103,16 @@
         
         <div id="game">
             <canvas id="game_canvas" height="450px" width="900px">
-                Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.
+                Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.            
             </canvas>
+            <div id="buttons">
+                <input id="help" type="image" class="help_button" src="images/icons/help.png" alt="Submit" onclick="m3.buttons.toggleHelp();"/>
+                <input id="sound" type="image" class="help_button" alt="Sound" onclick="m3.sound.toggleSound();"/>
+                <input id="music" type="image" class="help_button" alt="Music" onclick="m3.sound.toggleMusic();"/>
+            </div>    
         </div>
+        
+
  
  
  <!--src="images/resource/audio.png" -->
@@ -116,9 +123,6 @@
             <div class="links">
                 <ul>
                     <li><a href="#" onclick="m3.buttons.toggleHelp();">HELP ME!</a>  
-                    <input id="help" type="image" class="help_button" src="images/icons/help.png" alt="Submit" onclick="m3.buttons.toggleHelp();"/>
-                    <input id="sound" type="image" class="help_button" alt="Sound" onclick="m3.sound.toggleSound();"/>
-                    <input id="music" type="image" class="help_button" alt="Music" onclick="m3.sound.toggleMusic();"/>
                     <li><a href="../../test/index.html">QUnit Tests</a>
                     <li><a href="http://code.google.com/p/manicmonkeymadness/">Google Code Project Page</a></li>
                 </ul>
