@@ -17,6 +17,37 @@ $(function() {
         var Sprite  = m3.types.Sprite,
             context = m3.game.context;
         
+        // This returns the boundaries of the physics object accounting for rotation.
+        PhysicsObject.getBounds = function() {
+            var vertices = this.shape.m_vertices,
+                scale    = m3.config.scaling_factor;
+            
+            var bounds = {
+                left:   vertices[0].x,
+                right:  vertices[0].x,
+                top:    vertices[0].y,
+                bottom: vertices[0].y
+            };
+            
+            for (var i = 1, n = vertices.length; i < n; i++) {
+                if (!vertices[i]) {
+                    break;
+                }
+                
+                bounds.left   = Math.min(bounds.left,   vertices[i].x);
+                bounds.right  = Math.max(bounds.right,  vertices[i].x);
+                bounds.top    = Math.min(bounds.top,    vertices[i].y);
+                bounds.bottom = Math.max(bounds.bottom, vertices[i].y);
+            }
+            
+            bounds.left   = this.x + bounds.left * scale;
+            bounds.right  = this.x + bounds.right * scale;
+            bounds.top    = this.y + bounds.top * scale;
+            bounds.bottom = this.y + bounds.bottom * scale;
+            
+            return bounds;
+        };
+        
         // Removes an object from the world.
         PhysicsObject.destroy = function() {
             var container = this.container;
@@ -68,7 +99,7 @@ $(function() {
                         
                         // Check for offset otherwise assume a rectangle
                         if (!!spriteOffset) {
-                        	offset.set(-spriteOffset.x, -spriteOffset.y);
+                            offset.set(-spriteOffset.x, -spriteOffset.y);
                         }
                         else {
                             offset.set(-width, -height);

@@ -77,7 +77,7 @@ $(function() {
             var context = m3.game.context;
             
             if (m3.game.state.EditLevelState) {
-                context.fillStyle = "rgba(100, 180, 255, 0.6)";
+                context.fillStyle = (this.out_of_bounds) ? "rgba(255, 20, 10, 0.6)" : "rgba(100, 180, 255, 0.6)";
                 context.beginPath();
                 context.arc(this.x, this.y, m3.config.grabber_radius, 0.0, Math.PI * 2, false);
                 context.fill();
@@ -114,6 +114,7 @@ $(function() {
             f.cost           = t.cost;
             f.alive          = true;
             f.damage         = 0;
+            f.out_of_bounds  = false;
             
             return f;
         };

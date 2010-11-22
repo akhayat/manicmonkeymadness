@@ -14,10 +14,18 @@ $(function () {
             Vector    = m3.types.Vector;
         
         EditLevelState.done_button = m3.ui.Button.create(705, 380, 120, 32, "Export", "#550011", "#661122", function() {
-            $("#fort_output textarea").html(JSON.stringify(m3.game.state.output));
-            $(".fade").fadeIn(180);
-            $("#fort_output").fadeIn(180);
+            if (m3.game.state.fort_valid) {
+                $("#fort_output textarea").html(JSON.stringify(m3.game.state.output));
+                $(".fade").fadeIn(180);
+                $("#fort_output").fadeIn(180);
+            }
+            else {
+                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");
+            }
         });
+        
+        // Whether or not the fort is valid (all pieces are within bounds, etc).
+        EditLevelState.fort_valid = true;
         
         // Tracks whether we're dragging something or not.
         EditLevelState.dragging = false;
@@ -47,6 +55,14 @@ $(function () {
         
         // This state uses a regular level just like the play state does.
         EditLevelState.level = null;
+        
+        // Defines the boundaries of the buildable area.
+        EditLevelState.bounds = {
+            left:   m3.config.level_padding + 45,
+            top:    0,
+            right:  m3.config.level_padding + m3.config.fort_width - 35,
+            bottom: m3.game.height
+        };
         
         // This is a dummy object that contains a toJSON method that will be called by JSON.stringify
         // to create the JSON output.
@@ -198,7 +214,10 @@ $(function () {
                 active_piece = this.active_piece,
                 pieces       = this.pieces,
                 enemies      = this.enemies,
-                fort         = this.fort;
+                fort         = this.fort,
+                bounds       = this.bounds;
+            
+            this.fort_valid = true;
             
             // Rotate the currently-held piece with the arrow keys.
             if (active_piece) {
@@ -211,13 +230,29 @@ $(function () {
                 }
             }
             
+            // Check to see if any pieces or monkeys are out of bounds.
+            for (var i = 0, n = fort.pieces.length + fort.enemies.length; i < n; i++) {
+                var piece        = (i < fort.pieces.length) ? fort.pieces[i] : fort.enemies[i - fort.pieces.length],
+                    piece_bounds = piece.getBounds(),
+                    level_bounds = this.bounds;
+                
+                if (piece_bounds.left < level_bounds.left || piece_bounds.right  > level_bounds.right ||
+                    piece_bounds.top  < level_bounds.top  || piece_bounds.bottom > level_bounds.bottom) {
+                    piece.out_of_bounds = true;
+                    this.fort_valid = false;
+                }
+                else {
+                    piece.out_of_bounds = false;
+                }
+            }
+            
             this.level.update();
             m3.world.update();
             
             // Render some transparent red rectangles to show the fortress boundaries.
             context.fillStyle = "rgba(255, 0, 0, 0.2)";
-            context.fillRect(0, 0, m3.config.level_padding + 45, m3.game.height);
-            context.fillRect(m3.config.level_padding + m3.config.fort_width - 35, 0, m3.game.width, m3.game.height);
+            context.fillRect(0, 0, bounds.left, m3.game.height);
+            context.fillRect(bounds.right, 0, m3.game.width, m3.game.height);
             
             // Render the pieces and enemies.
             for (var i = 0, n = pieces.length; i < n; i++) {
