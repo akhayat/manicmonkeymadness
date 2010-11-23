@@ -90,6 +90,7 @@ $(function() {
             }
             
             if (m3.launcher.currentLauncher().pType === "watermelon" && this.type === "projectile") {
+            	this.type = "broken";
             	this.body.SetLinearVelocity(new b2Vec2(0,0));
             	this.sprite.play("explode");
             	
@@ -160,7 +161,7 @@ $(function() {
             if (t.icon)	p.icon = t.icon;
             
             if (ammo === "watermelon") {
-            	p.sprite.addAnimation("explode", [1, 0, 1, 2, 3, 4, 5], 0.12);
+            	p.sprite.addAnimation("explode", [1, 0, 1, 0, 1, 2, 3, 4, 3, 5], 0.25);
             }
             
             if (impulse) {

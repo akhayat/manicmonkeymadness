@@ -204,17 +204,17 @@ $(function() {
         	
     		xDistance = position.x / scale;
 
-      		shapes = active_player ? level.fortresses[1].pieces : level.fortresses[0].pieces;
+      		shapes = active_player ? level.fortresses[0].pieces : level.fortresses[1].pieces;
         	
         	for (var i = 0, j = shapes.length; i < j; i+=1) {
         		var b 	= shapes[i],
         		 	fv 	= new b2Vec2(b.x, b.y);
         		
-        		if (Math.abs(xDistance - fv.x / scale) <= 3) {
+        		if (Math.abs(xDistance - fv.x / scale) <= 5) {
         			fv.Subtract(position);
         			fv.Normalize();
-        			fv.Multiply(500);
-            		b.body.WakeUp();
+        			fv.Multiply(200);
+            		b.body.SetAwake(true);
             		b.body.ApplyImpulse(fv, new b2Vec2(b.x / scale, b.y / scale));
         		}
 
