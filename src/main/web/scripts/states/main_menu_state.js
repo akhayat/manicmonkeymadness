@@ -12,7 +12,7 @@ $(function () {
         MainMenuState.keyHandlers = {
             C: {
                 down: function() {
-                    $('#console').toggle();
+                    m3.util.toggleLog();
                 }
             },
             

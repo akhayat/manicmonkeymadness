@@ -154,6 +154,11 @@ $(function () {
         };
         
         EditLevelState.keyHandlers = {
+            C: {
+                down: function() {
+                    m3.util.toggleLog();
+                }
+            },
             D: {
             	down: function() {
           	        m3.world.toggleDebugDraw();

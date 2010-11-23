@@ -14,7 +14,9 @@ $(function() {
         
         var skins = {
             cannon: {
-                grey: { s: assets.cannon, h: 60, w: 92, barrel_height: 41, wheel_radius: 21, 
+                grey: { s: assets.cannon, h: 60, w: 92, barrel_height: 41, wheel_radius: 21,
+        	            barrel_vertices_left: [[-9,0], [-22,-15], [-22,-25], [-9,-41], [21,-41], [71,-36], [71,-5], [21,0]],
+        	            barrel_vertices_right: [[-21,0], [-71,-5], [-71,-36], [-21,-41], [9,-41], [22,-25], [22,-15], [9,0]],
         	            spriteOffset_left: m3.types.Vector.create(21,39), spriteOffset_right: m3.types.Vector.create(71,39) }
             }       
         };
@@ -64,32 +66,25 @@ $(function() {
                 var s = skins[skin][type],
                     d = details[type],
                     scale = m3.config.scaling_factor,
-                    x = 0,
-                    y = m3.config.level_height - m3.config.ground_height - s.wheel_radius;
-                    
-                
-                if (side === "left") {
-                    x = m3.config.fort_width + m3.config.level_padding + 100;
-                }
-                else {
-                    x = m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w;
-                }
+                    vertices = side === "left" ? s.barrel_vertices_left : s.barrel_vertices_right,
+                    y = m3.config.level_height - m3.config.ground_height - s.wheel_radius,                   
+                    x = side === "left" ? m3.config.fort_width + m3.config.level_padding + 100
+                                 : m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w;
                 
                 var object = Object.create(m3.types.PhysicsObject.create(x, y)),
-                    
-                    launcher = m3.world.createCircleBoxComposite(x / scale, y / scale, s.wheel_radius / scale,
-                    		s.w / scale, s.barrel_height / scale, new b2Vec2(-1 * axisOffset.x / scale, -1 * axisOffset.y / scale), 0);
                 
+                    launcher = m3.world.createCirclePolyComposite(x / scale, y / scale, s.wheel_radius / scale, m3.util.pixelsToMeters(vertices)); 
+                    		
                 launcher.body.SetUserData(object);
                 object.contact      = this.contact;
-                object.type         = 'weapon';
+                object.type         = "weapon";
                 object.fort         = fort;
                 object.alive        = true;
                 object.damage       = 0;
                 object.body         = launcher.body;
                 object.angle        = angle;
                 object.barrel_height = s.barrel_height;
-                object.facing       = fort.owner ? 'left' : 'right';
+                object.facing       = fort.owner ? "left" : "right";
                 object.axisOffset   = axisOffset;
                 object.launchOffset = launchOffset;
                 object.weapon       = 0;

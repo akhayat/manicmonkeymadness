@@ -118,7 +118,7 @@ $(function() {
          * Creates a kinematic body composed of two shapes. Offset is a vector relative to
          * the body center.
          */
-        var createCircleBoxComposite = function(x, y, radius, width, height, offset) {
+        var createCirclePolyComposite = function(x, y, radius, points) {
         	var bodyDef = new b2BodyDef();
             bodyDef.type = b2Body.b2_kinematicBody;
             bodyDef.position.x = x;
@@ -130,7 +130,7 @@ $(function() {
             var shape1 = body.CreateFixture(fixtureDef);
             
             fixtureDef.shape = new b2PolygonShape();
-            fixtureDef.shape.SetAsOrientedBox(width / 2, height / 2, offset, 0);
+            fixtureDef.shape.SetAsArray(points, points.length);
             var shape2 = body.CreateFixture(fixtureDef);
         	
             var object = { body: body, shape: shape2, shape2: shape2, type: "ground" };
@@ -303,7 +303,7 @@ $(function() {
             createBox: createBox,
             createBall: createCircle,
             createPoly: createPoly,
-            createCircleBoxComposite : createCircleBoxComposite,
+            createCirclePolyComposite : createCirclePolyComposite,
             explode: explode,
             allSleeping: allSleeping,
             allSettled: allSettled,

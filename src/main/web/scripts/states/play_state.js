@@ -63,8 +63,8 @@ $(function() {
             
             P: {
                 down: function() {
-                    m3.sound.toggleMusic();
-                }
+                    m3.util.toggleLog();
+               }
             },
             
             S: {

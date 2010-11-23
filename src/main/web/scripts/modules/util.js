@@ -9,16 +9,24 @@ $(function() {
     m3.util = function() {
         var log_count = 0,
             max_log_count = 1000,
+            log_enabled = true,
             b2Vec2 = Box2D.Common.Math.b2Vec2;
         
         return {
             log: function(text) {
-                $("#console_items").prepend("<p>" + text + "</p>");
-                log_count++;
+        	    if (log_enabled) {
+                    $("#console_items").prepend("<p>" + text + "</p>");
+                    log_count++;
                 
-                if (log_count > max_log_count) {
-                    $("#console_items").children("p").first().remove();
-                }
+                    if (log_count > max_log_count) {
+                        $("#console_items").children("p").first().remove();
+                    }
+        	    }
+            },
+            
+            toggleLog: function() {
+            	log_enabled = !log_enabled;
+            	$('#console').toggle();
             },
             
             /*
