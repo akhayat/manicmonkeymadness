@@ -35,7 +35,7 @@ $(function() {
             ground_height: 30,
             
             // Camera's scroll speed in pixels per second.
-            camera_scroll_speed: 1200,
+            camera_scroll_speed: 1000,
             
             // The maximum amount of time spent per turn, in seconds.
             max_turn_time: 20.0,
@@ -44,7 +44,8 @@ $(function() {
             scaling_factor: 20,
             
             // physics world iterations per step
-            iterations: 10,
+            velocity_iterations: 10,
+            position_iterations: 10,
             
             // damage conversion factor given impact velocity (m/s per damage unit)
             damage_factor: 70,
@@ -52,10 +53,7 @@ $(function() {
             // The radius of the circles drawn on the fort pieces in edit level mode used to drag
             // and drop the pieces.
             grabber_radius: 9.0,
-            
-            // The force applied to the launcher to rotate it when aiming
-            mouse_joint_force: 500,
-            
+
             // How fast the fort pieces should be rotated in edit level mode.
             rotation_speed: 2.5
         };

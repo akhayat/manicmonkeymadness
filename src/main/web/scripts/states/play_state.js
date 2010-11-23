@@ -55,6 +55,12 @@ $(function() {
                 }
             },
             
+            D: {
+            	down: function() {
+            	    m3.world.toggleDebugDraw();
+                }    
+            },
+            
             P: {
                 down: function() {
                     m3.sound.toggleMusic();
@@ -95,7 +101,7 @@ $(function() {
                         m3.game.state = m3.states.PlayState.create();
                     }
                 }
-            }
+            },
         };
         
         // Mouse input handlers for the main menu state.
@@ -247,8 +253,9 @@ $(function() {
             // Update modules.
             m3.camera.update();
             this.level.update();
-            m3.world.update();
             m3.launcher.update();
+            m3.world.update();
+            
             
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                 if (this.active_projectile[i]) {

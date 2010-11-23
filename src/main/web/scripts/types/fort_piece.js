@@ -83,7 +83,7 @@ $(function() {
                 context.fill();
                 context.closePath();
             }
-        }
+        };
         
         // Constructor.
         FortPiece.create = function(fort, shape, size, material, x, y, angle, container, fixed) {
@@ -91,8 +91,8 @@ $(function() {
                 t     = pieces[shape][size][material],
                 m     = materials[material],
                 scale = m3.config.scaling_factor,
-                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale,
-                                           fixed, m.density, m.restitution, m.friction, false);
+                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale, angle,
+                                           fixed, m.density, m.restitution, m.friction);
             
             piece.body.SetUserData(f);
             f.sprites = {};
@@ -109,7 +109,6 @@ $(function() {
             f.body           = piece.body;
             f.shape          = piece.shape;
             f.sprite         = f.sprites.normal;
-            f.angle          = angle;
             f.type           = "fort_piece";
             f.cost           = t.cost;
             f.alive          = true;

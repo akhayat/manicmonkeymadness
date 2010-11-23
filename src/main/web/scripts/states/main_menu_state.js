@@ -16,6 +16,12 @@ $(function () {
                 }
             },
             
+            D: {
+            	down: function() {
+            	    m3.world.toggleDebugDraw();
+                }
+            },
+            
             P: {
                 down: function() {
                     m3.sound.toggleMusic();
@@ -37,9 +43,7 @@ $(function () {
         
         // Main update function.
         MainMenuState.update = function() {
-            var context     = m3.game.context,
-                half_width  = m3.game.width / 2,
-                half_height = m3.game.height / 2;
+            var context     = m3.game.context;
             
             // Draw the background.
             context.fillStyle = "rgb(200, 220, 250)";
@@ -49,7 +53,7 @@ $(function () {
             context.fillStyle = "rgba(0, 0, 0, 0.8)";
             context.font      = "bold 48px sans-serif";
             context.textAlign = "center";
-            context.fillText("Manic Monkey Madness!!!", half_width, half_height);
+            context.fillText("Manic Monkey Madness!!!", m3.game.width / 2, m3.game.height / 2);
             
             // Update the buttons.
             this.play_button.update();

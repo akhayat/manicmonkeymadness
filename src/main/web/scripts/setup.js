@@ -24,9 +24,10 @@ if (typeof Object.create !== "function") {
     };
 }
 
-// Give arrays a remove function.
-Array.prototype.remove = function(from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
-};
+// Breaks Box2D, Dr. Toal was right this was trouble
+//// Give arrays a remove function.
+//Array.prototype.remove = function(from, to) {
+//    var rest = this.slice((to || from) + 1 || this.length);
+//    this.length = from < 0 ? this.length + from : from;
+//    return this.push.apply(this, rest);
+//};

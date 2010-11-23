@@ -44,7 +44,8 @@ $(function () {
         // These are all the enemies that can be placed in the fort.
         EditLevelState.enemies = [
             Enemy.create(0, "monkey", "small",  650, 200, 0, null, true, true),
-            Enemy.create(0, "monkey", "medium", 690, 200, 0, null, true, true)
+            Enemy.create(0, "monkey", "medium", 690, 200, 0, null, true, true),
+            Enemy.create(0, "monkey", "large", 730, 200, 0, null, true, true)
         ];
         
         // This object contains the lists for the fort's pieces and enemies.
@@ -152,6 +153,14 @@ $(function () {
             }
         };
         
+        EditLevelState.keyHandlers = {
+            D: {
+            	down: function() {
+          	        m3.world.toggleDebugDraw();
+                }
+            }
+        };
+        
         // Adds a new piece to the level based on a "template" piece -- one of the pieces in the palette.
         EditLevelState.addPiece = function(t) {
             var piece = m3.types.FortPiece.create(0, t.piece_shape, t.piece_size, t.piece_material, t.x, t.y, t.angle, null, true);
@@ -179,7 +188,7 @@ $(function () {
             var overlaps = function(piece) {
                 var distance_squared = Vector.create(x - piece.x, y - piece.y).lengthSquared();
                 return (distance_squared <= radius_squared);
-            }
+            };
             
             for (var i = 0, n = pieces.length; i < n; i++) {
                 if (overlaps(pieces[i])) {
@@ -282,10 +291,12 @@ $(function () {
             this.done_button.update();
         };
         
+        EditLevelState.
+        
         // Constructor.
         EditLevelState.create = function() {
             var s = Object.create(this);
-            m3.world.clear();
+            //m3.world.clear();
             m3.world.init();
             
             s.level = m3.types.Level.create("demo", false);

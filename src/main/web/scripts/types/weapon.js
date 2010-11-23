@@ -9,16 +9,18 @@ $(function() {
     m3.types.Weapon = function() {
     	    	
         var Sprite = m3.types.Sprite,
-            assets = m3.assets.sprites;
+            assets = m3.assets.sprites,
+            b2Vec2 = Box2D.Common.Math.b2Vec2;
         
         var skins = {
             cannon: {
-                grey: { s: assets.cannon, h: 60, w: 92, barrelHeight: 41 }
+                grey: { s: assets.cannon, h: 60, w: 92, barrel_height: 41, wheel_radius: 21, 
+        	            spriteOffset_left: m3.types.Vector.create(21,39), spriteOffset_right: m3.types.Vector.create(71,39) }
             }       
         };
         
         var details = {
-            grey: { density: 20, restitution: 0, friction: 1.0, power: 200 }
+            grey: { density: 20, restitution: 0.1, friction: 1.0, power: 250 }
         };
         
         return {
@@ -61,9 +63,10 @@ $(function() {
             create: function(fort, skin, type, side, angle, axisOffset, launchOffset) {
                 var s = skins[skin][type],
                     d = details[type],
+                    scale = m3.config.scaling_factor,
                     x = 0,
-                    y = m3.config.level_height - m3.config.ground_height - (s.h / 2) - 5,
-                    scale  = m3.config.scaling_factor;
+                    y = m3.config.level_height - m3.config.ground_height - s.wheel_radius;
+                    
                 
                 if (side === "left") {
                     x = m3.config.fort_width + m3.config.level_padding + 100;
@@ -74,28 +77,18 @@ $(function() {
                 
                 var object = Object.create(m3.types.PhysicsObject.create(x, y)),
                     
-                    barrel = m3.world.createBox(x / scale, y / scale, s.w / scale, s.barrelHeight / scale,
-                                                false, d.density, d.restituition, d.friction, false),
+                    launcher = m3.world.createCircleBoxComposite(x / scale, y / scale, s.wheel_radius / scale,
+                    		s.w / scale, s.barrel_height / scale, new b2Vec2(-1 * axisOffset.x / scale, -1 * axisOffset.y / scale), 0);
                 
-                    wheel = m3.world.createBall((x + axisOffset.x) / scale, (y + axisOffset.y) / scale, axisOffset.y / scale,
-                		                        true, 0, d.restituition, d.friction, false),
-                		                        
-                
-                    cannon = m3.world.createRevoluteJoint(barrel.body, wheel.body, wheel.body.GetWorldCenter());
-                
-                barrel.body.SetUserData(object);
-                wheel.body.SetUserData(object);
+                launcher.body.SetUserData(object);
                 object.contact      = this.contact;
                 object.type         = 'weapon';
                 object.fort         = fort;
                 object.alive        = true;
                 object.damage       = 0;
-                object.body         = wheel.body;
-                object.barrel       = barrel.body;
-                object.wheel        = wheel.body;
-                object.joint        = cannon;
-                object.shape        = barrel.shape;
-                object.barrelHeight = s.barrelHeight;
+                object.body         = launcher.body;
+                object.angle        = angle;
+                object.barrel_height = s.barrel_height;
                 object.facing       = fort.owner ? 'left' : 'right';
                 object.axisOffset   = axisOffset;
                 object.launchOffset = launchOffset;

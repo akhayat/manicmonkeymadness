@@ -16,14 +16,17 @@ $(function() {
         
         var enemies = {
             monkey: {
-                small: { s: assets.monkey, h: 49, w: 41 },
-                medium:{ s: assets.monkey_helmet, h: 51, w: 41 }
+                small: { s: assets.monkey, h: 51, w: 45 },
+                medium:{ s: assets.monkey_helmet, h: 51, w: 41 },
+                large: { s: assets.monkey_spike, h: 55, w: 45}
             }
         };
         
         var details = {
-            small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 1.75 },
-            medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.0 }
+            small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.2, destroyThreshold: 1.75 },
+            medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.0 },
+            large: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 5.0 }
+
         };
         
         // Collision callback.
@@ -95,8 +98,8 @@ $(function() {
                 t     = enemies[character][type],
                 d     = details[type],
                 scale = m3.config.scaling_factor,
-                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale,
-                                           fixed, d.density, d.restitution, d.friction, false);
+                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale, angle,
+                                           fixed, d.density, d.restitution, d.friction);
                
                 piece.body.SetUserData(e);
                 e.destroyThreshold  = d.destroyThreshold;
@@ -104,7 +107,6 @@ $(function() {
                 
                 e.enemy_type = character;
                 e.enemy_size = type;
-                
                 e.body          = piece.body;
                 e.shape         = piece.shape;
                 e.fort          = fort;
@@ -119,9 +121,13 @@ $(function() {
                 if (!stop_animation) {
                     if (type === "small") {
                         e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+                        e.sprite.addAnimation("death", [4, 4, 5, 6], 0.25);
                     }
                     else if (type === "medium") {
                         e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3], 0.12);
+                    }
+                    else if (type === "large") {
+                        e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
                     }
                     
                     e.sprite.play(e.subtype);

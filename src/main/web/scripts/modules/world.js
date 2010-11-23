@@ -9,106 +9,218 @@
 
 $(function() {
     m3.world = function() {
-        // create the world
-        var worldAABB = new b2AABB();
-        worldAABB.lowerBound.Set(-10000.0, -10000.0);
-        worldAABB.upperBound.Set(10000.0, 10000.0);
-        var gravity = new b2Vec2(0.0, 9.8);
-        var world = new b2World(worldAABB, gravity, true);
-        world.SetContactListener(m3.contact);
+    	
+    	//box2d package references (yay actionscript port)
+        var b2Vec2 = Box2D.Common.Math.b2Vec2,
+     		b2BodyDef = Box2D.Dynamics.b2BodyDef,
+     		b2Body = Box2D.Dynamics.b2Body,
+     		b2FixtureDef = Box2D.Dynamics.b2FixtureDef,
+     		b2Fixture = Box2D.Dynamics.b2Fixture,
+     		b2World = Box2D.Dynamics.b2World,
+     		b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape,
+     		b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
+     	    b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+
+        //box2d world
+        var world = new b2World(new b2Vec2(0, 9.8), //gravity
+                                true);              //allow sleeping bodies
         
-        // reference of the world's objects
+        //reference to box2d world objects
         var objects = [];
         
-        var createBox = function(x, y, width, height, fixed, density, restitution, friction, draw) {
-            var bodyDef = new b2BodyDef();
-            bodyDef.position.Set(x, y);
-            bodyDef.angularDamping = 0.1;
-            var body = world.CreateBody(bodyDef);
-            var shapeDef = new b2PolygonDef();
-            shapeDef.restitution = restitution || 0.2;
-            if(!fixed) shapeDef.density = density || 1.0;
-            shapeDef.friction = friction || 0.9;
-            body.w = width / 2;
-            body.h = height / 2;
-            shapeDef.SetAsOrientedBox(body.w, body.h, new b2Vec2(0,0), 0);
-            var shape = body.CreateShape(shapeDef);
-            body.SetMassFromShapes();
-            if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw, type: "box" };
-            objects.push(object);
-            return object;
-        };
+        //box2d native debug drawing
+        var debugDrawEnabled = false;
         
-        var createBall = function(x, y, radius, fixed, density, restitution, friction, draw) {
-            var bodyDef = new b2BodyDef();
-            bodyDef.position.Set(x, y);
-            if(!fixed) bodyDef.isBullet = true;
-            if(!fixed) bodyDef.angularDamping = 1.0;
-            var body = world.CreateBody(bodyDef);
-            var shapeDef = new b2CircleDef();
-            shapeDef.radius = radius || 1.0;
-            shapeDef.restitution = restitution || 0.6;
-            if(!fixed) shapeDef.density = density || 1.0;
-            shapeDef.friction = friction || 0.9;
-            body.w = 1.0;
-            body.h = 1.0;
-            var shape = body.CreateShape(shapeDef);
-            body.SetMassFromShapes();
-            if (draw === undefined) draw = true;
-            var object = { body: body, shape: shape, draw: draw, type: "ball" };
-            objects.push(object);
-            return object;
-        };
-       
-        var createPoly = function(x, y, points, fixed, density, restitution, friction, draw) {
-            var bodyDef = new b2BodyDef();
-            bodyDef.position.Set(x, y);
-            bodyDef.angularDamping = 0.1;
-            var body = world.CreateBody(bodyDef);
-            var shapeDef = new b2PolygonDef();
-            shapeDef.restitution = restitution || 0.2;
-            if(!fixed) shapeDef.density = density || 1.0;
-            shapeDef.friction = friction || 0.9;
-            shapeDef.vertexCount = points.length;
-            for (var i = 0, n = points.length; i < n; i++) {
-                shapeDef.vertices[i].Set(points[i][0], points[i][1]);
+        /*
+         * Creates a box shaped box2d object with the given parameters
+         */         
+        var createBox = function(x, y, width, height, angle, fixed, density, restitution, friction) {
+        	var bodyDef = new b2BodyDef();
+            if (!fixed) {
+                bodyDef.type = b2Body.b2_dynamicBody;
+                bodyDef.angularDamping = 0.1;
+                bodyDef.bullet = true;
             }
-            body.w = 1.0;
-            body.h = 1.0;
-            var shape = body.CreateShape(shapeDef);
-            if (!fixed) body.SetMassFromShapes();
-            if (draw === undefined) draw = true;
-            body.SynchronizeShapes();
-            var object = { body: body, shape: shape, draw: draw, type: "ground" };
-            body.SetUserData(object);
+            bodyDef.position.x = x;
+            bodyDef.position.y = y;
+            bodyDef.angle = angle;
+            var body = world.CreateBody(bodyDef);
+            
+            var fixtureDef = new b2FixtureDef();
+            fixtureDef.shape = new b2PolygonShape();
+            fixtureDef.shape.SetAsBox(width / 2, height / 2);
+            fixtureDef.density = density || 1.0;
+            fixtureDef.friction = friction || 0.9;
+            fixtureDef.restitution = restitution || 0.2;
+            var shape = body.CreateFixture(fixtureDef);
+            
+            var object = { body: body, shape: shape, type: "box" };
             objects.push(object);
             return object;
         };
         
-        var createRevoluteJoint = function(body1, body2, anchor, upperAngle, lowerAngle) {
-            var revoluteJointDef = new b2RevoluteJointDef();
-            revoluteJointDef.Initialize(body1, body2, new b2Vec2(anchor.x, anchor.y));
-            revoluteJointDef.motorSpeed = 0;
-            revoluteJointDef.maxMotorTorque = 10000000;
-            revoluteJointDef.enableMotor = true;
-            revoluteJointDef.enableLimit = false;
-            var revoluteJoint = world.CreateJoint(revoluteJointDef);
-            return revoluteJoint;
+        /*
+         * Creates a circle box2d object with the given parameters
+         */
+        var createCircle = function(x, y, radius, fixed, density, restitution, friction) {
+        	var bodyDef = new b2BodyDef();
+            if (!fixed) {
+                bodyDef.type = b2Body.b2_dynamicBody;
+                bodyDef.angularDamping = 1.0;
+                bodyDef.bullet = true;
+            }
+            bodyDef.position.x = x;
+            bodyDef.position.y = y;
+            var body = world.CreateBody(bodyDef);
+
+            var fixtureDef = new b2FixtureDef();
+            fixtureDef.shape = new b2CircleShape(radius);
+            fixtureDef.density = density || 1.0;
+            fixtureDef.friction = friction || 0.9;
+            fixtureDef.restitution = restitution || 0.2;
+            var shape = body.CreateFixture(fixtureDef);
+
+            var object = { body: body, shape: shape, type: "circle" };
+            objects.push(object);
+            return object;
         };
         
-        var createMouseJoint = function(body, mouse_coords) {
-        	var mouseJointDef = new b2MouseJointDef();
-        	mouseJointDef.body1 = world.GetGroundBody();
-        	mouseJointDef.body2 = body;
-        	mouseJointDef.target.Set(mouse_coords.x, mouse_coords.y);
-        	mouseJointDef.maxForce = m3.config.mouse_joint_force * body.mass;
-        	mouseJointDef.timeStep = 100;
-    		var mouseJoint = world.CreateJoint(mouseJointDef);
-    		body.WakeUp();
-    		return mouseJoint;
-        };
+        /*
+         * Creates a convex polygon box2d object with the given parameters.
+         * Points is an array of b2Vec vertices
+         */
+        var createPoly = function(x, y, points, angle, fixed, density, restitution, friction) {
+        	var bodyDef = new b2BodyDef();
+            if (!fixed) {
+                bodyDef.type = b2Body.b2_dynamicBody;
+                bodyDef.angularDamping = 0.1;
+                bodyDef.bullet = true;
+            }
+            bodyDef.position.x = x;
+            bodyDef.position.y = y;
+            bodyDef.angle = angle || 0;
+            var body = world.CreateBody(bodyDef);
 
+            var fixtureDef = new b2FixtureDef();
+            fixtureDef.shape = new b2PolygonShape();
+            fixtureDef.shape.SetAsArray(points, points.length);
+            fixtureDef.density = density || 1.0;
+            fixtureDef.friction = friction || 0.9;
+            fixtureDef.restitution = restitution || 0.2;
+            var shape = body.CreateFixture(fixtureDef);
+            
+            var object = { body: body, shape: shape, type: "ground" };
+            objects.push(object);
+            return object;
+        };
+        
+        /*
+         * Creates a kinematic body composed of two shapes. Offset is a vector relative to
+         * the body center.
+         */
+        var createCircleBoxComposite = function(x, y, radius, width, height, offset) {
+        	var bodyDef = new b2BodyDef();
+            bodyDef.type = b2Body.b2_kinematicBody;
+            bodyDef.position.x = x;
+            bodyDef.position.y = y;
+            var body = world.CreateBody(bodyDef);
+            
+            var fixtureDef = new b2FixtureDef();
+            fixtureDef.shape = new b2CircleShape(radius);
+            var shape1 = body.CreateFixture(fixtureDef);
+            
+            fixtureDef.shape = new b2PolygonShape();
+            fixtureDef.shape.SetAsOrientedBox(width / 2, height / 2, offset, 0);
+            var shape2 = body.CreateFixture(fixtureDef);
+        	
+            var object = { body: body, shape: shape2, shape2: shape2, type: "ground" };
+            objects.push(object);
+            return object;
+        };
+        
+        /*
+         * Initializes the world
+         */
+        var init = function() {
+        	//setup collision detection
+        	world.SetContactListener(m3.contact);
+        	
+            //create ground
+        	var bodyDef = new b2BodyDef();
+            bodyDef.position.x = (m3.config.level_width / 2) / m3.config.scaling_factor;
+            bodyDef.position.y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
+            var groundBody = world.CreateBody(bodyDef);
+            
+            var fixtureDef = new b2FixtureDef();
+            fixtureDef.shape = new b2PolygonShape();
+            fixtureDef.density = 1.0;
+            fixtureDef.friction = 0.9;
+            fixtureDef.restitution = 0.2;
+            fixtureDef.shape.SetAsBox((m3.config.level_width / 2) / m3.config.scaling_factor, (m3.config.ground_height / 2) / m3.config.scaling_factor);
+            var groundShape = groundBody.CreateFixture(fixtureDef);
+            
+            var object = {body: groundBody, shape: groundShape, type: 'ground'};
+            groundBody.SetUserData(object);
+            objects.push(object);
+
+            //create platforms
+            var scale    = m3.config.scaling_factor,
+                p_width  = m3.config.fort_width / scale,
+                p_height = m3.config.fort_platform_height / scale;
+          
+            var platform1 = createPoly(m3.config.level_padding / scale, 
+                  (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
+                  [new b2Vec2(2, 0), new b2Vec2(p_width - 2, 0), new b2Vec2(p_width, p_height), new b2Vec2(0, p_height)], 
+                  0, true, 1.0, 0.1, 1.0);
+            platform1.body.SetUserData(platform1);
+            
+       
+            var platform2 = createPoly((m3.config.level_width - m3.config.fort_width - m3.config.level_padding) / scale, 
+                  (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
+                  [new b2Vec2(2, 0), new b2Vec2(p_width - 2, 0), new b2Vec2(p_width, p_height), new b2Vec2(0, p_height)],
+                  0, true, 1.0, 0.1, 1.0);
+            platform2.body.SetUserData(platform2);
+            
+            //setup debug draw mode
+            var debugDraw = new b2DebugDraw();
+		    debugDraw.SetSprite(m3.game.context);
+			debugDraw.SetDrawScale(m3.config.scaling_factor);
+			debugDraw.SetFillAlpha(0.3);
+			debugDraw.SetLineThickness(1.0);
+			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+			world.SetDebugDraw(debugDraw);
+        };
+        
+        /*
+         * Simulates an explosion by applying impulses to the surrounding bodies
+         */
+        var explode = function(position) {
+        	var shapes 			= [],
+        		xDistance 		= 0,
+        		active_player 	= m3.game.state.active_player,
+        		level			= m3.game.state.level,
+        		scale 			= m3.config.scaling_factor,
+        		level_width		= m3.config.level_width;
+        	
+    		xDistance = position.x / scale;
+
+      		shapes = active_player ? level.fortresses[1].pieces : level.fortresses[0].pieces;
+        	
+        	for (var i = 0, j = shapes.length; i < j; i+=1) {
+        		var b 	= shapes[i],
+        		 	fv 	= new b2Vec2(b.x, b.y);
+        		
+        		if (Math.abs(xDistance - fv.x / scale) <= 3) {
+        			fv.Subtract(position);
+        			fv.Normalize();
+        			fv.Multiply(500);
+            		b.body.WakeUp();
+            		b.body.ApplyImpulse(fv, new b2Vec2(b.x / scale, b.y / scale));
+        		}
+
+        	}
+        	
+        };
         
         /*
          * Returns true if all of the objects in the world 
@@ -125,7 +237,7 @@ $(function() {
         };
         
         /*
-         * A method to test for settled physics  
+         * Returns true iff the physics have settled  
          */
         var allSettled = function(threshold) {
         	for (var i = 0, n = objects.length; i < n; i+=1) {
@@ -138,6 +250,9 @@ $(function() {
         	return true;
         };
         
+        /*
+         * Removes an object from the box2d world
+         */
         var removeObject = function(object) {
             for (var i = 0, n = objects.length; i < n; i++) {
                 if (object === objects[i].body) {
@@ -148,6 +263,9 @@ $(function() {
             }
         };
         
+        /*
+         * Destroys all bodies in the box2d world
+         */
         var clear = function() {
             for (var i = 0, n = objects.length; i < n; i++) {
                 world.DestroyBody(objects[i].body);
@@ -155,122 +273,44 @@ $(function() {
             objects = [];
         };
         
-        var init = function() {
-            // // create the ground
-            // var groundBodyDef = new b2BodyDef();
-            // var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
-            // var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
-            // groundBodyDef.position.Set(ground_x, ground_y);
-            // var groundBody = world.CreateBody(groundBodyDef);
-            // var groundShapeDef = new b2PolygonDef();
-            // groundShapeDef.restitution = 0.1;
-            // groundShapeDef.friction = 1;
-            // groundShapeDef.density = 1.0;
-            // groundBody.w = m3.config.level_width / m3.config.scaling_factor;
-            // groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
-            // groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
-            // var groundShape = groundBody.CreateShape(groundShapeDef);
-            // groundBody.SynchronizeShapes();
-            // 
-            // var object = {body: groundBody, shape: groundShape, draw: true, type: 'ground'};
-            // groundBody.SetUserData(object);
-            // objects.push(object);
+        /*
+         * Steps the box2d world
+         */
+        var update = function() {
+        	world.Step(1 / m3.config.fps, m3.config.velocity_iterations, m3.config.position_iterations);
             
-            // create the ground
-            var groundBodyDef = new b2BodyDef();
-            var ground_x = (m3.config.level_width / 2) / m3.config.scaling_factor;
-            var ground_y = (m3.config.level_height - m3.config.ground_height / 2) / m3.config.scaling_factor;
-            groundBodyDef.position.Set(ground_x, ground_y);
-            var groundBody = world.CreateBody(groundBodyDef);
-            var groundShapeDef = new b2PolygonDef();
-            groundShapeDef.restitution = 0.1;
-            groundShapeDef.friction = 1;
-            groundShapeDef.density = 1.0;
-            groundBody.w = m3.config.level_width / m3.config.scaling_factor;
-            groundBody.h = (m3.config.ground_height / 2) / m3.config.scaling_factor;
-            groundShapeDef.SetAsBox(groundBody.w, groundBody.h);
-            groundShapeDef.vertexCount = 4;
-            groundShapeDef.vertices[0].Set(-groundBody.w, -groundBody.h);
-            groundShapeDef.vertices[1].Set( groundBody.w, -groundBody.h);
-            groundShapeDef.vertices[2].Set( groundBody.w,  groundBody.h);
-            groundShapeDef.vertices[3].Set(-groundBody.w,  groundBody.h);
-            var groundShape = groundBody.CreateShape(groundShapeDef);
-            groundBody.SynchronizeShapes();
-            
-            var object = {body: groundBody, shape: groundShape, draw: false, type: 'ground'};
-            groundBody.SetUserData(object);
-            objects.push(object);
-            
-            // Create platforms.
-            var scale    = m3.config.scaling_factor,
-                p_width  = m3.config.fort_width / scale,
-                p_height = m3.config.fort_platform_height / scale;
-            
-            createPoly(m3.config.level_padding / scale, 
-                       (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
-                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, false);
-            
-            createPoly((m3.config.level_width - m3.config.fort_width - m3.config.level_padding) / scale, 
-                       (m3.config.level_height - m3.config.ground_height - m3.config.fort_platform_height) / scale,
-                       [[2, 0], [p_width - 2, 0], [p_width, p_height], [0, p_height]], true, 1.0, 0.1, 1.0, false);
-            
+            if (debugDrawEnabled) world.DrawDebugData();
         };
         
-        var explode = function(position) {
-        	var shapes 			= [],
-        		xDistance 		= 0,
-        		active_player 	= m3.game.state.active_player,
-        		level			= m3.game.state.level,
-        		scale 			= m3.config.scaling_factor,
-        		level_width		= m3.config.level_width;
-        	
-    		xDistance = position.Copy().x / scale;
-
-        	if (active_player === 0) {
-        		shapes = level.fortresses[1].pieces;
-        	}
-        	else {
-        		shapes = level.fortresses[0].pieces;
-        	}
-        	
-        	for (var i = 0, j = shapes.length; i < j; i+=1) {
-        		var b 	= shapes[i],
-        		 	fv 	= new b2Vec2(b.x, b.y);
-        		
-        		if (Math.abs(xDistance - fv.x/scale) <= 3) {
-        			fv.Subtract(position);
-        			fv.Normalize();
-        			fv.Multiply(100);
-            		b.body.WakeUp();
-            		b.body.ApplyImpulse(fv, new b2Vec2(b.x/scale, b.y/scale));
-        		}
-
-        	}
-        	
+        /*
+         * Toggles debug drawing mode
+         */
+        var toggleDebugDraw = function() {
+        	debugDrawEnabled = !debugDrawEnabled;
+        	m3.util.log(debugDrawEnabled ? "Debug Drawing Enabled" : "Debug Drawing Disabled");
         };
         
+        /*
+         * Returns true iff debug drawing mode is enabled
+         */
+        var debugDrawMode = function() {
+        	return debugDrawEnabled;
+        };
+    	
         return {
-            universe: world,
-            objects: objects,
+            init: init,
+            update: update,
             createBox: createBox,
-            createBall: createBall,
+            createBall: createCircle,
             createPoly: createPoly,
-            createRevoluteJoint: createRevoluteJoint,
-            createMouseJoint: createMouseJoint,
+            createCircleBoxComposite : createCircleBoxComposite,
+            explode: explode,
             allSleeping: allSleeping,
             allSettled: allSettled,
             removeObject: removeObject,
             clear: clear,
-            init: init,
-            explode: explode,
-            update: function() {
-                var context = m3.game.context;
-                context.save();
-                context.scale(m3.config.scaling_factor, m3.config.scaling_factor);
-                world.Step(1 / m3.config.fps, m3.config.iterations);
-                m3.graphics.drawWorld(objects, context);
-                context.restore();
-            }
+            toggleDebugDraw: toggleDebugDraw,
+            debugDrawMode: debugDrawMode
         };
     }();
 });

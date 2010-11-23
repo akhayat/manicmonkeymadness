@@ -20,7 +20,7 @@ $(function() {
         // Update the game state. The actual game logic goes into the update
         // functions of the various game states inside scripts/states.
         m3.game.context.save();
-        m3.game.state.update();
+        m3.game.state.update();       
         m3.game.context.restore();
         
         m3.input.reset();

@@ -84,6 +84,8 @@ $(function() {
                 monkey_helmet: imageFromSource("sprites/monkey_helmet.png"),
                 banana_bunch:  imageFromSource("sprites/banana_bunch.png"),
                 banana_green:  imageFromSource("sprites/banana_green.png"),
+                monkey_spike:  imageFromSource("sprites/monkey_spike.png"),
+                watermelon_explode:    imageFromSource("sprites/watermelon_explode.png"),
                 
                 fort_pieces: {
                     box_long_wood: {

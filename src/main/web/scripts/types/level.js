@@ -23,7 +23,7 @@ $(function() {
                     { image: backgrounds.tree_layer, offset: 0, scroll_factor: 0.7 },
                     { image: backgrounds.ground_layer, offset: 0, scroll_factor: 1 }
                 ]
-            },
+            }
         };
         
         // Draws a background consisting of multiple layers with parallax scrolling.
@@ -36,7 +36,7 @@ $(function() {
                     x     = m3.camera.position.x * (1.0 - background[i].scroll_factor),
                     y     = m3.game.height - image.height - background[i].offset;
                 
-                context.drawImage(image, x, y);
+                if (!m3.world.debugDrawMode()) context.drawImage(image, x, y);
             }
         };
         

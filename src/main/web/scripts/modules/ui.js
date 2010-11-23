@@ -21,13 +21,18 @@ $(function() {
                 this.done.update();
             }
             else {
-                this.turn.update();
                 this.weapon.update();
-                this.marker.update();
+
+                if (!m3.world.debugDrawMode()) {
+                    this.turn.update();
+                    this.marker.update();
+                }    
             }
             
-            this.score.update();
-            this.monkey_count.update();
+            if (!m3.world.debugDrawMode()) {
+                this.score.update();
+                this.monkey_count.update();
+            }    
         };
         
         return ui;

@@ -98,7 +98,7 @@ $(function() {
                 }
                 
                 // Draw the sprite.
-                context.drawImage(sheet, offset.x, offset.y, width, height, x, y, width, height);
+                if (!m3.world.debugDrawMode()) context.drawImage(sheet, offset.x, offset.y, width, height, x, y, width, height);
             },
             
             // "Constructor". The x and y parameters are optional, but the others

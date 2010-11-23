@@ -8,9 +8,8 @@
 
 $(function() {
     m3.launcher = function() {
-        var mouseJoint, 
-            mouse_coords = m3.types.Vector.create(0,0),
-            mouse_coords_physics = m3.types.Vector.create(0,0);
+        var b2Vec2 = Box2D.Common.Math.b2Vec2,            
+            mouse_coords = m3.types.Vector.create(0,0);
         
         return {
             aiming:  false,
@@ -21,19 +20,19 @@ $(function() {
         	              {type:"watermelon", details:"whole"},
         	              {type:"monkey", details:"medium"}],
             
-            // Returns the current launcher based on whose turn it is.
+            /*
+             * Returns the launcher of the player whose turn it is
+             */
             currentLauncher: function() {
                 return m3.game.state.level.fortresses[m3.game.state.active_player].weapon;
             },
             
+            /*
+             * Updates the mouse coordinates of the pixels and physics world
+             */
             updateMouseCoords: function(event) {
-            	var scale = m3.config.scaling_factor;
-            	
                 mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
                 mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
-                
-                mouse_coords_physics.x = mouse_coords.x / scale;
-                mouse_coords_physics.y = mouse_coords.y / scale;            	
             },
             
             prepareLaunch: function(event) {
@@ -42,25 +41,46 @@ $(function() {
             	this.aiming = true;
                 
                 this.updateMouseCoords(event);
-                
-                if (!mouseJoint) 
-                	mouseJoint = m3.world.createMouseJoint(launcher.barrel, mouse_coords_physics);
             },
             
             aim: function(event) {
                 if (this.aiming) {
                     var launcher = this.currentLauncher();
-                    
+                	
                     this.updateMouseCoords(event);
                     
-                    if (!!mouseJoint) 
-                    	mouseJoint.SetTarget(mouse_coords_physics);
+                    var x = launcher.x;
+                    var y = launcher.y;
+
+                    if (launcher.facing === "right") {
+                    	
+                    	var angle = Math.atan2(mouse_coords.y - y, mouse_coords.x - x);
+                    	
+                    	if (angle > 0 && angle <= Math.PI) {
+                    		angle = 0;
+                    	} else if (angle < -Math.PI / 2) {
+                    		angle = -Math.PI / 2;
+                    	}
+                    	
+                    	launcher.angle = angle;
+                    } else {
+                    	
+                    	var angle = Math.atan2(y - mouse_coords.y, x - mouse_coords.x);
+                    	
+                    	if (angle < 0) {
+                    		angle = 0;
+                    	} else if (angle > Math.PI / 2) {
+                    		angle = Math.PI / 2;
+                    	}
+                    	
+                    	launcher.angle = angle;
+                    }
                 }
             },
             
             launch: function(event) {
                 var launcher     = this.currentLauncher(),
-                    theta        = launcher.barrel.GetAngle(),
+                    theta        = launcher.angle,
                     axisOffset   = launcher.axisOffset,
                     launchOffset = launcher.launchOffset,
                     power        = launcher.power,
@@ -87,20 +107,15 @@ $(function() {
                 }
                 
                 if (launcher.pDetails === "triple") {
-                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
-                	m3.game.state.active_projectile[1] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
-                	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
+                	m3.game.state.active_projectile[1] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
+                	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
                 }
                 else {
-                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse.x, impulse.y, pType, pDetails);
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
                 }
                 
                 m3.camera.follow(m3.game.state.active_projectile[0]);
-                
-                if (!!mouseJoint) {
-                    m3.world.universe.DestroyJoint(mouseJoint);
-                    mouseJoint = null;
-                }
                 
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
             },
@@ -114,6 +129,32 @@ $(function() {
             },
             
             update: function() {
+            	var launcher = this.currentLauncher(),
+            	    angle    = launcher.angle,
+            	    speed    = m3.config.rotation_speed,
+            	    time     = m3.game.elapsed;
+            	
+            	//rotate current launcher if keys are being used
+            	if (launcher.facing === "left") {
+                    if (m3.input.keys.Z && angle > speed * time) {
+                	    launcher.angle -= speed * time;
+                    }
+                
+                    if (m3.input.keys.X && angle < Math.PI / 2 - (speed * time)) {
+                	    launcher.angle += speed * time;
+                    }
+            	} else {
+                    if (m3.input.keys.Z && angle > speed * time) {
+                	    launcher.angle += speed * time;
+                    }
+                
+                    if (m3.input.keys.X && angle < Math.PI / 2 - (speed * time)) {
+                	    launcher.angle -= speed * time;
+                    }
+            	}    
+            	
+            	if (m3.world.debugDrawMode()) return;
+            	
                 var context = m3.game.context;
                 
                 // Draws both launchers at the appropriate angles.
@@ -121,7 +162,7 @@ $(function() {
                     var fortress = m3.game.state.level.fortresses[i],
                         launcher = fortress.weapon,
                         axisOffset = launcher.axisOffset,
-                        barrelHeight = launcher.barrelHeight,
+                        barrel_height = launcher.barrel_height,
                         image = launcher.image;
                     
                     context.save();
@@ -131,14 +172,14 @@ $(function() {
                     
                     if (launcher.facing === "left") {
                         context.scale(-1, 1);
-                        context.rotate(launcher.joint.GetJointAngle());                        
+                        context.rotate(-launcher.angle);                        
                         context.translate(image.width / -2, 0);                
-                        context.drawImage(image, axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
+                        context.drawImage(image, axisOffset.x, -(barrel_height / 2 + axisOffset.y));
                     }
                     else {
-                        context.rotate(-launcher.joint.GetJointAngle());
+                        context.rotate(launcher.angle);
                         context.translate(image.width / -2, 0);
-                        context.drawImage(image, -axisOffset.x, -(barrelHeight / 2 + axisOffset.y));
+                        context.drawImage(image, -axisOffset.x, -(barrel_height / 2 + axisOffset.y));
                     }
                     
                     context.restore();
