@@ -13,6 +13,7 @@ $(function() {
         // Private members.
         var Sprite = m3.types.Sprite;
             assets = m3.assets.sprites;
+            b2Vec2 = Box2D.Common.Math.b2Vec2;
         
         var enemies = {
             monkey: {
@@ -33,10 +34,10 @@ $(function() {
         Enemy.contact = function(other, velocity) {
             if(velocity > this.minImpactVelocity) m3.assets.sfx.monkeyGrunt.play();
             
-            if (m3.launcher.currentLauncher().pType === "watermelon" && this.type === "projectile") {
-            	this.type = "broken";
-            	this.body.SetLinearVelocity(new b2Vec2(0,0));
-            	this.sprite.play("explode");
+            if (m3.launcher.currentLauncher().pType === "watermelon" && other.type === "projectile") {
+            	other.type = "broken";
+            	other.body.SetLinearVelocity(new b2Vec2(0,0));
+            	other.sprite.play("explode");
             	
             	setTimeout(function(projectile){
             		return function () {
