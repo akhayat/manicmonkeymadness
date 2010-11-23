@@ -17,7 +17,7 @@ $(function() {
         var enemies = {
             monkey: {
                 small: { s: assets.monkey, h: 51, w: 45 },
-                medium:{ s: assets.monkey_helmet, h: 51, w: 41 },
+                medium:{ s: assets.monkey_helmet, h: 53, w: 43 },
                 large: { s: assets.monkey_spike, h: 55, w: 45}
             }
         };
@@ -125,9 +125,11 @@ $(function() {
                     }
                     else if (type === "medium") {
                         e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 3, 3, 3], 0.12);
+                        e.sprite.addAnimation("death", [4, 4, 5, 6], 0.25);
                     }
                     else if (type === "large") {
                         e.sprite.addAnimation(e.subtype, [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 0, 0], 0.12);
+                        e.sprite.addAnimation("death", [4, 4, 5, 6], 0.25);
                     }
                     
                     e.sprite.play(e.subtype);

@@ -117,13 +117,16 @@ $(function() {
             }
             else {
             	if (this.sprite && this.sprite.animations["death"]) {
-            		
+            		//play the disappear animation then destroy the object
             		this.sprite.stop();
             		this.sprite.play("death");
             		this.alive = true;
             		
-            		var object = this;
-            		setTimeout(function() { object.destroy(); }, 1000);
+                	setTimeout(function(object){
+                		return function () {
+                			object.destroy();
+                		};
+                	}(this), 1000);
             	}
             	else {
                     this.destroy();
