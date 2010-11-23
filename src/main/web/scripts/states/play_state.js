@@ -191,8 +191,6 @@ $(function() {
                              x < 0 || x > m3.config.level_width;
             
             if (transition) {
-                m3.util.log("Shot Number " + this.shots + " of " + this.max_shots);
-
                 if (this.max_shots === this.shots || (this.shots > this.max_shots && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
                 	if (m3.score.getScore(0) > m3.score.getScore(1)) {
                 		this.endRound(0);
