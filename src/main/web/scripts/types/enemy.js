@@ -44,7 +44,7 @@ $(function() {
             			m3.world.explode(new b2Vec2(m3.game.state.active_projectile[0].x, m3.game.state.active_projectile[0].y));
             			projectile.alive = false;
             		};
-            	}(this), 2000);
+            	}(other), 2000);
                 return;
             }
             
