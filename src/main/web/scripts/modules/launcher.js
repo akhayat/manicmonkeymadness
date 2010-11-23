@@ -133,7 +133,7 @@ $(function() {
             	    angle    = launcher.angle,
             	    speed    = m3.config.rotation_speed,
             	    time     = m3.game.elapsed;
-            	console.log(angle);
+
             	//rotate current launcher if keys are being used
             	if (launcher.facing === "left") {
                     if (m3.input.keys.Z && angle > speed * time) {
