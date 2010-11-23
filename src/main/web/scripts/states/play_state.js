@@ -191,8 +191,9 @@ $(function() {
                              x < 0 || x > m3.config.level_width;
             
             if (transition) {
-            	
-                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
+                m3.util.log("Shot Number " + this.shots + " of " + this.max_shots);
+
+                if (this.max_shots === this.shots || (this.shots > this.max_shots && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
                 	if (m3.score.getScore(0) > m3.score.getScore(1)) {
                 		this.endRound(0);
                 	}
@@ -200,13 +201,14 @@ $(function() {
                 		this.endRound(1);
                 	}
                 }
-            	
-                m3.camera.stopFollowing();
-                this.updateProjectiles();
-                var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
-                m3.camera.slideTo(camera_position, 0, "smooth");
-                this.active_player = (this.active_player + 1) % 2;
-                this.setState("transitioning");
+                else {
+                    m3.camera.stopFollowing();
+                    this.updateProjectiles();
+                    var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+                    m3.camera.slideTo(camera_position, 0, "smooth");
+                    this.active_player = (this.active_player + 1) % 2;
+                    this.setState("transitioning");
+                }
             }
         };
         
