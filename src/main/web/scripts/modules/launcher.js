@@ -1,9 +1,8 @@
 /**
  * launcher.js 
  * 
- * This module is supposed to determine a launch angle using click and drag. The original
- * click location is supposed to be origin and the angle is determined by where the user 
- * lets go. Similar to crush the castle
+ * This module manages the launcher functions to choose weapons, take aim, and fire
+ * projectiles as well as draw the launcher sprites.
  */
 
 $(function() {
@@ -28,33 +27,32 @@ $(function() {
             },
             
             /*
-             * Updates the mouse coordinates of the pixels and physics world
+             * Updates the mouse pixel coordinates
              */
             updateMouseCoords: function(event) {
                 mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
                 mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
             },
             
+            /*
+             * Engages the launcher
+             */
             prepareLaunch: function(event) {
-            	var launcher = this.currentLauncher();
-                
-            	this.aiming = true;
-                
+            	this.aiming = true;                
                 this.updateMouseCoords(event);
             },
             
+            /*
+             * Aims the launcher with the mouse
+             */
             aim: function(event) {
                 if (this.aiming) {
                     var launcher = this.currentLauncher();
                 	
                     this.updateMouseCoords(event);
                     
-                    var x = launcher.x;
-                    var y = launcher.y;
-
-                    if (launcher.facing === "right") {
-                    	
-                    	var angle = Math.atan2(mouse_coords.y - y, mouse_coords.x - x);
+                    if (launcher.facing === "right") {                    	
+                    	var angle = Math.atan2(mouse_coords.y - launcher.y, mouse_coords.x - launcher.x);
                     	
                     	if (angle > 0 && angle <= Math.PI) {
                     		angle = 0;
@@ -63,9 +61,9 @@ $(function() {
                     	}
                     	
                     	launcher.angle = angle;
-                    } else {
-                    	
-                    	var angle = Math.atan2(y - mouse_coords.y, x - mouse_coords.x);
+                    } 
+                    else {                    	
+                    	var angle = Math.atan2(launcher.y - mouse_coords.y, launcher.x - mouse_coords.x);
                     	
                     	if (angle < 0) {
                     		angle = 0;
@@ -78,63 +76,77 @@ $(function() {
                 }
             },
             
+            /*
+             * Fires the projectile
+             */
             launch: function(event) {
-                var launcher     = this.currentLauncher(),
-                    theta        = launcher.angle,
-                    axisOffset   = launcher.axisOffset,
-                    launchOffset = launcher.launchOffset,
-                    power        = launcher.power,
-                    pType        = launcher.pType,
-                    pDetails     = launcher.pDetails;
+                var launcher      = this.currentLauncher(),
+                    launch_offset = launcher.launchOffset,
+                    theta         = launcher.angle,
+                    pType         = launcher.pType,
+                    pDetails      = launcher.pDetails;
                 
+                // Disable mouse aiming
                 this.aiming = false;
                 
-                m3.assets.sfx.explosion.play();
+                // Spawn the projectile next to the launcher
+                var projectile_offset = launcher.facing === "left" 
+                		? m3.types.Vector.create(-30, -30)
+                		: m3.types.Vector.create(30, -30);
+                	
+                // Calculate the launch point from angle
+                var launch_point = m3.types.Vector.create(launcher.x + (launch_offset.x + projectile_offset.x) * Math.cos(theta), launcher.y + launch_offset.y + (launch_offset.x + projectile_offset.y) * Math.sin(theta));
                 
-                // Apply an impulse to give the projectile velocity in the x and y directions
-                var axislaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
-                var launchPoint = m3.types.Vector.create((launcher.x + axisOffset.x + axislaunchOffset.x), (launcher.y + axisOffset.y + axislaunchOffset.y));
-                var axisLaunchOffset = m3.types.Vector.create((launchOffset.x - axisOffset.x + 200) * Math.cos(theta), (launchOffset.x - axisOffset.x) * Math.sin(theta));
+                // Apply an impulse to give the projectile velocity
+                var power = m3.types.Projectile.power(pType, pDetails);
+                var impulse = launcher.facing === "left" 
+                		? m3.types.Vector.create(-power * Math.cos(theta), -power * Math.sin(theta))
+                		: m3.types.Vector.create(power * Math.cos(theta), power * Math.sin(theta));
                 
-                var launchPoint = m3.types.Vector.create((launcher.x + axisLaunchOffset.x), (launcher.y + axisLaunchOffset.y));
-                
-                var impulse = m3.types.Vector.create(power * Math.cos(theta), power * Math.sin(theta));
-                
-                if (launcher.facing === "left") {
-                    impulse.x = -impulse.x;
-                    impulse.y = -impulse.y;
-                    launchPoint.x -= 300;
+                // Create the projectile(s)
+                if (pDetails === "triple") {
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y + 20, 0, impulse, pType, pDetails);
+                	m3.game.state.active_projectile[1] = m3.types.Projectile.create(launch_point.x, launch_point.y, 0, impulse, pType, pDetails);
+                	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launch_point.x, launch_point.y - 20, 0, impulse, pType, pDetails);
                 }
-                
-                if (launcher.pDetails === "triple") {
-                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
-                	m3.game.state.active_projectile[1] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
-                	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
+                else if (pType === "monkey"){
+                	var angle = launcher.facing === "left" ? -Math.PI / 2 : Math.PI / 2;
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, angle, impulse, pType, pDetails);
                 }
                 else {
-                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launchPoint.x, launchPoint.y, impulse, pType, pDetails);
+                	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, 0, impulse, pType, pDetails);
                 }
                 
+                // Boom!
+                m3.assets.sfx.explosion.play();
+                
+                // Follow the projectile
                 m3.camera.follow(m3.game.state.active_projectile[0]);
                 
-                m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
+//                m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));
             },
             
+            /*
+             * Changes the current weapon
+             */
             changeWeapon: function() {
                 var launcher = this.currentLauncher();
-
             	launcher.weapon = (launcher.weapon + 1) % this.projectiles.length;
         		launcher.pType = this.projectiles[launcher.weapon].type;
         		launcher.pDetails = this.projectiles[launcher.weapon].details;
             },
             
+            /*
+             * Draws the launcher and moves it with the keyboard
+             */
             update: function() {
             	var launcher = this.currentLauncher(),
             	    angle    = launcher.angle,
             	    speed    = m3.config.rotation_speed,
-            	    time     = m3.game.elapsed;
+            	    time     = m3.game.elapsed,
+            	    context  = m3.game.context;
 
-            	//rotate current launcher if keys are being used
+            	// Rotate current launcher with keyboard
             	if (launcher.facing === "left") {
                     if (m3.input.keys.Z && angle > speed * time) {
                 	    launcher.angle -= speed * time;
@@ -155,12 +167,9 @@ $(function() {
             	
             	if (m3.world.debugDrawMode()) return;
             	
-                var context = m3.game.context;
-                
                 // Draws both launchers at the appropriate angles.
                 for (var i = 0; i < 2; i++) {
-                    var fortress = m3.game.state.level.fortresses[i],
-                        launcher = fortress.weapon,
+                    var launcher = m3.game.state.level.fortresses[i].weapon,
                         axisOffset = launcher.axisOffset,
                         barrel_height = launcher.barrel_height,
                         image = launcher.image;

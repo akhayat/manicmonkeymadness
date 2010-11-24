@@ -89,16 +89,8 @@ $(function() {
                 f.addEnemy(e.type, e.size, e.x, e.y, e.angle);
             }
             
-            // Add launchers.
-            var axis_offset   = Vector.create(-25, 18),
-                launch_offset = Vector.create(46, 0);
-            
-            if (owner === 1) {
-                axis_offset.x   *= -1;
-                launch_offset.x *= -1;
-            }
-            
-            f.addLauncher("cannon", "grey", 0, axis_offset, launch_offset);
+            // Add launchers.           
+            f.addLauncher("cannon", "grey", 0);
             
             return f;
         };

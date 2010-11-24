@@ -9,15 +9,19 @@ $(function() {
     m3.types.Weapon = function() {
     	    	
         var Sprite = m3.types.Sprite,
-            assets = m3.assets.sprites,
-            b2Vec2 = Box2D.Common.Math.b2Vec2;
+            Vector = m3.types.Vector,
+            b2Vec2 = Box2D.Common.Math.b2Vec2,
+            assets = m3.assets.sprites;
         
         var skins = {
             cannon: {
                 grey: { s: assets.cannon, h: 60, w: 92, barrel_height: 41, wheel_radius: 21,
         	            barrel_vertices_left: [[-9,0], [-22,-15], [-22,-25], [-9,-41], [21,-41], [71,-36], [71,-5], [21,0]],
         	            barrel_vertices_right: [[-21,0], [-71,-5], [-71,-36], [-21,-41], [9,-41], [22,-25], [22,-15], [9,0]],
-        	            spriteOffset_left: m3.types.Vector.create(21,39), spriteOffset_right: m3.types.Vector.create(71,39) }
+        	            spriteOffset_left: Vector.create(21,39), spriteOffset_right: Vector.create(71,39),
+        	            axis_offset_left: Vector.create(-25, 18), launch_offset_left: Vector.create(71, -20),
+        	            axis_offset_right: Vector.create(25, 18), launch_offset_right: Vector.create(-71, -20)
+        	    }
             }       
         };
         
@@ -62,14 +66,29 @@ $(function() {
             },
             
             // Constructor.
-            create: function(fort, skin, type, side, angle, axisOffset, launchOffset) {
+            create: function(fort, skin, type, side, angle) {
                 var s = skins[skin][type],
                     d = details[type],
                     scale = m3.config.scaling_factor,
-                    vertices = side === "left" ? s.barrel_vertices_left : s.barrel_vertices_right,
-                    y = m3.config.level_height - m3.config.ground_height - s.wheel_radius,                   
-                    x = side === "left" ? m3.config.fort_width + m3.config.level_padding + 100
-                                 : m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w;
+                    vertices,
+                    axis_offset,
+                    launch_offset,
+                    x,
+                    y = m3.config.level_height - m3.config.ground_height - s.wheel_radius;                  
+
+                
+                if (side === "left") {
+                	vertices = s.barrel_vertices_left;
+                	x = m3.config.fort_width + m3.config.level_padding + 100;
+                	axis_offset = s.axis_offset_left;
+                	launch_offset = s.launch_offset_left;
+                }
+                else {
+                	vertices = s.barrel_vertices_right;
+                	x = m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w;
+                	axis_offset = s.axis_offset_right;
+                	launch_offset = s.launch_offset_right;
+                }
                 
                 var object = Object.create(m3.types.PhysicsObject.create(x, y)),
                 
@@ -85,8 +104,8 @@ $(function() {
                 object.angle        = angle;
                 object.barrel_height = s.barrel_height;
                 object.facing       = fort.owner ? "left" : "right";
-                object.axisOffset   = axisOffset;
-                object.launchOffset = launchOffset;
+                object.axisOffset   = axis_offset;
+                object.launchOffset = launch_offset;
                 object.weapon       = 0;
                 object.power        = d.power;                
                 object.image        = s.s;
