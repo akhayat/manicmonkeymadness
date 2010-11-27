@@ -38,9 +38,6 @@ $(function() {
         // This determines whose turn it is. The player who starts is chosen randomly.
         PlayState.active_player = m3.math.randomInteger(0, 1);
         
-        // Keeps track of first shot
-        PlayState.first = false;
-        
         // Shot Counter
         PlayState.shots = 0;
                 
@@ -63,8 +60,8 @@ $(function() {
             
             P: {
                 down: function() {
-                    m3.util.toggleLog();
-               }
+                    m3.sound.toggleMusic();
+                }
             },
             
             S: {
@@ -101,7 +98,7 @@ $(function() {
                         m3.game.state = m3.states.PlayState.create();
                     }
                 }
-            },
+            }
         };
         
         // Mouse input handlers for the main menu state.
@@ -118,10 +115,15 @@ $(function() {
                 var state = m3.game.state;
                 
                 if (state.game_state === "waiting" && m3.launcher.aiming) {
+                    if(state.shots == 0) m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
                     m3.launcher.launch(event);
                     state.setState("attacking");
                     state.shots += 1;
                     m3.util.log("Shot Number " + state.shots + " of " + state.max_shots);
+                    
+                	if(state.activePlayer === state.starter) {
+                		m3.ui.weapon.unlockNewWeapon(state.shots);
+                	}
                 }
             },
             
@@ -143,6 +145,8 @@ $(function() {
         // This is the update function for the starting state.
         PlayState.updateStarting = function() {
             if (this.state_time >= 0.5) {
+            	//console.log($("#unlock").get(0).checked);
+            	if($("#unlock").get(0).checked) m3.launcher.unlockAllWeapons();
                 this.setState("waiting");
             }
         };
@@ -164,11 +168,6 @@ $(function() {
         
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
-            // Changes the music on the first shot.
-            if(!this.first) {
-                m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
-                this.first = true;
-            }
             
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
@@ -191,7 +190,8 @@ $(function() {
                              x < 0 || x > m3.config.level_width;
             
             if (transition) {
-                if (this.max_shots === this.shots || (this.shots > this.max_shots && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
+            	
+                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
                 	if (m3.score.getScore(0) > m3.score.getScore(1)) {
                 		this.endRound(0);
                 	}
@@ -199,14 +199,13 @@ $(function() {
                 		this.endRound(1);
                 	}
                 }
-                else {
-                    m3.camera.stopFollowing();
-                    this.updateProjectiles();
-                    var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
-                    m3.camera.slideTo(camera_position, 0, "smooth");
-                    this.active_player = (this.active_player + 1) % 2;
-                    this.setState("transitioning");
-                }
+            	
+                m3.camera.stopFollowing();
+                this.updateProjectiles();
+                var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+                m3.camera.slideTo(camera_position, 0, "smooth");
+                this.active_player = (this.active_player + 1) % 2;
+                this.setState("transitioning");
             }
         };
         

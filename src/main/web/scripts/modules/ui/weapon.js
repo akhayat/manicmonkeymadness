@@ -13,6 +13,29 @@ $(function() {
             camera  = m3.camera.position;
         
         return {
+        	
+        	/*
+        	 * Unlocks a weapon based on the number of shots taken
+        	 */
+        	unlockNewWeapon: function(shot) {
+        		m3.ui.drawStrokedText("Unlocked a new weapon!", camera.x, camera.y);
+                switch(shot / 2) {
+                    case 1: 
+                        m3.launcher.unlock("banana", "single"); 
+                        break;
+                    case 2: 
+                        m3.launcher.unlock("banana", "triple"); 
+                        break;
+                    case 3: 
+                        m3.launcher.unlock("monkey", "medium");
+                        break;
+                    case 4:
+                        m3.launcher.unlock("watermelon", "whole");
+                        break;
+                    default: break;
+                }
+        	},
+        	
             update: function() {
                 var active_player = m3.game.state.active_player,
                     cannon        = m3.game.state.level.fortresses[active_player].weapon,
