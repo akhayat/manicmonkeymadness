@@ -15,7 +15,7 @@ $(function() {
             monkey_height = 50,
             camera        = m3.camera.position,
             width         = m3.game.width,
-            padding       = m3.types.Vector.create(64, 2);
+            padding       = m3.types.Vector.create(96, 2);
         
         monkey_count.update = function() {
             var forts = m3.game.state.level.fortresses;

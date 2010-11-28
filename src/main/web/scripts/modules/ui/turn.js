@@ -23,7 +23,7 @@ $(function() {
                 
                 context.fillStyle = "rgba(250, 250, 200, 0.95)";
                 context.beginPath();
-                context.arc(camera.x + circle_position.x, camera.y + circle_position.y, 65.0, 0.0, Math.PI * 2, false);
+                context.arc(camera.x + circle_position.x, camera.y + circle_position.y, 75.0, 0.0, Math.PI * 2, false);
                 context.fill();
                 context.closePath();
             }

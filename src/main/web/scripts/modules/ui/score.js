@@ -23,11 +23,11 @@ $(function() {
                 context.textAlign   = "left";
                 context.lineWidth   = 2;
                 context.strokeStyle = "rgba(0, 25, 0, 0.75)";
-                ui.drawStrokedText("Score", camera.x + padding.x, camera.y + padding.y);
+                ui.drawStrokedText("Player 1", camera.x + padding.x, camera.y + padding.y);
                 
                 // Right score label
                 context.textAlign = "right";
-                ui.drawStrokedText("Score", camera.x + width - padding.x, camera.y + padding.y);
+                ui.drawStrokedText("Player 2", camera.x + width - padding.x, camera.y + padding.y);
                 
                 // Left score value
                 context.fillStyle   = "rgba(210, 255, 215, 0.8)";
