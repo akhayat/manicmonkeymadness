@@ -27,10 +27,7 @@ $(function() {
         //                    waiting for the players to choose to start over or return
         //                    to the main menu.
         PlayState.game_state = "starting";
-        
-        // Keeps track of which game mode is being played.
-        PlayState.game_mode = m3.game_choices.game_mode;
-        
+                
         // This keeps track of how long we've been in the current state.
         PlayState.state_time = 0.0;
         PlayState.old_time = null;
@@ -168,7 +165,8 @@ $(function() {
         
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
-            
+            var score = m3.score;
+        	
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {
                 var position = this.active_projectile[i].body.GetPosition();
@@ -191,11 +189,11 @@ $(function() {
             
             if (transition) {
             	
-                if (this.max_shots === this.shots || (this.shots > this.max_shots * 2 && this.shots % 2 === 0 && this.game_mode === "demolition derby")) {
-                	if (m3.score.getScore(0) > m3.score.getScore(1)) {
+                if (score.getScore(0) !== score.getScore(1) && this.game_mode === "demolition derby" && ((this.max_shots === this.shots) || (this.shots > this.max_shots && this.shots % 2 === 0))) {
+                	if (score.getScore(0) > score.getScore(1)) {
                 		this.endRound(0);
                 	}
-                	else if (m3.score.getScore(0) < m3.score.getScore(1)) {
+                	else if (score.getScore(0) < score.getScore(1)) {
                 		this.endRound(1);
                 	}
                 }
@@ -276,6 +274,7 @@ $(function() {
             s.level             = m3.types.Level.create("demo", true);
             s.active_projectile = [];
             s.max_shots 		= m3.game_choices.max_shots * 2;
+            s.game_mode			= m3.game_choices.game_mode;
             
             // If the second player is starting, we need to warp the camera to their side.
             if (s.active_player === 1) {
