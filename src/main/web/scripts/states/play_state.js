@@ -55,6 +55,12 @@ $(function() {
                 }    
             },
             
+            H: {
+                down: function() {
+            		m3.buttons.toggleHelp();
+                }
+            },
+            
             P: {
                 down: function() {
                     m3.sound.toggleMusic();
