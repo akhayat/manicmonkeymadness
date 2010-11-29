@@ -199,13 +199,14 @@ $(function() {
                 		this.endRound(1);
                 	}
                 }
-            	
-                m3.camera.stopFollowing();
-                this.updateProjectiles();
-                var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
-                m3.camera.slideTo(camera_position, 0, "smooth");
-                this.active_player = (this.active_player + 1) % 2;
-                this.setState("transitioning");
+                else {              	
+                    m3.camera.stopFollowing();
+                    this.updateProjectiles();
+                    var camera_position = (this.active_player === 0) ? m3.config.level_width - m3.game.width : 0;
+                    m3.camera.slideTo(camera_position, 0, "smooth");
+                    this.active_player = (this.active_player + 1) % 2;
+                    this.setState("transitioning");
+                }
             }
         };
         
