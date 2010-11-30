@@ -18,7 +18,7 @@ $(function() {
         var enemies = {
             monkey: {
                 small: { s: assets.monkey, h: 53, w: 50 },
-                medium:{ s: assets.monkey_helmet, h: 53, w: 43 },
+                medium:{ s: assets.monkey_helmet, h: 55, w: 50 },
                 large: { s: assets.monkey_spike, h: 62, w: 50}
             }
         };
