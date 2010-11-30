@@ -10,6 +10,7 @@ $(function() {
         var context = m3.game.context,
             ui      = m3.ui,
             cannons = m3.launcher.cannons,
+            newWeapon  = false;
             camera  = m3.camera.position;
         
         return {
@@ -18,7 +19,7 @@ $(function() {
         	 * Unlocks a weapon based on the number of shots taken
         	 */
         	unlockNewWeapon: function(shot) {
-        		m3.ui.drawStrokedText("Unlocked a new weapon!", camera.x, camera.y);
+        		newWeapon = shot % 2 === 0;
                 switch(shot / 2) {
                     case 1: 
                         m3.launcher.unlock("banana", "single"); 
@@ -40,6 +41,7 @@ $(function() {
                 var active_player = m3.game.state.active_player,
                     cannon        = m3.game.state.level.fortresses[active_player].weapon,
                     game_width    = m3.game.width,
+                    game_height   = m3.game.height,
                     icon          = null,
                     launcher	  = m3.launcher.currentLauncher(),
                     projectile	  = m3.types.Projectile;
@@ -48,12 +50,20 @@ $(function() {
                 
                 var w = icon.width,
                     h = icon.height;
-                
+
                 context.fillStyle   = "rgba(220, 245, 255, 0.8)";
                 context.strokeStyle = "rgba(0, 10, 30, 0.4)";
                 context.lineWidth   = 2;
                 context.fillRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 45);
                 context.strokeRect(camera.x + (game_width / 2) - 26, camera.y + 5, 41, 45);
+                
+                if(newWeapon) {
+                    context.fillStyle   = "rgba(240, 255, 245, 0.95)";
+                    context.font        = "18px Tahoma, Geneva, sans-serif";
+                    context.textAlign   = "center";
+                    context.strokeStyle = "rgba(0, 25, 0, 0.75)";
+                	m3.ui.drawStrokedText("Unlocked a new weapon!", camera.x + game_width / 2, camera.y + game_height / 2);
+                }
                 
                 context.drawImage(icon, 0, 0, w, h, camera.x + (game_width - icon.width) / 2, camera.y + 26 - (icon.height * .7 / 2), w * .7, h * .7);
             }

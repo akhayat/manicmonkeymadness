@@ -148,8 +148,10 @@ $(function() {
         // This is the update function for the starting state.
         PlayState.updateStarting = function() {
             if (this.state_time >= 0.5) {
-            	//console.log($("#unlock").get(0).checked);
-            	if($("#unlock").get(0).checked) m3.launcher.unlockAllWeapons();
+            	/*  
+            	 * Had to add the lockAllWeapons in case a new game is started after a finsihed one
+            	 */
+            	$("#unlock").get(0).checked ? m3.launcher.unlockAllWeapons() : m3.launcher.lockAllWeapons();
                 this.setState("waiting");
             }
         };
