@@ -45,8 +45,11 @@ $(function () {
         EditLevelState.enemies = [
             Enemy.create(0, "monkey", "small",  650, 200, 0, null, true, true),
             Enemy.create(0, "monkey", "medium", 690, 200, 0, null, true, true),
-            Enemy.create(0, "monkey", "large", 730, 200, 0, null, true, true)
+            Enemy.create(0, "monkey", "large",  730, 200, 0, null, true, true)
         ];
+        
+        // How many enemies of each type the player is allowed to place.
+        EditLevelState.enemy_points = [2, 2, 2];
         
         // This object contains the lists for the fort's pieces and enemies.
         EditLevelState.fort = { pieces: [], enemies: [] };
@@ -125,10 +128,18 @@ $(function () {
                     }
                     else if (clicked_piece.type === "fort_piece" && state.points - clicked_piece.cost >= 0) {
                         state.active_piece = state.addPiece(clicked_piece);
-                        m3.game.state.points -= clicked_piece.cost;
+                        state.points -= clicked_piece.cost;
                     }
-                    else if (clicked_piece.type === "enemy" && state.fort.enemies.length < m3.config.max_enemies) {
-                        state.active_piece = state.addEnemy(clicked_piece);
+                    else if (clicked_piece.type === "enemy") {
+                        var index = state.enemies.indexOf(clicked_piece);
+                        
+                        if (state.enemy_points[index] > 0) {
+                            state.enemy_points[index]--;
+                            state.active_piece = state.addEnemy(clicked_piece);
+                        }
+                        else {
+                            state.dragging = false;
+                        }
                     }
                     else {
                         state.dragging = false;
@@ -229,7 +240,8 @@ $(function () {
                 pieces       = this.pieces,
                 enemies      = this.enemies,
                 fort         = this.fort,
-                bounds       = this.bounds;
+                bounds       = this.bounds,
+                enemy_points = this.enemy_points;
             
             this.fort_valid = true;
             
@@ -290,13 +302,12 @@ $(function () {
             context.font        = "16px Tahoma, Geneva, sans-serif";
             context.textAlign   = "center";
             context.fillText(this.points + "/" + m3.config.fort_points + " points remaining", m3.game.width - 138, 330);
-            context.fillText((m3.config.max_enemies - fort.enemies.length) + " enemies left", m3.game.width - 138, 350);
+            context.textAlign   = "left";
+            context.fillText(enemy_points[0] + "      " + enemy_points[1] + "      " + enemy_points[2], m3.game.width - 255, 245);
             
             // Update the done button.
             this.done_button.update();
         };
-        
-        EditLevelState.
         
         // Constructor.
         EditLevelState.create = function() {
