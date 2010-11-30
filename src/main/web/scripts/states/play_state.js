@@ -35,6 +35,8 @@ $(function() {
         // This determines whose turn it is. The player who starts is chosen randomly.
         PlayState.active_player = m3.math.randomInteger(0, 1);
         
+        PlayState.starter = PlayState.active_player;
+        
         // Shot Counter
         PlayState.shots = 0;
                 

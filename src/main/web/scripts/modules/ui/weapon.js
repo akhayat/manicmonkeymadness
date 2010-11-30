@@ -19,7 +19,7 @@ $(function() {
         	 * Unlocks a weapon based on the number of shots taken
         	 */
         	unlockNewWeapon: function(shot) {
-        		newWeapon = shot % 2 === 0;
+        		newWeapon = shot % 2 === 0 && shot < m3.launcher.projectiles.length;
                 switch(shot / 2) {
                     case 1: 
                         m3.launcher.unlock("banana", "single"); 
@@ -59,10 +59,10 @@ $(function() {
                 
                 if(newWeapon) {
                     context.fillStyle   = "rgba(240, 255, 245, 0.95)";
-                    context.font        = "18px Tahoma, Geneva, sans-serif";
-                    context.textAlign   = "center";
                     context.strokeStyle = "rgba(0, 25, 0, 0.75)";
-                	m3.ui.drawStrokedText("Unlocked a new weapon!", camera.x + game_width / 2, camera.y + game_height / 2);
+                    context.font        = "20px Tahoma, Geneva, sans-serif";
+                    context.textAlign   = "center";
+                    ui.drawStrokedText("Unlocked a new weapon!", camera.x + game_width / 2, camera.y + game_height / 2);
                 }
                 
                 context.drawImage(icon, 0, 0, w, h, camera.x + (game_width - icon.width) / 2, camera.y + 26 - (icon.height * .7 / 2), w * .7, h * .7);

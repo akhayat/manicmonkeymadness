@@ -30,6 +30,7 @@ $(function() {
             }
             
             if (!m3.world.debugDrawMode()) {
+            	this.shots.update();
                 this.score.update();
                 this.monkey_count.update();
             }    
