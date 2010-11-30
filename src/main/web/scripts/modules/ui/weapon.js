@@ -19,7 +19,8 @@ $(function() {
         	 * Unlocks a weapon based on the number of shots taken
         	 */
         	unlockNewWeapon: function(shot) {
-        		newWeapon = shot % 2 === 0 && shot < m3.launcher.projectiles.length;
+        		console.log(shot % 2);
+        		newWeapon = shot % 2 === 0 && shot / 2 < m3.launcher.projectiles.length;
                 switch(shot / 2) {
                     case 1: 
                         m3.launcher.unlock("banana", "single"); 

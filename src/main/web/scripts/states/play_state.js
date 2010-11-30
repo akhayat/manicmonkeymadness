@@ -120,15 +120,13 @@ $(function() {
                 var state = m3.game.state;
                 
                 if (state.game_state === "waiting" && m3.launcher.aiming) {
-                    if(state.shots == 0) m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
+                    if(state.shots === 0) m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
                     m3.launcher.launch(event);
                     state.setState("attacking");
                     state.shots += 1;
                     m3.util.log("Shot Number " + state.shots + " of " + state.max_shots);
                     
-                	if(state.activePlayer === state.starter) {
-                		m3.ui.weapon.unlockNewWeapon(state.shots);
-                	}
+                	if(!$("#unlock").get(0).checked) m3.ui.weapon.unlockNewWeapon(state.shots);
                 }
             },
             
@@ -150,9 +148,7 @@ $(function() {
         // This is the update function for the starting state.
         PlayState.updateStarting = function() {
             if (this.state_time >= 0.5) {
-            	/*  
-            	 * Had to add the lockAllWeapons in case a new game is started after a finsihed one
-            	 */
+            	 //Had to add the lockAllWeapons in case a new game is started after a finsihed one
             	$("#unlock").get(0).checked ? m3.launcher.unlockAllWeapons() : m3.launcher.lockAllWeapons();
                 this.setState("waiting");
             }
