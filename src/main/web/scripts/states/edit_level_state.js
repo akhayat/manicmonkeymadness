@@ -156,10 +156,12 @@ $(function () {
             
             move: function(event) {
                 if (m3.game.state.dragging) {
-                    var state = m3.game.state;
+                    var game  = m3.game,
+                        state = game.state,
+                        clamp = m3.util.clamp;
                     
-                    state.active_piece.x = event.pageX - m3.game.x + m3.camera.position.x;
-                    state.active_piece.y = event.pageY - m3.game.y + m3.camera.position.y;
+                    state.active_piece.x = clamp(event.pageX - game.x + m3.camera.position.x, 0, game.width);
+                    state.active_piece.y = clamp(event.pageY - game.y + m3.camera.position.y, 0, game.height);
                 }
             }
         };
@@ -206,18 +208,6 @@ $(function () {
                 return (distance_squared <= radius_squared);
             };
             
-            for (var i = 0, n = pieces.length; i < n; i++) {
-                if (overlaps(pieces[i])) {
-                    return pieces[i];
-                }
-            }
-            
-            for (var i = 0, n = enemies.length; i < n; i++) {
-                if (overlaps(enemies[i])) {
-                    return enemies[i];
-                }
-            }
-            
             for (var i = 0, n = fort.pieces.length; i < n; i++) {
                 if (overlaps(fort.pieces[i])) {
                     return fort.pieces[i];
@@ -227,6 +217,18 @@ $(function () {
             for (var i = 0, n = fort.enemies.length; i < n; i++) {
                 if (overlaps(fort.enemies[i])) {
                     return fort.enemies[i];
+                }
+            }
+            
+            for (var i = 0, n = pieces.length; i < n; i++) {
+                if (overlaps(pieces[i])) {
+                    return pieces[i];
+                }
+            }
+            
+            for (var i = 0, n = enemies.length; i < n; i++) {
+                if (overlaps(enemies[i])) {
+                    return enemies[i];
                 }
             }
             
