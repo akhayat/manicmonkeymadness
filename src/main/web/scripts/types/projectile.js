@@ -169,7 +169,7 @@ $(function() {
             if (t.icon)	p.icon = t.icon;
             
             if (ammo === "watermelon") {
-            	p.sprite.addAnimation("explode", [1, 0, 1, 0, 1, 2, 3, 4, 3, 5], 0.25);
+            	p.sprite.addAnimation("explode", [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 2, 3, 4, 3, 5], 0.12);
             }
             
             if (impulse) {
@@ -177,7 +177,7 @@ $(function() {
                 
                 var torque = (impulse.x < 0) ? -1 * t.torque : t.torque;
                 //may be causing bodies to rotate nonstop
-                //p.body.ApplyTorque(torque);
+                // p.body.ApplyTorque(torque);
             }
                         
             return p;

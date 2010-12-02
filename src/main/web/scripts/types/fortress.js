@@ -64,18 +64,31 @@ $(function() {
             var f   = Object.create(this);
             f.owner = owner;
             
-            if (owner == 0) {
+            if (owner === 0) {
                 f.side     = "left";
                 f.position = 40;
             }
             else {
                 f.side     = "right";
                 f.position = m3.config.level_width - m3.config.fort_width - 40;
+                
+                // Flip the fort on the right side.
+                for (var i = 0, n = json.pieces.length; i < n; i++) {
+                    var p = json.pieces[i];
+                    p.x -= 2 * p.x - m3.config.fort_width;
+                    p.angle *= -1;
+                }
+                
+                for (var i = 0, n = json.enemies.length; i < n; i++) {
+                    var e = json.enemies[i];
+                    e.x -= 2 * e.x - m3.config.fort_width;
+                    e.angle *= -1;
+                }
             }
             
             f.pieces  = [];
             f.enemies = [];
-            f.weapon = null;
+            f.weapon  = null;
             
             // Add fort pieces.
             for (var i = 0, n = json.pieces.length; i < n; i++) {
