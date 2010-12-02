@@ -92,6 +92,7 @@ $(function() {
         
         // Collision callback.
         Projectile.contact = function(other, velocity) {
+
             // We want to stop following the projectile when it hits something.
             if (this.life_time > 1.0) {
                 m3.camera.stopFollowing();

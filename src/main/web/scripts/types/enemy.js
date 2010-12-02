@@ -36,7 +36,7 @@ $(function() {
             
             if (other.type === "projectile") {
                 m3.camera.stopFollowing();
-            
+
                 if (m3.launcher.currentLauncher().pType === "watermelon") {
             	    other.sprite.play("explode");
             	    other.type = "broken";
@@ -44,7 +44,8 @@ $(function() {
             	
             	    setTimeout(function(projectile){
             		    return function () {
-            			    m3.world.explode(new b2Vec2(m3.game.state.active_projectile[0].x, m3.game.state.active_projectile[0].y));
+                			projectile.type = "done";
+            			    m3.world.explode(new b2Vec2(projectile.x, projectile.y));
             			    projectile.alive = false;
             		    };
             	    }(other), 2000);
