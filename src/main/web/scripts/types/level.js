@@ -18,9 +18,9 @@ $(function() {
             demo: {
                 background: [ 
                     { image: backgrounds.background_layer, offset: 0, scroll_factor: 1 },
-                    { image: backgrounds.mountain_layer2, offset: 0, scroll_factor: 0.3 },
-                    { image: backgrounds.mountain_layer, offset: 0, scroll_factor: 0.5 },
-                    { image: backgrounds.tree_layer, offset: 0, scroll_factor: 0.7 },
+                    { image: backgrounds.mountain_layer2, offset: 164, scroll_factor: 0.3 },
+                    { image: backgrounds.mountain_layer, offset: 84, scroll_factor: 0.5 },
+                    { image: backgrounds.tree_layer, offset: 27, scroll_factor: 0.7 },
                     { image: backgrounds.ground_layer, offset: 0, scroll_factor: 1 }
                 ]
             }
