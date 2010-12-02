@@ -189,10 +189,12 @@ $(function() {
                 this.old_time = null;
             }
             
-            var transition = settled ||
+            var transition = (settled ||
                              this.state_time > m3.config.max_turn_time ||
-                             x < 0 || x > m3.config.level_width;
-            
+                             x < 0 || x > m3.config.level_width ||
+                             !this.active_projectile[0]) &&
+                             this.active_projectile[0].type !== "broken";
+             
             if (transition) {
             	
                 if (score.getScore(0) !== score.getScore(1) && this.game_mode === "demolition derby" && ((this.max_shots === this.shots) || (this.shots > this.max_shots && this.shots % 2 === 0))) {

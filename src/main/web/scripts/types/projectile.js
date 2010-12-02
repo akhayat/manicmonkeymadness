@@ -48,8 +48,8 @@ $(function() {
             watermelon: {
                 whole: 	{ s: assets.watermelon_explode, h: 52, w: 72, icon: assets.watermelon,
    	             		  density: 1.2, restitution: 0.1, friction: 1.25, torque: 10, power: 150,
-   	             		  vertices: [[8,-15], [26,-5], [26,5], [8,15], [-8,15], [-26,5], [-26,-5], [-8,-15]],
-   	             		  spriteOffset: Vector.create(22,22),
+   	             		  vertices: [[8,-16], [26,-5], [26,5], [8,16], [-8,16], [-26,5], [-26,-5], [-8,-16]],
+   	             		  spriteOffset: Vector.create(35,30),
    	             		  spawn: function(x, y, angle) {
 	                 	      return m3.world.createPoly(x / scale, y / scale, m3.util.pixelsToMeters(this.vertices), angle, false, this.density, this.restitution, this.friction);
                  		  }
@@ -104,7 +104,8 @@ $(function() {
             	
             	setTimeout(function(projectile){
             		return function () {
-            			m3.world.explode(new b2Vec2(m3.game.state.active_projectile[0].x, m3.game.state.active_projectile[0].y));
+            			projectile.type = "done";
+            			m3.world.explode(new b2Vec2(projectile.x, projectile.y));
             			projectile.alive = false;
             		};
             	}(this), 2000);

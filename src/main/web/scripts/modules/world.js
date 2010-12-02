@@ -196,6 +196,7 @@ $(function() {
          */
         var explode = function(position) {
         	var shapes 			= [],
+        		enemies			= [],
         		xDistance 		= 0,
         		active_player 	= m3.game.state.active_player,
         		level			= m3.game.state.level,
@@ -205,17 +206,32 @@ $(function() {
     		xDistance = position.x / scale;
 
       		shapes = active_player ? level.fortresses[0].pieces : level.fortresses[1].pieces;
-        	
-        	for (var i = 0, j = shapes.length; i < j; i+=1) {
-        		var b 	= shapes[i],
-        		 	fv 	= new b2Vec2(b.x, b.y);
+      		enemies = active_player ? level.fortresses[0].enemies : level.fortresses[1].enemies;
+
+      		for (var i = 0, j = shapes.length; i < j; i+=1) {
+        		var s 		= shapes[i],
+        		 	fv1 	= new b2Vec2(s.x, s.y);
         		
-        		if (Math.abs(xDistance - fv.x / scale) <= 7) {
-        			fv.Subtract(position);
-        			fv.Normalize();
-        			fv.Multiply(200);
-            		b.body.SetAwake(true);
-            		b.body.ApplyImpulse(fv, new b2Vec2(b.x / scale, b.y / scale));
+        		if (Math.abs(xDistance - fv1.x / scale) <= 7) {
+        			fv1.Subtract(position);
+        			fv1.Normalize();
+        			fv1.Multiply(200);
+            		s.body.SetAwake(true);
+            		s.body.ApplyImpulse(fv1, new b2Vec2(s.x / scale, s.y / scale));
+        		}
+
+        	}
+        	
+        	for (var k = 0, m = enemies.length; k < m; k+=1) {
+        		var e 		= enemies[k];
+        		 	fv2 	= new b2Vec2(e.x, e.y);
+        		 	        		
+        		if (Math.abs(xDistance - fv2.x / scale) <= 7) {
+        			fv2.Subtract(position);
+        			fv2.Normalize();
+        			fv2.Multiply(100);
+            		e.body.SetAwake(true);
+            		e.body.ApplyImpulse(fv2, new b2Vec2(e.x / scale, e.y / scale));
         		}
 
         	}
