@@ -66,11 +66,11 @@ $(function() {
             
             if (owner === 0) {
                 f.side     = "left";
-                f.position = 40;
+                f.position = 0;
             }
             else {
                 f.side     = "right";
-                f.position = m3.config.level_width - m3.config.fort_width - 40;
+                f.position = m3.config.level_width - m3.config.fort_width;
                 
                 // Flip the fort on the right side.
                 for (var i = 0, n = json.pieces.length; i < n; i++) {

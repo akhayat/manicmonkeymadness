@@ -79,13 +79,13 @@ $(function() {
                 
                 if (side === "left") {
                 	vertices = s.barrel_vertices_left;
-                	x = m3.config.fort_width + m3.config.level_padding + 100;
+                	x = m3.config.fort_width + m3.config.level_padding + 30;
                 	axis_offset = s.axis_offset_left;
                 	launch_offset = s.launch_offset_left;
                 }
                 else {
                 	vertices = s.barrel_vertices_right;
-                	x = m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w;
+                	x = m3.config.level_width - m3.config.fort_width - m3.config.level_padding - s.w + 60;
                 	axis_offset = s.axis_offset_right;
                 	launch_offset = s.launch_offset_right;
                 }
