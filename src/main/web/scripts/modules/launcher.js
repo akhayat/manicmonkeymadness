@@ -91,8 +91,8 @@ $(function() {
                 
                 // Spawn the projectile next to the launcher
                 var projectile_offset = launcher.facing === "left" 
-                		? m3.types.Vector.create(-30, -30)
-                		: m3.types.Vector.create(30, -30);
+                		? m3.types.Vector.create(-40, -30)
+                		: m3.types.Vector.create(40, -30);
                 	
                 // Calculate the launch point from angle
                 var launch_point = m3.types.Vector.create(launcher.x + (launch_offset.x + projectile_offset.x) * Math.cos(theta), launcher.y + launch_offset.y + (launch_offset.x + projectile_offset.y) * Math.sin(theta));

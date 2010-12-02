@@ -46,10 +46,10 @@ $(function() {
                 }
             },
             watermelon: {
-                whole: 	{ s: assets.watermelon_explode, h: 30, w: 42, icon: assets.watermelon,
-   	             		  density: 2.5, restitution: 0.1, friction: 1.25, torque: 10, power: 150,
-   	             		  vertices: [[8,-12], [20,-5], [20,5], [8,12], [-8,12], [-20,5], [-20,-5], [-8,-12]],
-   	             		  spriteOffset: Vector.create(20,15),
+                whole: 	{ s: assets.watermelon_explode, h: 52, w: 72, icon: assets.watermelon,
+   	             		  density: 1.2, restitution: 0.1, friction: 1.25, torque: 10, power: 150,
+   	             		  vertices: [[8,-15], [26,-5], [26,5], [8,15], [-8,15], [-26,5], [-26,-5], [-8,-15]],
+   	             		  spriteOffset: Vector.create(22,22),
    	             		  spawn: function(x, y, angle) {
 	                 	      return m3.world.createPoly(x / scale, y / scale, m3.util.pixelsToMeters(this.vertices), angle, false, this.density, this.restitution, this.friction);
                  		  }
@@ -169,7 +169,7 @@ $(function() {
             if (t.icon)	p.icon = t.icon;
             
             if (ammo === "watermelon") {
-            	p.sprite.addAnimation("explode", [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 2, 3, 4, 3, 5], 0.12);
+            	p.sprite.addAnimation("explode", [0, 1, 0, 1, 2, 3, 4, 5, 6, 5, 6], 0.25);
             }
             
             if (impulse) {

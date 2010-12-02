@@ -210,7 +210,7 @@ $(function() {
         		var b 	= shapes[i],
         		 	fv 	= new b2Vec2(b.x, b.y);
         		
-        		if (Math.abs(xDistance - fv.x / scale) <= 5) {
+        		if (Math.abs(xDistance - fv.x / scale) <= 7) {
         			fv.Subtract(position);
         			fv.Normalize();
         			fv.Multiply(200);
