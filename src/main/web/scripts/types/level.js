@@ -42,7 +42,7 @@ $(function() {
                     x     = m3.camera.position.x * (1.0 - background[i].scroll_factor),
                     y     = m3.game.height - image.height - background[i].offset;
                 
-                if (!m3.world.debugDrawMode()) context.drawImage(image, x, y);
+                context.drawImage(image, x, y);
             }
         };
         
@@ -50,7 +50,7 @@ $(function() {
         Level.update = function() {
             var fortresses = this.fortresses;
             
-            this.drawBackground();
+            if (!m3.world.debugDrawMode()) this.drawBackground();
             
             for (var i = 0, n = fortresses.length; i < n; i++) {
                 fortresses[i].update();
