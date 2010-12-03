@@ -68,7 +68,6 @@ $(function() {
             // Images.
             backgrounds: {
         	    ground_layer :    imageFromSource("backgrounds/ground_layer.png"),
-                background_layer: imageFromSource("backgrounds/background_layer.png"),
                 mountain_layer:   imageFromSource("backgrounds/mountain_layer.png"),
                 mountain_layer2:  imageFromSource("backgrounds/mountain_layer2.png"),
                 tree_layer:       imageFromSource("backgrounds/tree_layer.png")

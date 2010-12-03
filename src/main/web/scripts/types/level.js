@@ -17,7 +17,6 @@ $(function() {
         var levels = {
             demo: {
                 background: [ 
-                    { image: backgrounds.background_layer, offset: 0, scroll_factor: 1 },
                     { image: backgrounds.mountain_layer2, offset: 164, scroll_factor: 0.3 },
                     { image: backgrounds.mountain_layer, offset: 84, scroll_factor: 0.5 },
                     { image: backgrounds.tree_layer, offset: 27, scroll_factor: 0.7 },
@@ -30,6 +29,13 @@ $(function() {
         Level.drawBackground = function() {
             var context    = m3.game.context,
                 background = this.background;
+            
+            // Draw a gradient as the base for the background.
+            var gradient = context.createLinearGradient(0, 0, 0, m3.config.level_height);
+            gradient.addColorStop(0, "#BDE7F5");
+            gradient.addColorStop(0.5, "#FFF");
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
             
             for (var i = 0, n = background.length; i < n; i++) {
                 var image = background[i].image,
