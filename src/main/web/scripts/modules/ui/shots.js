@@ -7,19 +7,21 @@
 
 $(function() {
     m3.ui.shots = function() {
-        var context = m3.game.context,
-            ui      = m3.ui,
-            camera  = m3.camera.position,
-            width   = m3.game.width;
+        var context   = m3.game.context,
+            ui        = m3.ui,
+            camera    = m3.camera.position,
+            width     = m3.game.width;
         
         return {
             update: function() {
-                var starter = m3.game.state.starter,
-                    shots = m3.game.state.shots,
+                var playstate = m3.game.state,
+                    starter = playstate.starter,
+                    shots = playstate.shots,
                     x = camera.x + (width / 2) - 30,
                     y = camera.y + 15,
                     left  = Math.floor(shots / 2),
-                    right = left;
+                    right = left,
+                    max = playstate.max_shots / 2;
                     
                 //Keeps track of who went first and adjusts
                 //their number of shots accordingly
@@ -32,11 +34,11 @@ $(function() {
                 context.strokeStyle = "rgba(0, 25, 0, 0.75)";
                 
                 ui.drawStrokedText("Shots", x, y);
-                ui.drawStrokedText("" + left, x, y + 15);
+                ui.drawStrokedText("" + left + "/" + max, x, y + 15);
                 
                 context.textAlign = "left";
                 ui.drawStrokedText("Shots", x + 50, y);
-                ui.drawStrokedText("" + right, x + 50, y + 15);
+                ui.drawStrokedText("" + right + "/" + max, x + 50, y + 15);
             }
         };
     }();
