@@ -12,8 +12,9 @@ $(function() {
         
         // Private members.
         var Sprite = m3.types.Sprite,
+            Vector = m3.types.Vector,
+            b2Vec2 = Box2D.Common.Math.b2Vec2
             assets = m3.assets.sprites.fort_pieces;
-        	b2Vec2 = Box2D.Common.Math.b2Vec2;
 
         
         var pieces = {
@@ -25,7 +26,24 @@ $(function() {
                 short: {
                     wood: { s: assets.box_short_wood, h: 50, w: 10, cost: 8 },
                     rock: { s: assets.box_short_rock, h: 50, w: 10, cost: 16 }
+                },
+                square: {
+                    wood: { s: assets.box_square_wood, h: 25, w: 25, cost: 5 },
+                    rock: { s: assets.box_square_rock, h: 25, w: 25, cost: 10 }
+                },
+                wide: {
+                    wood: { s: assets.box_wide_wood, h: 40, w: 20, cost: 8 },
+                    rock: { s: assets.box_wide_rock, h: 40, w: 20, cost: 16 }
                 }
+            },
+            
+            triangle: {
+            	small: {
+            		wood: { s: assets.triangle_wood, h: 18, w: 36, cost: 5, 
+            			    vertices: [[0,-12], [18, 6], [-18,6]], spriteOffset: Vector.create(18,12)},
+            		rock: { s: assets.triangle_rock, h: 18, w: 37, cost: 10, 
+            			    vertices: [[0,-12], [19, 6], [-19,5]], spriteOffset: Vector.create(19,12) }
+            	}
             }
         };
         
@@ -109,8 +127,10 @@ $(function() {
                 t     = pieces[shape][size][material],
                 m     = materials[material],
                 scale = m3.config.scaling_factor,
-                piece = m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale, angle,
-                                           fixed, m.density, m.restitution, m.friction);
+                piece = t.vertices ? m3.world.createPoly(x / scale, y / scale, m3.util.pixelsToMeters(t.vertices), angle,
+                                           fixed, m.density, m.restitution, m.friction)
+                                   : m3.world.createBox(x / scale, y / scale, t.w / scale, t.h / scale, angle,
+                                           fixed, m.density, m.restitution, m.friction);                      
             
             piece.body.SetUserData(f);
             f.sprites = {};
@@ -119,6 +139,8 @@ $(function() {
             f.sprites.destroyed = t.s.destroyed ? Sprite.create(t.s.damaged, t.h, t.w) : null;
             f.destroyThreshold  = m.destroyThreshold;
             f.minImpactVelocity = m.minImpactVelocity;
+            
+            if (t.spriteOffset) f.spriteOffset = t.spriteOffset;
             
             f.piece_shape    = shape;
             f.piece_size     = size;

@@ -35,17 +35,23 @@ $(function () {
         
         // This is an array that holds all the fort pieces that can be used to construct a fort.
         EditLevelState.pieces = [
-            FortPiece.create(0, "box", "long",  "wood", 650, 60, 0, null, true),
-            FortPiece.create(0, "box", "short", "wood", 670, 60, 0, null, true),
-            FortPiece.create(0, "box", "long",  "rock", 690, 60, 0, null, true),
-            FortPiece.create(0, "box", "short", "rock", 710, 60, 0, null, true)
+            FortPiece.create(0, "box", "long",  "wood", 640, 60, 0, null, true),
+            FortPiece.create(0, "box", "short", "wood", 660, 60, 0, null, true),
+            FortPiece.create(0, "box", "wide", "wood", 682, 60, 0, null, true),
+            FortPiece.create(0, "box", "square", "wood", 710, 60, 0, null, true),
+            FortPiece.create(0, "triangle", "small", "wood", 745, 60, 0, null, true),
+            FortPiece.create(0, "box", "long",  "rock", 775, 60, 0, null, true),
+            FortPiece.create(0, "box", "short", "rock", 795, 60, 0, null, true),
+            FortPiece.create(0, "box", "wide", "rock", 817, 60, 0, null, true),
+            FortPiece.create(0, "box", "square", "rock", 845, 60, 0, null, true),
+            FortPiece.create(0, "triangle", "small", "rock", 880, 60, 0, null, true)
         ];
         
         // These are all the enemies that can be placed in the fort.
         EditLevelState.enemies = [
-            Enemy.create(0, "monkey", "small",  650, 200, 0, null, true, true),
-            Enemy.create(0, "monkey", "medium", 690, 200, 0, null, true, true),
-            Enemy.create(0, "monkey", "large",  730, 200, 0, null, true, true)
+            Enemy.create(0, "monkey", "small",  655, 200, 0, null, true, true),
+            Enemy.create(0, "monkey", "medium", 705, 200, 0, null, true, true),
+            Enemy.create(0, "monkey", "large",  755, 197, 0, null, true, true)
         ];
         
         // How many enemies of each type the player is allowed to place.
@@ -305,7 +311,7 @@ $(function () {
             context.textAlign   = "center";
             context.fillText(this.points + "/" + m3.config.fort_points + " points remaining", m3.game.width - 138, 330);
             context.textAlign   = "left";
-            context.fillText(enemy_points[0] + "      " + enemy_points[1] + "      " + enemy_points[2], m3.game.width - 255, 245);
+            context.fillText(enemy_points[0] + "         " + enemy_points[1] + "        " + enemy_points[2], m3.game.width - 255, 245);
             
             // Update the done button.
             this.done_button.update();

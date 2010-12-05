@@ -95,12 +95,30 @@ $(function() {
                     box_short_wood: {
                         normal:    imageFromSource("sprites/box_short_wood.png")
                     },
+                    box_square_wood: {
+                        normal:    imageFromSource("sprites/box_square_wood.png")
+                    },
+                    box_wide_wood: {
+                        normal:    imageFromSource("sprites/box_wide_wood.png")
+                    },
+                    triangle_wood: {
+                    	normal:    imageFromSource("sprites/triangle_wood.png")
+                    },
                     box_long_rock: {
                         normal:    imageFromSource("sprites/box_long_rock.png")
                     },
                     box_short_rock: {
-                        normal:    imageFromSource("sprites/box_long_rock.png")
-                    }
+                        normal:    imageFromSource("sprites/box_short_rock.png")
+                    },
+                    box_square_rock: {
+                        normal:    imageFromSource("sprites/box_square_rock.png")
+                    },
+                    box_wide_rock: {
+                        normal:    imageFromSource("sprites/box_wide_rock.png")
+                    },
+                    triangle_rock: {
+                    	normal:    imageFromSource("sprites/triangle_rock.png")
+                    }                    
                 }
             },
             

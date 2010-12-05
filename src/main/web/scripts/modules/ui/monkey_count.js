@@ -7,12 +7,12 @@
 
 $(function() {
     m3.ui.monkey_count = function() {
-        monkey_count = {};
+        var monkey_count = {};
         
         var context       = m3.game.context,
             monkey_sprite = m3.assets.sprites.monkey,
-            monkey_width  = 38,
-            monkey_height = 50,
+            monkey_width  = 47,
+            monkey_height = 53,
             camera        = m3.camera.position,
             width         = m3.game.width,
             padding       = m3.types.Vector.create(96, 2);
