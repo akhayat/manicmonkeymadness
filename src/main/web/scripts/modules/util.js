@@ -19,7 +19,7 @@ $(function() {
                     log_count++;
                     
                     if (log_count > max_log_count) {
-                        $("#console_items").children("p").first().remove();
+                        $("#console_items").children("p").last().remove();
                     }
                 }
             },

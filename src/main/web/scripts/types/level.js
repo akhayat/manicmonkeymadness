@@ -37,12 +37,20 @@ $(function() {
             context.fillStyle = gradient;
             context.fillRect(0, 0, m3.config.level_width, m3.config.level_height);
             
+            // Draw each layer.
             for (var i = 0, n = background.length; i < n; i++) {
                 var image = background[i].image,
                     x     = m3.camera.position.x * (1.0 - background[i].scroll_factor),
                     y     = m3.game.height - image.height - background[i].offset;
                 
-                context.drawImage(image, x, y);
+                // Tile the layer so it fills the level.
+                var remaining_width = m3.config.level_width;
+                
+                while (remaining_width > 0) {
+                    context.drawImage(image, x, y);
+                    remaining_width -= image.width;
+                    x += image.width;
+                }
             }
         };
         
@@ -50,7 +58,9 @@ $(function() {
         Level.update = function() {
             var fortresses = this.fortresses;
             
-            if (!m3.world.debugDrawMode()) this.drawBackground();
+            if (!m3.world.debugDrawMode()) {
+                this.drawBackground();
+            }
             
             for (var i = 0, n = fortresses.length; i < n; i++) {
                 fortresses[i].update();
