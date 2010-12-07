@@ -43,13 +43,16 @@ $(function() {
                     x     = m3.camera.position.x * (1.0 - background[i].scroll_factor),
                     y     = m3.game.height - image.height - background[i].offset;
                 
+                // Don't draw background tiles that are off screen.
+                x += Math.floor((m3.camera.position.x - x) / image.width) * image.width;
+                
                 // Tile the layer so it fills the level.
-                var remaining_width = m3.config.level_width;
+                var remaining_width = m3.game.width + (m3.camera.position.x - x);
                 
                 while (remaining_width > 0) {
                     context.drawImage(image, x, y);
-                    remaining_width -= image.width;
-                    x += image.width;
+                    remaining_width -= image.width - 1;
+                    x += image.width - 1;
                 }
             }
         };
