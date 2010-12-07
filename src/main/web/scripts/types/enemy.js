@@ -24,10 +24,9 @@ $(function() {
         };
         
         var details = {
-            small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.2, destroyThreshold: 1.75 },
-            medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 3.0 },
-            large: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 5.0 }
-
+            small: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.2, destroyThreshold: 1.5 },
+            medium:{ density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 2.75 },
+            large: { density: 1.25, restitution: 0.25, friction: 0.85, minImpactVelocity: 0.3, destroyThreshold: 4.5 }
         };
         
         // Collision callback.

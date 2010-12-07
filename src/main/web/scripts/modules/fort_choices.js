@@ -36,36 +36,7 @@ $(function() {
         fort_choices.premade = [
             {
                 id:   "Original",
-                fort: {
-                    pieces: [
-                        { shape: "box", size: "long",  type: "rock", x: 258, y: 305, angle: -Math.PI / 4 },
-                        { shape: "box", size: "long",  type: "wood", x: 100, y: 295, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 150, y: 295, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 200, y: 295, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 100, y: 195, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 150, y: 195, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 200, y: 195, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 150, y: 140, angle: Math.PI / 2 },
-                        { shape: "box", size: "short", type: "wood", x: 110, y: 110, angle: 0 },
-                        { shape: "box", size: "short", type: "wood", x: 150, y: 110, angle: 0 },
-                        { shape: "box", size: "short", type: "wood", x: 190, y: 110, angle: 0 },
-                        { shape: "box", size: "long",  type: "wood", x: 150, y: 80,  angle: Math.PI / 2 },
-                        { shape: "box", size: "long",  type: "rock", x: 215, y: 295, angle: 0 },
-                        { shape: "box", size: "long",  type: "rock", x: 215, y: 195, angle: 0 },
-                        { shape: "box", size: "long",  type: "rock", x: 88,  y: 295, angle: 0 },
-                        { shape: "box", size: "long",  type: "rock", x: 88,  y: 195, angle: 0 },
-                        { shape: "box", size: "short", type: "rock", x: 88,  y: 120, angle: 0 },
-                        { shape: "box", size: "short", type: "rock", x: 210, y: 120, angle: 0 },
-                        { shape: "box", size: "long",  type: "rock", x: 150, y: 70,  angle: Math.PI / 2 }
-                    ],
-                          
-                    enemies: [
-                        { type: "monkey", size: "medium", x: 120, y: 325, angle: 0 },
-                        { type: "monkey", size: "medium", x: 170, y: 325, angle: 0 },
-                        { type: "monkey", size: "small",  x: 120, y: 125, angle: 0 },
-                        { type: "monkey", size: "small",  x: 170, y: 125, angle: 0 }
-                    ]
-                }
+                fort: {"pieces":[{"shape":"box","size":"long","type":"rock","x":99,"y":296,"angle":0},{"shape":"box","size":"long","type":"rock","x":213,"y":296,"angle":0},{"shape":"box","size":"long","type":"wood","x":156,"y":278,"angle":1.589999999999999},{"shape":"box","size":"long","type":"rock","x":213,"y":198,"angle":0},{"shape":"box","size":"long","type":"rock","x":99,"y":197,"angle":0},{"shape":"box","size":"long","type":"wood","x":156,"y":214,"angle":1.597499999999999},{"shape":"box","size":"long","type":"rock","x":156,"y":150,"angle":1.5624999999999993},{"shape":"box","size":"wide","type":"wood","x":119,"y":126,"angle":0},{"shape":"box","size":"wide","type":"wood","x":141,"y":126,"angle":0},{"shape":"box","size":"wide","type":"wood","x":169,"y":125,"angle":0},{"shape":"box","size":"wide","type":"wood","x":190,"y":125,"angle":0},{"shape":"triangle","size":"small","type":"wood","x":130,"y":99,"angle":0},{"shape":"triangle","size":"small","type":"wood","x":179,"y":98,"angle":0},{"shape":"box","size":"long","type":"rock","x":355,"y":297,"angle":-3.5424999999999986},{"shape":"box","size":"long","type":"rock","x":291,"y":304,"angle":0.6774999999999998},{"shape":"box","size":"square","type":"rock","x":230,"y":334,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":310,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":286,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":262,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":238,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":214,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":190,"angle":0},{"shape":"box","size":"square","type":"rock","x":230,"y":166,"angle":0},{"shape":"box","size":"long","type":"rock","x":343,"y":297,"angle":2.7824999999999998},{"shape":"box","size":"short","type":"rock","x":321,"y":323,"angle":0.6549999999999999},{"shape":"box","size":"square","type":"rock","x":230,"y":142,"angle":4.687500000000002},{"shape":"triangle","size":"small","type":"rock","x":230,"y":124,"angle":0}],"enemies":[{"type":"monkey","size":"large","x":181,"y":315,"angle":0},{"type":"monkey","size":"large","x":130,"y":315,"angle":0},{"type":"monkey","size":"small","x":131,"y":246,"angle":0},{"type":"monkey","size":"medium","x":181,"y":182,"angle":0},{"type":"monkey","size":"small","x":181,"y":247,"angle":0},{"type":"monkey","size":"medium","x":130,"y":182,"angle":0}]}
             },
             
             {
