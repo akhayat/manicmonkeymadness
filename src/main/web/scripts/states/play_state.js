@@ -109,9 +109,21 @@ $(function() {
         // Mouse input handlers for the main menu state.
         PlayState.mouseHandlers = {
             down: function(event) {
-                var state = m3.game.state;
+                var state = m3.game.state,
+                    box_coords = m3.ui.weapon.box_coords,
+                    box_dim = m3.ui.weapon.box_dimensions,
+                    weaponBox = false,
+                    mouse_coords = m3.types.Vector.create(0,0);
                 
-                if (state.game_state === "waiting") {
+                    mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
+                    mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
+                    
+                    weaponBox = mouse_coords.x >= box_coords.x && mouse_coords.x <= box_coords.x + box_dim.x &&
+                        mouse_coords.y >= box_coords.y && mouse_coords.y <= box_coords.y + box_dim.y;
+                    	
+                if (state.game_state === "waiting" && weaponBox) {
+                	m3.launcher.changeWeapon();
+                } else if(state.game_state === "waiting") {
                     m3.launcher.prepareLaunch(event);
                 }
             },
@@ -178,7 +190,7 @@ $(function() {
                 var position = this.active_projectile[i].body.GetPosition();
                     x = position.x * m3.config.scaling_factor;
                     settled = false;
-                m3.ui.marker.mark(this.active_projectile); 
+                m3.ui.marker.mark(this.active_projectile);
             }
             
             // This ensures the world is settled for half a second before transitioning.

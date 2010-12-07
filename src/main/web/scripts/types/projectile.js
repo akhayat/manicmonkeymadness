@@ -47,7 +47,7 @@ $(function() {
             },
             watermelon: {
                 whole: 	{ s: assets.watermelon_explode, h: 52, w: 72, icon: assets.watermelon,
-   	             		  density: 1.2, restitution: 0.1, friction: 1.25, torque: 10, power: 150,
+   	             		  density: 1.2, restitution: 0.1, friction: 0.9, torque: 10, power: 150,
    	             		  vertices: [[8,-16], [26,-5], [26,5], [8,16], [-8,16], [-26,5], [-26,-5], [-8,-16]],
    	             		  spriteOffset: Vector.create(35,30),
    	             		  spawn: function(x, y, angle) {
@@ -57,7 +57,7 @@ $(function() {
             },
             monkey: { 
                 medium: { s: assets.monkey_spike, h: 62, w: 50, icon: assets.proj_monkey,
-            	          density: 1.0, restitution: 0.5, friction: 1.0, torque: 10, power: 175,
+            	          density: 2.0, restitution: 0.3, friction: 1.0, torque: 10, power: 550,
             	          spawn: function(x, y, angle) {
             	    	      return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, angle, false, this.density, this.restitution, this.friction);
             	          }
