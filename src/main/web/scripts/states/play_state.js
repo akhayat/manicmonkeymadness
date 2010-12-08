@@ -132,7 +132,7 @@ $(function() {
                 var state = m3.game.state;
                 
                 if (state.game_state === "waiting" && m3.launcher.aiming) {
-                    if(state.shots === 0) m3.sound.changeMusic(m3.assets.music.rideTheLightning, true);
+                    if(state.shots === 0) m3.sound.changeMusic(m3.assets.music.metalMonkeys, true);
                     m3.launcher.launch(event);
                     state.setState("attacking");
                     state.shots += 1;
