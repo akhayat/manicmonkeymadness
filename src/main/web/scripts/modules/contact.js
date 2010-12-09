@@ -13,7 +13,7 @@ $(function () {
 
         return {
             /*
-             * This is called when two fixtures being to overlap inside a time step
+             * This is called when two fixtures begin to overlap inside a time step
              */
             BeginContact: function(contact) {
                // m3.util.log('begin contact');
