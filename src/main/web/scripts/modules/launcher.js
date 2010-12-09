@@ -89,6 +89,9 @@ $(function() {
                 // Disable mouse aiming
                 this.aiming = false;
                 
+                // Boom!
+                m3.assets.sfx.explosion.play();
+                
                 // Spawn the projectile next to the launcher
                 var projectile_offset = launcher.facing === "left" 
                 		? m3.types.Vector.create(-40, -30)
@@ -110,6 +113,7 @@ $(function() {
                 	m3.game.state.active_projectile[2] = m3.types.Projectile.create(launch_point.x, launch_point.y - 20, 0, impulse, pType, pDetails);
                 }
                 else if (pType === "monkey"){
+                	m3.assets.sfx.monkeyScream.play()
                 	var angle = launcher.facing === "left" ? -Math.PI / 2 : Math.PI / 2;
                 	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, angle, impulse, pType, pDetails);
                 }
@@ -117,10 +121,7 @@ $(function() {
                 	m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, 0, impulse, pType, pDetails);
                 }
                 
-                // Boom!
-                m3.assets.sfx.explosion.play();
                 
-                // Follow the projectile
                 m3.camera.follow(m3.game.state.active_projectile[0]);
                 
                 m3.util.log("fire!!!  Angle = " + (-1 * theta * (180 / Math.PI)).toFixed(2));

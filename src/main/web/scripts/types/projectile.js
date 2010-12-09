@@ -108,6 +108,7 @@ $(function() {
             			projectile.type = "done";
             			m3.world.explode(new b2Vec2(projectile.x, projectile.y));
             			projectile.alive = false;
+                    	m3.assets.sfx.splat.play();
             		};
             	}(this), 2000);
                 return;

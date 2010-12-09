@@ -26,6 +26,7 @@ $(function() {
                 
                 if (object.type === 'fort_piece') {
                     player_scores[player] += fort_piece_value;
+                    object.piece_material === "rock" ? m3.assets.sfx.rock.play() : m3.assets.sfx.wood.play();
                 } else if (object.type === 'enemy') {
                 	m3.assets.sfx.monkeyScream.play();
                     player_scores[player] += enemy_value;

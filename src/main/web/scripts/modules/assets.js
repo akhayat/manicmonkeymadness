@@ -145,7 +145,11 @@ $(function () {
                 monkeyScream: soundFromSource("effects/monkey_scream", false),
                 monkeyGrunt:  soundFromSource("effects/monkey_grunt", false),
                 //from partnersinrhyme.com
-                explosion: soundFromSource("effects/explosion", false)
+                explosion: soundFromSource("effects/explosion", false),
+                //from a1soundeffects
+                rock:  soundFromSource("effects/rock", false), 
+                wood:  soundFromSource("effects/wood", false),
+                splat: soundFromSource("effects/Squish2")
             }
         };
     }();
