@@ -71,7 +71,7 @@ $(function () {
             left:   m3.config.level_padding + 45,
             top:    0,
             right:  m3.config.level_padding + m3.config.fort_width - 35,
-            bottom: m3.game.height
+            bottom: m3.game.height - m3.config.ground_height - m3.config.fort_platform_height
         };
         
         // This is a dummy object that contains a toJSON method that will be called by JSON.stringify
