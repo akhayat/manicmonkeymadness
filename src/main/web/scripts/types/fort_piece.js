@@ -57,16 +57,24 @@ $(function () {
             if (m3.launcher.currentLauncher().pType === "watermelon" && other.type === "projectile") {
                 other.type = "broken";
                 other.body.SetLinearVelocity(new b2Vec2(0,0));
-                other.sprite.play("explode");
-
-                setTimeout(function (projectile) {
-                    return function () {
-                        projectile.type = "done";
-                        m3.world.explode(new b2Vec2(projectile.x, projectile.y));
-                        projectile.alive = false;
-                    };
-                }(other), 2000);
-                return;
+            	other.sprite.play("ticking");
+            	
+            	setTimeout(function(projectile){
+            		return function () {
+                    	projectile.sprite.play("explode");
+            			m3.world.explode(new b2Vec2(projectile.x, projectile.y));
+            			m3.assets.sfx.splat.play();
+            			
+            			setTimeout(function(projectile){
+            				return function () {
+                    		//	alert("boom");
+                            	projectile.type = "done";
+                            	projectile.alive = false;
+            				};
+            			}(projectile), 1000);
+            	
+            		};
+            	}(other), 1000);
             }
 
             if (other.type === 'fort_piece') {

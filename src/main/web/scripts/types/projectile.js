@@ -101,16 +101,24 @@ $(function() {
             if (m3.launcher.currentLauncher().pType === "watermelon" && this.type === "projectile") {
             	this.type = "broken";
             	this.body.SetLinearVelocity(new b2Vec2(0,0));
-            	this.sprite.play("explode");
+            	this.sprite.play("ticking");
             	
             	setTimeout(function(projectile){
             		return function () {
-            			projectile.type = "done";
+                    	projectile.sprite.play("explode");
             			m3.world.explode(new b2Vec2(projectile.x, projectile.y));
-            			projectile.alive = false;
-                    	m3.assets.sfx.splat.play();
+            			m3.assets.sfx.splat.play();
+            			
+            			setTimeout(function(projectile){
+            				return function () {
+                    		//	alert("boom");
+                            	projectile.type = "done";
+                            	projectile.alive = false;
+            				};
+            			}(projectile), 1000);
+            	
             		};
-            	}(this), 2000);
+            	}(this), 1000);
                 return;
             }
             
@@ -172,7 +180,8 @@ $(function() {
             if (t.icon)	p.icon = t.icon;
             
             if (ammo === "watermelon") {
-            	p.sprite.addAnimation("explode", [0, 1, 0, 1, 2, 3, 4, 5, 6, 5, 6], 0.25);
+            	p.sprite.addAnimation("ticking", [0, 1, 0, 1, 0, 1, 0], 0.25);
+            	p.sprite.addAnimation("explode", [2, 3, 4, 5, 6, 5, 6], 0.20);
             }
             
             if (impulse) {
