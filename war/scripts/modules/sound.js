@@ -7,17 +7,17 @@
 $(function() {    
     m3.sound = function() {
         
-        var soundOn = true;
+        var soundOn = true,
             musicOn = false,
-            currentSong = null
-            soundSrc = "images/icons/sound_on.png";
-            noSoundSrc = "images/icons/sound_off.png";
-            musicSrc = "images/icons/music_on.png";
-            noMusicSrc = "images/icons/music_off.png";
-            soundButton = $("#sound").get(0);
-            musicButton = $("#music").get(0);
+            currentSong = null,
+            soundSrc = "images/icons/sound_on.png",
+            noSoundSrc = "images/icons/sound_off.png",
+            musicSrc = "images/icons/music_on.png",
+            noMusicSrc = "images/icons/music_off.png",
             
-            soundButton.src = soundSrc;
+            soundButton = $("#sound").get(0),
+            musicButton = $("#music").get(0),
+            soundButton.src = soundSrc,
             musicButton.src = noMusicSrc;
     	
         return {
@@ -26,9 +26,9 @@ $(function() {
         	 * Changes the current song and plays it
         	 */
         	changeMusic: function(sound, play) {
-        	    if(currentSong !== null) currentSong.pause();
+        	    if (currentSong !== null) currentSong.pause();
         	    currentSong = sound;
-        	    if(play && musicOn) currentSong.play();
+        	    if (play && musicOn) currentSong.play();
         	},
         
         	pauseMusic: function() {
@@ -36,7 +36,7 @@ $(function() {
         	},
         	
         	playMusic: function() {
-        	    if(musicOn) currentSong.play();
+        	    if (musicOn) currentSong.play();
         	},
         	
         	soundOn: function() {
@@ -51,7 +51,7 @@ $(function() {
              * Toggles ALL sound, effects AND music
              */
         	toggleSound: function() {
-        	    if(soundOn) {
+        	    if (soundOn) {
         	    	soundOn = false;
         	        soundButton.src = noSoundSrc;
         	        this.pauseMusic();
@@ -59,7 +59,7 @@ $(function() {
         	    else {
         	    	soundOn = true;
         	    	soundButton.src = soundSrc;
-        	    	if(musicOn) this.playMusic();
+        	    	if (musicOn) this.playMusic();
         	    }
             },
             
@@ -67,7 +67,7 @@ $(function() {
              * Master switch for music
              */
             toggleMusic: function() {
-            	if(musicOn) {
+            	if (musicOn) {
             		musicOn = false;
             		currentSong.pause();
             		musicButton.src = noMusicSrc;

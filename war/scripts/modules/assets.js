@@ -26,7 +26,7 @@ $(function () {
         });
 
         paused = true;
-        mpegPath = "audio/" + source + "mp3";
+        mpegPath = "audio/" + source + ".mp3";
         oggPath = "audio/" + source + ".ogg";
 
         $('<source/>').attr('src', mpegPath).appendTo(sound);
