@@ -17,7 +17,7 @@ $(function() {
             
             soundButton = $("#sound").get(0),
             musicButton = $("#music").get(0),
-            soundButton.src = soundSrc,
+            soundButton.src = soundSrc;
             musicButton.src = noMusicSrc;
     	
         return {
