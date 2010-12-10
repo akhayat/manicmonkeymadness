@@ -16,7 +16,7 @@ $(function() {
             noMusicSrc = "images/icons/music_off.png",
             
             soundButton = $("#sound").get(0),
-            musicButton = $("#music").get(0),
+            musicButton = $("#music").get(0);
             soundButton.src = soundSrc;
             musicButton.src = noMusicSrc;
     	
