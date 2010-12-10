@@ -91,6 +91,7 @@ $(function() {
                 $.get('/m3?cmd=save_high_score&game=' + game_mode + '&name=' + player + '&score=' + score, function(data) {
                     if (data) {
                         $('#new_high_score').hide();
+                        $('#new_high_score_name').val('');
                         m3.score.populateHighScores(data);
                     }
                 });
