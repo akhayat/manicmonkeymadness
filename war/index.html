@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Manic Monkey Madness</title>
+        <link href="styles/index.css" media="screen" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="header">
+            <h1>Manic Monkey Madness</h1>
+        </div>
+        
+        <div id="game">
+            <canvas id="game_canvas" height="450px" width="900px">
+                Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.
+            </canvas>
+            
+            <div id="buttons">
+                <input id="help" type="image" src="images/icons/help.png" alt="Help" />
+                <input id="sound" type="image" alt="Sound" onclick="m3.sound.toggleSound(); return false;" />
+                <input id="music" type="image" alt="Music" onclick="m3.sound.toggleMusic(); return false;" />
+            </div>
+            
+            <ul id="nav">
+                <li><a href="#" id="help_link">Help</a> |</li>
+                <li><a href="#" onclick="m3.score.getHighScores(); return false;">High Scores</a> |</li>
+                <li><a href="http://code.google.com/p/manicmonkeymadness/">Google Code</a> |</li>
+                <li><a href="test/index.html">QUnit</a></li>              
+            </ul>
+        </div>
+
+        <div id="console">
+            <h2>Console</h2>
+            <div id="console_items"></div>
+        </div>
+        
+        <div id="game_select" class="dialog">
+            <p>Select which game mode you wish to play:</p>
+            
+            <p>Last Monkey Standing - Play until either player has lost all their monkeys.</p>
+            <div class="game_lms">
+                <input type="button" id="lms" value="Last Monkey Standing" />
+            </div>
+            
+            <p>Demolition Derby - Select how many shots (per player) before the game ends and the player with the highest score wins. If the turn limit is exceeded, both players will be given an extra shot until there is a winner.</p>
+            <div class="game_dd">
+                <input type="button" id="dd3" value="Demolition Derby (3)" />
+                <input type="button" id="dd5" value="Demolition Derby (5)" />
+                <input type="button" id="dd10" value="Demolition Derby (10)" />
+            </div>
+            
+            <label for="unlock">
+                <input type="checkbox" id="unlock" checked="checked" />
+                Unlock all weapons
+            </label>
+        </div>
+        
+        <div id="fort_select" class="dialog">
+            <p>If you have created a fort using the level editor, you can use it by pasting the text from the editor here. Otherwise, just choose a premade fort from the list.</p>
+            
+            <label for="custom_fort_choice">
+                <input type="radio" name="fort_choices" id="custom_fort_choice" checked="checked" />
+                Custom
+            </label>            
+            <textarea></textarea>
+            
+            <div id="premade_fort_choices"></div>
+            
+            <div class="done"><a href="#">Done</a></div>
+        </div>
+        
+        <div id="fort_output" class="dialog">
+            <p>Copy this to your clipboard and save it somewhere. When you start a new game you can paste it into the game to use the fort.</p>
+            <textarea></textarea>
+            
+            <div class="done"><a href="#">Done</a></div>
+        </div>
+        
+        <div id="help_screen" class="dialog">
+            <h2>Manic Monkey Madness (M3) Help Page</h2>
+            <h4>How to Play</h4>
+            <ul>
+                <li>Select a weapon by pressing the 'W' key, the rock is selected by default.</li>
+                <li>Click and drag to adjust the angle at which the cannon will shoot, release to fire.</li>
+                <li>Destroying enemy fortress pieces and monkeys will award points.</li>
+                <li>Eliminate all the enemy monkeys or get a higher score to win!</li>
+            </ul>
+            <h4>Projectile Types</h4>
+            <ul>
+                <li>Rock - The rock is a heavy projectile, it moves slow but is extremely destructive.</li>
+                <li>Banana - The banana is a light projectile, it moves extremely fast and is useful for direct shots.</li>
+                <li>Triple Banana - The triple banana shoots three light projectiles, they move extremely fast and are useful for direct shots.</li>
+                <li>Watermelon - The watermelon is a heavy projectile, it moves slow and explodes shortly after impact raining sweet seeds about the battlefield.</li>
+                <li>Monkey - Shoot a flippin' monkey out of the cannon! What else is there to say?</li>
+            </ul>
+            <h4>Game Modes</h4>
+            <ul>
+                <li>Last Monkey Standing (LMS) - It's a fight to the finish. Players must fire upon each other's fortress until one has lost all their monkeys.</li>
+                <li>Demolition Derby (DD) - Wreck havoc on the enemy fortress. Gain as many points as possible by destroying monkeys and fort pieces with a limited number of shots.</li>
+            </ul>
+            <h4>Controls and Tips</h4>
+            <ul>
+                <li>"H" opens and closes this help menu.</li>
+                <li>"Z" and "X", as well as click and drag, adjust the angle of the active player's cannon.</li>
+                <li>"W" changes the cannon's weapon.</li>
+                <li>"P" toggles the music.</li>
+                <li>"S" toggles all sounds.</li>
+                <li>"C" toggles the debug console.</li>
+                <li>"D" toggles Box2D debug draw mode. (See what's going on behind the scenes)</li>
+            </ul>
+                    
+            <a href="#" class="close">X</a>
+        </div>
+        
+        <div id="high_scores" class="dialog">
+            <h2>High Scores:</h2>
+            <div id="scoreboard"></div>
+            
+            <a href="#" class="close">X</a>
+        </div>
+        
+        <div id="new_high_score" class="dialog">
+        	<h2>Congratulations! You have a new high score.</h2>
+        	<p>Enter your name to be immortalized on the M3 scoreboard.</p>
+        	<label for="name">Player: </label><input id="new_high_score_name" name="name" type="text" />
+        	<input type="button" value="Submit" onclick="m3.score.saveHighScore(); return false;" />
+        	
+        	<a href="#" class="close">X</a>	
+        </div>
+        
+        <div id="lightbox"></div>
+                       
+        <!-- Libraries -->
+        <script src="scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+        
+        <!-- Box2D Physics Engine -->
+        <script src="scripts/box2d-2.1/box2d-2.1.min.js" type="text/javascript"></script>
+        
+        <!-- Setup -->
+        <script src="scripts/modules/assets.js" type="text/javascript"></script>
+        <script src="scripts/setup.js" type="text/javascript"></script>
+        <script src="scripts/modules/game.js" type="text/javascript"></script>
+        <script src="scripts/modules/config.js" type="text/javascript"></script>
+        <script src="scripts/modules/fort_choices.js" type="text/javascript"></script>
+        <script src="scripts/modules/game_choices.js" type="text/javascript"></script>
+        
+        <!-- Types -->
+        <script src="scripts/types/vector.js" type="text/javascript"></script>
+        <script src="scripts/types/sprite.js" type="text/javascript"></script>
+        <script src="scripts/types/physics_object.js" type="text/javascript"></script>
+        <script src="scripts/types/projectile.js" type="text/javascript"></script>
+        <script src="scripts/types/weapon.js" type="text/javascript"></script>
+        <script src="scripts/types/fort_piece.js" type="text/javascript"></script>
+        <script src="scripts/types/enemy.js" type="text/javascript"></script>
+        <script src="scripts/types/fortress.js" type="text/javascript"></script>
+        <script src="scripts/types/level.js" type="text/javascript"></script>        
+        
+        <!-- Modules -->
+        <script src="scripts/modules/math.js" type="text/javascript"></script>        
+        <script src="scripts/modules/util.js" type="text/javascript"></script>
+        <script src="scripts/modules/input.js" type="text/javascript"></script>
+        <script src="scripts/modules/camera.js" type="text/javascript"></script>
+        <script src="scripts/modules/score.js" type="text/javascript"></script>
+        <script src="scripts/modules/launcher.js" type="text/javascript"></script>
+        <script src="scripts/modules/contact.js" type="text/javascript"></script>
+        <script src="scripts/modules/world.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/button.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/done.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/score.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/monkey_count.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/turn.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/weapon.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/marker.js" type="text/javascript"></script>
+        <script src="scripts/modules/ui/shots.js" type="text/javascript"></script>
+        <script src="scripts/modules/sound.js" type="text/javascript"></script>
+        
+        <!-- States -->
+        <script src="scripts/states/main_menu_state.js" type="text/javascript"></script>
+        <script src="scripts/states/play_state.js" type="text/javascript"></script>
+        <script src="scripts/states/edit_level_state.js" type="text/javascript"></script>
+        
+        <!-- Main -->
+        <script src="scripts/main.js" type="text/javascript"></script>        
+        
+    </body>
+</html>
