@@ -133,6 +133,26 @@ $(function() {
                     m3.game.state = m3.states.EditLevelState.create();
                 });
                 
+                $("#reuse_fort").click(function(event) {
+                    event.preventDefault();
+                    $("#reuse_fort_input").slideDown(function() {
+                    	$(this).find('textarea').focus();
+                    });
+                });
+                
+                $("#fort_submit").click(function(event) {
+                    event.preventDefault();
+                    $("#fort_select").fadeOut(200);
+                    $("#lightbox").fadeOut(200);
+                    
+                    var fortJson = $("#reuse_fort_input textarea").val();
+                    
+                    m3.fort_choices.setFortChoice(0, "custom", fortJson);
+                    m3.fort_choices.setFortChoice(1, "custom", fortJson);
+                    
+                    m3.game.state = m3.states.PlayState.create();
+                });
+                
                 $(".premade_fort").click(function(event) {
                     event.preventDefault();
                     $("#fort_select").fadeOut(200);
@@ -142,6 +162,10 @@ $(function() {
                     m3.fort_choices.setFortChoice(1, "premade", parseInt($(this).attr("data-index")));
                     
                     m3.game.state = m3.states.PlayState.create();
+                });
+                
+                $("#fort_save textarea").one('click', function() {
+                	$(this).focus().select();
                 });
                 
                 $("#high_score_submit").click(function(event) {

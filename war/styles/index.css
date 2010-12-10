@@ -136,6 +136,11 @@ a:hover {
 	text-align: center;
 }
 
+#game_select p {
+	margin: 6px 0px;
+	text-align: center;
+}
+
 #fort_select {
 	text-align: center;
 }
@@ -145,11 +150,31 @@ a:hover {
 #fort_select input {
 	margin: 0px 5px;
 }
-
-#game_select p {
-	margin: 6px 0px;
-	text-align: center;
+#reuse_fort_input {
+	margin: auto;
+	display: none;
+	padding: 15px;
 }
+#reuse_fort_input textarea {
+	margin-bottom: 5px;
+	width: 450px;
+	height: 100px;
+}
+
+#fort_save {
+	text-align: center;
+	margin-top: 10px;
+}
+#fort_save p {
+	margin: 6px 0px;
+	padding: 0px 35px;
+}
+#fort_save textarea {
+	margin: 10px;
+    width: 450px;
+	height: 100px;
+}	
+
 
 #new_high_score {
 	text-align: center;

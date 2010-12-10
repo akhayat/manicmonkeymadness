@@ -56,13 +56,19 @@
         </div>
 
         <div id="fort_select" class="dialog">
-            <p>Select which fortresses you wish to use:</p>
+            <p>Select which forts you wish to use:</p>
 			
-			<p>Choose from the premade levels</p>
+			<p>Choose from the premade forts</p>
             <div id="premade_fort_choices"></div>
             
-            <p>Or create your own with the level editor</p>
-            <input type="button" id="custom_fort" value="Customize" />
+            <p>Or create your own with the fort editor or paste in one you have saved</p>
+            <input type="button" id="custom_fort" value="Create Custom Fort" />
+            <input type="button" id="reuse_fort" value="Reuse Saved Fort" />
+            
+            <div id="reuse_fort_input">
+              <textarea></textarea><br />
+              <input type="button" id="fort_submit" value="Submit" />
+            </div>  
         </div>
 
         <div id="help_screen" class="dialog">
@@ -100,7 +106,14 @@
 
             <a href="#" class="close">X</a>
         </div>
+        
+        <div id="fort_save" class="dialog">
+            <p>If you are proud of your fort, copy it and save it somewhere. When you start a new game later, paste it into the fort selection screen to reuse.  Close this dialog and hit Play to use the fort now.</p>
+            <textarea></textarea>
 
+            <a href="#" class="close">X</a>
+        </div>
+        
         <div id="high_scores" class="dialog">
             <h2>High Scores:</h2>
             <div id="scoreboard"></div>

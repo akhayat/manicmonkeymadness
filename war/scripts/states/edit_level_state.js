@@ -13,7 +13,7 @@ $(function () {
             Enemy     = m3.types.Enemy,
             Vector    = m3.types.Vector;
         
-        EditLevelState.done_button = m3.ui.Button.create(705, 380, 120, 32, "Done", "#550011", "#661122", function() {
+        EditLevelState.done_button = m3.ui.Button.create(640, 380, 115, 32, "Play", "#003322", "#225544", function() {
             if (m3.game.state.fort_valid) {                
                 var fortJson = JSON.stringify(m3.game.state.output);
                 
@@ -21,6 +21,17 @@ $(function () {
                 m3.fort_choices.setFortChoice(1, "custom", fortJson);
                 
                 m3.game.state = m3.states.PlayState.create();
+            }
+            else {
+                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");
+            }
+        });
+        
+        EditLevelState.save_button = m3.ui.Button.create(770, 380, 115, 32, "Export", "#550011", "#661122", function() {
+            if (m3.game.state.fort_valid) {
+                $("#fort_save textarea").html(JSON.stringify(m3.game.state.output));
+                $("#lightbox").fadeIn(180);
+                $("#fort_save").fadeIn(180);
             }
             else {
                 alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");
@@ -318,6 +329,7 @@ $(function () {
             
             // Update the done button.
             this.done_button.update();
+            this.save_button.update();
         };
         
         // Constructor.
