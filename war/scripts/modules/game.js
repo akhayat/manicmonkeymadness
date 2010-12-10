@@ -49,6 +49,8 @@ $(function() {
                 
                 m3.game.state = m3.states.MainMenuState.create();
                 
+                $('#buttons').fadeIn();
+                
                 document.onkeydown   = m3.input.processKeyDown;
                 document.onkeyup     = m3.input.processKeyUp;
                 canvas.onmousedown   = m3.input.processMouseDown;
