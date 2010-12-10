@@ -11,8 +11,8 @@ $(function() {
         Enemy.Enemy = Enemy;
         
         // Private members.
-        var Sprite = m3.types.Sprite;
-            assets = m3.assets.sprites;
+        var Sprite = m3.types.Sprite,
+            assets = m3.assets.sprites,
             b2Vec2 = Box2D.Common.Math.b2Vec2;
         
         var enemies = {
