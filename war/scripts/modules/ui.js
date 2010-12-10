@@ -19,21 +19,24 @@ $(function() {
         ui.update = function() {
             if (m3.game.state.game_state === "done") {
                 this.done.update();
+                
+                if (!m3.world.debugDrawMode()) {
+                	this.shots.update();
+                    this.score.update();
+                    this.monkey_count.update();
+                } 
             }
             else {
                 this.weapon.update();
-
+                
                 if (!m3.world.debugDrawMode()) {
-                    this.turn.update();
+                	this.shots.update();
+                	this.turn.update();
+                    this.score.update();
+                    this.monkey_count.update();                    
                     this.marker.update();
-                }    
+                }     
             }
-            
-            if (!m3.world.debugDrawMode()) {
-            	this.shots.update();
-                this.score.update();
-                this.monkey_count.update();
-            }    
         };
         
         return ui;
