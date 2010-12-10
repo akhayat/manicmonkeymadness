@@ -47,118 +47,111 @@ $(function() {
                 	lightbox = $('#lightbox'),
                 	game_select = $('#game_select');
                 
+                // Create the main menu
                 m3.game.state = m3.states.MainMenuState.create();
                 
-                $('#buttons').fadeIn();
+                // Put in the premade forts                
+                $("#premade_fort_choices").html(function() {
+                    var forts   = m3.fort_choices.premade,
+                        choices = "";
+                    
+                    for (var i = 0, n = forts.length; i < n; i++) {
+                        choices += '<input type="button" class="premade_fort" id="fort"' + i + '" value="' + forts[i].id + '" data-index="' + i + '" />';
+                    }
+                    
+                    return choices;
+                });
                 
+                // Setup event handlers
                 document.onkeydown   = m3.input.processKeyDown;
                 document.onkeyup     = m3.input.processKeyUp;
                 canvas.onmousedown   = m3.input.processMouseDown;
                 document.onmouseup   = m3.input.processMouseUp;
                 document.onmousemove = m3.input.processMouseMove;
                 
-                $("#help_screen .close").click(function(event) {
+                $('#sound').click(function(event) {
                 	event.preventDefault();
-                	$("#help_screen").fadeOut(200);
-                    lightbox.fadeOut(200);
+                	m3.sound.toggleSound();
                 });
                 
-                $("#high_scores .close").click(function(event) {
+                $('#music').click(function(event) {
                 	event.preventDefault();
-                	$("#high_scores").fadeOut(200);
-                    lightbox.fadeOut(200);
+                	m3.sound.toggleMusic();
                 });
                 
-                $("#new_high_score .close").click(function(event) {
+                $("#help, #help_link").click(function(event) {
                 	event.preventDefault();
-                	$("#new_high_score").fadeOut(200);
+    			    $('#help_screen').fadeIn(200);
+    			    lightbox.fadeIn(200);
+                });
+                
+                $(".close").click(function(event) {
+                	event.preventDefault();
+                	$(this).parent().fadeOut(200);
                     lightbox.fadeOut(200);
                 });
                 
-                $("#fort_output .done a").click(function(event) {
-                    event.preventDefault();
-                    $("#fort_output").fadeOut(200);
-                    lightbox.fadeOut(200);
-                });
-                
-                $("#fort_select .done a").click(function(event) {
-                    event.preventDefault();
-                    $("#fort_select").fadeOut(200);
-                    game_select.fadeIn(180);
-                    
-                    var choice = $("#fort_select input:checked");
-                    
-                    if (choice.attr("id") === "custom_fort_choice") {
-                        m3.fort_choices.setFortChoice(0, "custom", $("#fort_select textarea").val());
-                        m3.fort_choices.setFortChoice(1, "custom", $("#fort_select textarea").val());
-                    }
-                    else {
-                        m3.fort_choices.setFortChoice(0, "premade", parseInt(choice.attr("data-index")));
-                        m3.fort_choices.setFortChoice(1, "premade", parseInt(choice.attr("data-index")));
-                    }                    
-                });
-                
+                $('#buttons').fadeIn();
+
                 $("#lms").click(function(event) {
                 	event.preventDefault();
                 	game_select.fadeOut(200);
-                    lightbox.fadeOut(200);
+                	$('#fort_select').fadeIn(200);
                     m3.game_choices.setGameLength(0);
                     m3.game_choices.setGameMode("last_monkey_standing");
-                    m3.game.state = m3.states.PlayState.create();
                 });
                 
                 $("#dd3").click(function(event) {
                 	event.preventDefault();
                 	game_select.fadeOut(200);
-                    lightbox.fadeOut(200);
+                	$('#fort_select').fadeIn(200);
                     m3.game_choices.setGameLength(3);
                     m3.game_choices.setGameMode("demolition_derby_3");
-                    m3.game.state = m3.states.PlayState.create();
                 });
                 
                 $("#dd5").click(function(event) {
                 	event.preventDefault();
                 	game_select.fadeOut(200);
-                	lightbox.fadeOut(200);
+                	$('#fort_select').fadeIn(200);
                     m3.game_choices.setGameLength(5);
                     m3.game_choices.setGameMode("demolition_derby_5");
-                    m3.game.state = m3.states.PlayState.create();
                 });
                 
                 $("#dd10").click(function(event) {
                 	event.preventDefault();
                 	game_select.fadeOut(200);
-                	lightbox.fadeOut(200);
+                	$('#fort_select').fadeIn(200);
                     m3.game_choices.setGameLength(10);
                     m3.game_choices.setGameMode("demolition_derby_10");
+                });
+                
+                $("#custom_fort").click(function(event) {
+                    event.preventDefault();
+                    $("#fort_select").fadeOut(200);
+                    $("#lightbox").fadeOut(200);
+                    
+                    m3.game.state = m3.states.EditLevelState.create();
+                });
+                
+                $(".premade_fort").click(function(event) {
+                    event.preventDefault();
+                    $("#fort_select").fadeOut(200);
+                    $("#lightbox").fadeOut(200);
+                    
+                    m3.fort_choices.setFortChoice(0, "premade", parseInt($(this).attr("data-index")));
+                    m3.fort_choices.setFortChoice(1, "premade", parseInt($(this).attr("data-index")));
+                    
                     m3.game.state = m3.states.PlayState.create();
                 });
                 
-                $("#premade_fort_choices").html(function() {
-                    var forts   = m3.fort_choices.premade,
-                        choices = "";
-                    
-                    for (var i = 0, n = forts.length; i < n; i++) {
-                        choices += "<label for='choice_" + i + "'>";
-                        choices += "<input type='radio' name='fort_choices' id='choice_" + i + "' data-index='" + i + "' /> ";
-                        choices +=  forts[i].id + "</label><br />";
-                    }
-                    
-                    return choices;
+                $("#high_score_submit").click(function(event) {
+                    event.preventDefault();
+                	m3.score.saveHighScore();
                 });
                 
-                $("#fort_select input[type=\"radio\"]").change(function(event) {
-                    if ($("#custom_fort_choice").is(":checked")) {
-                        $("#fort_select textarea").removeAttr("disabled");
-                    }
-                    else {
-                        $("#fort_select textarea").attr("disabled", "disabled");
-                    }
-                });
-                
-                $("#help, #help_link").click(function() {
-    			    $('#help_screen').fadeIn(200);
-    			    lightbox.fadeIn(200);
+                $("#high_score_link").click(function(event) {
+                    event.preventDefault();
+                	m3.score.getHighScores();
                 });
             }
         };

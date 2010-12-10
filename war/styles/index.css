@@ -136,14 +136,14 @@ a:hover {
 	text-align: center;
 }
 
-#fort_output p, #fort_select p {
+#fort_select {
+	text-align: center;
+}
+#fort_select p {
 	margin: 6px 0px;
 }
-
-#fort_output textarea, #fort_select textarea {
-	width: 100%;
-	height: 140px;
-	margin-bottom: 10px;
+#fort_select input {
+	margin: 0px 5px;
 }
 
 #game_select p {
@@ -200,11 +200,6 @@ a:hover {
 #console_items {
 	height: 300px;
 	overflow-y: scroll;
-}
-
-input[disabled], textarea[disabled] {
-	background: #EEEEEE;
-	color: #333333;
 }
 
 .game_lms {

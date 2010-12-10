@@ -17,13 +17,13 @@
 
             <div id="buttons">
                 <input id="help" type="image" src="images/icons/help.png" alt="Help" />
-                <input id="sound" type="image" alt="Sound" onclick="m3.sound.toggleSound(); return false;" />
-                <input id="music" type="image" alt="Music" onclick="m3.sound.toggleMusic(); return false;" />
+                <input id="sound" type="image" alt="Sound" />
+                <input id="music" type="image" alt="Music" />
             </div>
 
             <ul id="nav">
                 <li><a href="#" id="help_link">Help</a> |</li>
-                <li><a href="#" onclick="m3.score.getHighScores(); return false;">High Scores</a> |</li>
+                <li><a href="#" id="high_score_link">High Scores</a> |</li>
                 <li><a href="http://code.google.com/p/manicmonkeymadness/" target="project">Google Code</a> |</li>
                 <li><a href="test/index.html" target="test">QUnit</a></li>
             </ul>
@@ -56,24 +56,13 @@
         </div>
 
         <div id="fort_select" class="dialog">
-            <p>If you have created a fort using the level editor, you can use it by pasting the text from the editor here. Otherwise, just choose a premade fort from the list.</p>
-
-            <label for="custom_fort_choice">
-                <input type="radio" name="fort_choices" id="custom_fort_choice" checked="checked" />
-                Custom
-            </label>
-            <textarea></textarea>
-
+            <p>Select which fortresses you wish to use:</p>
+			
+			<p>Choose from the premade levels</p>
             <div id="premade_fort_choices"></div>
-
-            <div class="done"><a href="#">Done</a></div>
-        </div>
-
-        <div id="fort_output" class="dialog">
-            <p>Copy this to your clipboard and save it somewhere. When you start a new game you can paste it into the game to use the fort.</p>
-            <textarea></textarea>
-
-            <div class="done"><a href="#">Done</a></div>
+            
+            <p>Or create your own with the level editor</p>
+            <input type="button" id="custom_fort" value="Customize" />
         </div>
 
         <div id="help_screen" class="dialog">
@@ -122,8 +111,8 @@
         <div id="new_high_score" class="dialog">
             <h2>Congratulations! You have a new high score.</h2>
             <p>Enter your name to be immortalized on the M3 scoreboard.</p>
-            <label for="name">Player: </label><input id="new_high_score_name" name="name" type="text" />
-            <input type="button" value="Submit" onclick="m3.score.saveHighScore(); return false;" />
+            <label for="name">Player: </label><input id="high_score_name" name="name" type="text" />
+            <input id="high_score_submit" type="button" value="Submit" />
 
             <a href="#" class="close">X</a>
         </div>

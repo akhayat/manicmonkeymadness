@@ -32,13 +32,9 @@ $(function () {
         // Buttons to progress from the menu.
         var button_y = m3.game.height - 75;
         
-        MainMenuState.play_button = m3.ui.Button.create(215, button_y, 200, 32, "Play", "#003322", "#225544", function() {
+        MainMenuState.play_button = m3.ui.Button.create(350, button_y, 200, 35, "Play", "#003322", "#225544", function() {
             $("#lightbox").fadeIn(180);
-            $("#fort_select").fadeIn(180);
-        });
-        
-        MainMenuState.edit_button = m3.ui.Button.create(480, button_y, 200, 32, "Edit Level", "#003322", "#225544", function() {
-            m3.game.state = m3.states.EditLevelState.create();
+            $("#game_select").fadeIn(180);
         });
         
         // Main update function.
@@ -55,7 +51,6 @@ $(function () {
             
             // Update the buttons.
             this.play_button.update();
-            this.edit_button.update();
         };
         
         // Constructor.
