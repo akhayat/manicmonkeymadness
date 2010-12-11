@@ -1,52 +1,52 @@
 * {
-	margin: 0px;
-	padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 html {
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 body {
-	font: 15px Helvetica, Arial, sans-serif;
-	color: #002200;
-	background: #CCEECC
+    font: 15px Helvetica, Arial, sans-serif;
+    color: #002200;
+    background: #CCEECC
 }
 
 ul {
-	margin: 10px 35px;
+    margin: 10px 35px;
 }
 
 a {
-	color: #CC1111;
-	text-decoration: none;
+    color: #CC1111;
+    text-decoration: none;
 }
 
 a:hover {
-	color: #EE3333;
+    color: #EE3333;
 }
 
 #header {
-	margin: 0px 0px 20px 0px;
-	padding: 20px 0px;
-	text-align: center;
-	color: #FFFFFF;
-	background: #008822;
+    margin: 0px 0px 20px 0px;
+    padding: 20px 0px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #008822;
 }
 
 #header h1 {
-	font-size: 1.8em;
-}	
+    font-size: 1.8em;
+}
 
 #game {
-	height: 450px;
-	width: 900px;
-	margin: 0px auto 40px auto;
-	background: #888888;
-	position: relative;
+    height: 450px;
+    width: 900px;
+    margin: 0px auto 40px auto;
+    background: #888888;
+    position: relative;
 }
 
 #buttons {
@@ -61,115 +61,115 @@ a:hover {
     -webkit-border-top-right-radius: 8px 8px;
     -moz-border-top-right-radius: 8px 8px;
     z-index: 1004;
-    display: none; 
+    display: none;
 }
 
 #nav {
-	text-align: right;
-	position: absolute;
+    text-align: right;
+    position: absolute;
     bottom: -35px;
     right: 0;
     margin-right: 0;
 }
 #nav li {
-	list-style-type: none;
-	display: inline;
+    list-style-type: none;
+    display: inline;
 }
 #nav a {
-    padding: 0px 5px;	
-}	
+    padding: 0px 5px;
+}
 
 #lightbox {
-	width: 100%;
-	height: 100%;
-	background: #000000;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1005;
-	filter: alpha(opacity=80);
-	opacity: 0.6;
-	display: none;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1005;
+    filter: alpha(opacity=80);
+    opacity: 0.6;
+    display: none;
 }
 
 .dialog {
-	position: fixed;
-	left: 20%;
-	top: 90px;
-	width: 60%;
-	padding: 10px;
-	background: #EEFFEE;
-	border: 4px solid #112211;
-	z-index: 1050;
-	display: none;
+    position: fixed;
+    left: 20%;
+    top: 90px;
+    width: 60%;
+    padding: 10px;
+    background: #EEFFEE;
+    border: 4px solid #112211;
+    z-index: 1050;
+    display: none;
 }
 
 .close {
-	position: absolute;
-	top: 0;
-	right: 0;
-	border-left: 2px solid #112211;
-	border-bottom: 2px solid #112211;
-	padding: 2px 6px;
-	font-weight: bold;
-	font-size: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 2px solid #112211;
+    border-bottom: 2px solid #112211;
+    padding: 2px 6px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .done {
-	font-size: 24px;
-	text-align: center;
+    font-size: 24px;
+    text-align: center;
 }
 
 #help_screen h2 {
-	text-align: center;
+    text-align: center;
 }
 
 #game_select p {
-	margin: 6px 0px;
-	text-align: center;
+    margin: 6px 0px;
+    text-align: center;
 }
 
 #fort_select {
-	text-align: center;
+    text-align: center;
 }
 #fort_select p {
-	margin: 6px 0px;
+    margin: 6px 0px;
 }
 #fort_select input {
-	margin: 0px 5px;
+    margin: 0px 5px;
 }
 #reuse_fort_input {
-	margin: auto;
-	display: none;
-	padding: 15px;
+    margin: auto;
+    display: none;
+    padding: 15px;
 }
 #reuse_fort_input textarea {
-	margin-bottom: 5px;
-	width: 450px;
-	height: 100px;
+    margin-bottom: 5px;
+    width: 450px;
+    height: 100px;
 }
 
 #fort_save {
-	text-align: center;
-	margin-top: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 #fort_save p {
-	margin: 6px 0px;
-	padding: 0px 35px;
+    margin: 6px 0px;
+    padding: 0px 35px;
 }
 #fort_save textarea {
-	margin: 10px;
+    margin: 10px;
     width: 450px;
-	height: 100px;
-}	
+    height: 100px;
+}
 
 
 #new_high_score {
-	text-align: center;
-	padding-bottom: 20px;
+    text-align: center;
+    padding-bottom: 20px;
 }
 #new_high_score h2, #new_high_score p {
-   margin-bottom: 20px;	
+   margin-bottom: 20px;
 }
 
 #high_scores {
@@ -177,50 +177,55 @@ a:hover {
    padding: 10px;
 }
 #high_scores table {
-	margin: auto;
-	padding: 10px;
-	vertical-align: top;
+    margin: auto;
+    padding: 10px;
+    vertical-align: top;
 }
 #high_scores th {
-	padding: 10px;
+    padding: 10px;
 }
 #high_scores td {
-	vertical-align: top;
-	text-align: left;
-	padding: 0px 5px;
+    vertical-align: top;
+    text-align: left;
+    padding: 0px 5px;
 }
 
 #console {
-	width: 900px;
-	margin: 0px auto 20px auto;
-	background: #EEFFEE;
-	-moz-user-select: text;
-	-khtml-user-select: text;
-	-webkit-user-select: text;
-	user-select: text;
-	display: none;
+    width: 900px;
+    margin: 0px auto 20px auto;
+    background: #EEFFEE;
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    -webkit-user-select: text;
+    user-select: text;
+    display: none;
 }
 #console h2 {
-	padding: 3px 0px;
-	font-size: 1.5em;
-	text-align: center;
+    padding: 3px 0px;
+    font-size: 1.5em;
+    text-align: center;
 }
 
 #console p {
-	padding: 2px 8px;
+    padding: 2px 8px;
 }
 
 #console_items {
-	height: 300px;
-	overflow-y: scroll;
+    height: 300px;
+    overflow-y: scroll;
 }
 
 .game_lms {
-	width: 140px;
+    width: 140px;
     margin: auto;
 }
 
 .game_dd {
     width: 400px;
     margin: auto;
+}
+
+kbd {
+    border: 1px solid black;
+    padding: 0px 1px;
 }

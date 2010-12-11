@@ -12,7 +12,7 @@
 
         <div id="game">
             <canvas id="game_canvas" height="450" width="900">
-                Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.
+                <p>Get a real browser! Try <a href="http://www.google.com/chrome">Chrome</a>.</p>
             </canvas>
 
             <div id="buttons">
@@ -22,10 +22,11 @@
             </div>
 
             <ul id="nav">
-                <li><a href="#" id="help_link">Help</a> |</li>
+                <li><a href="#" id="help_link" title="All you need to know to play">Help</a> |</li>
                 <li><a href="#" id="high_score_link">High Scores</a> |</li>
-                <li><a href="http://code.google.com/p/manicmonkeymadness/" target="project">Google Code</a> |</li>
-                <li><a href="test/index.html" target="test">QUnit</a></li>
+                <li><a href="http://code.google.com/p/manicmonkeymadness/" target="project"
+                    title="The project page at Google Code">Google Code</a> |</li>
+                <li><a href="test/index.html" target="test" title="Run test suite">QUnit</a></li>
             </ul>
         </div>
 
@@ -37,12 +38,14 @@
         <div id="game_select" class="dialog">
             <p>Select which game mode you wish to play:</p>
 
-            <p>Last Monkey Standing - Play until either player has lost all their monkeys.</p>
+            <p>Last Monkey Standing &mdash; Play until all monkeys on one side have been lost.</p>
             <div class="game_lms">
                 <input type="button" id="lms" value="Last Monkey Standing" />
             </div>
 
-            <p>Demolition Derby - Select how many shots (per player) before the game ends and the player with the highest score wins. If the turn limit is exceeded, both players will be given an extra shot until there is a winner.</p>
+            <p>Demolition Derby &mdash; Select how many shots (per player) before the game ends and
+            the player with the highest score wins. If the turn limit is exceeded, both players
+            will be given an extra shot until there is a winner.</p>
             <div class="game_dd">
                 <input type="button" id="dd3" value="Demolition Derby (3)" />
                 <input type="button" id="dd5" value="Demolition Derby (5)" />
@@ -76,43 +79,49 @@
         </div>
 
         <div id="help_screen" class="dialog">
-            <h2>Manic Monkey Madness (M3) Help Page</h2>
+            <h2>Manic Monkey Madness (M3)</h2>
             <h4>How to Play</h4>
             <ul>
-                <li>Select a weapon by pressing the 'W' key, the rock is selected by default.</li>
-                <li>Click and drag to adjust the angle at which the cannon will shoot, release to fire.</li>
-                <li>Destroying enemy fortress pieces and monkeys will award points.</li>
-                <li>Eliminate all the enemy monkeys or get a higher score to win!</li>
+                <li>Select a weapon by pressing the <kbd>W</kbd> key; the rock is selected by default.</li>
+                <li>Click and drag to adjust the angle at which the cannon will shoot; release to fire.</li>
+                <li>Destroy enemy fortress pieces and monkeys to earn points.</li>
+                <li>Eliminate all the enemy monkeys or get the highest score to win!</li>
             </ul>
             <h4>Projectile Types</h4>
             <ul>
-                <li>Rock - The rock is a heavy projectile, it moves slow but is extremely destructive.</li>
-                <li>Banana - The banana is a light projectile, it moves extremely fast and is useful for direct shots.</li>
-                <li>Triple Banana - The triple banana shoots three light projectiles, they move extremely fast and are useful for direct shots.</li>
-                <li>Watermelon - The watermelon is a heavy projectile, it moves slow and explodes shortly after impact raining sweet seeds about the battlefield.</li>
-                <li>Monkey - Shoot a flippin' monkey out of the cannon! What else is there to say?</li>
+                <li>Rock &mdash; A heavy projectile, slow but extremely destructive.</li>
+                <li>Banana &mdash; A light projectile, extremely fast and useful for direct shots.</li>
+                <li>Banana Bunch &mdash; Three light banana projectiles, extremely fast and useful for direct shots.</li>
+                <li>Watermelon &mdash; A heavy and slow projectile, explodes shortly after impact
+                    raining sweet seeds about the battlefield.  Some watermelons are duds, exploding
+                    after the second or third bounce.  Take your chances with this one.</li>
+                <li>Monkey &mdash; Shoot a flippin' monkey out of the cannon! What else is there to say?</li>
             </ul>
             <h4>Game Modes</h4>
             <ul>
-                <li>Last Monkey Standing (LMS) - It's a fight to the finish. Players must fire upon each other's fortress until one has lost all their monkeys.</li>
-                <li>Demolition Derby (DD) - Wreck havoc on the enemy fortress. Gain as many points as possible by destroying monkeys and fort pieces with a limited number of shots.</li>
+                <li>Last Monkey Standing (LMS) - It's a fight to the finish. Players must fire upon each
+                    other's fortress until one side has lost all of its monkeys.</li>
+                <li>Demolition Derby (DD) - Wreck havoc on the enemy fortress. Gain as many points
+                    as possible by destroying monkeys and fort pieces with a limited number of shots.</li>
             </ul>
             <h4>Controls and Tips</h4>
             <ul>
-                <li>"H" opens and closes this help menu.</li>
-                <li>"Z" and "X", as well as click and drag, adjust the angle of the active player's cannon.</li>
-                <li>"W" changes the cannon's weapon.</li>
-                <li>"P" toggles the music.</li>
-                <li>"S" toggles all sounds.</li>
-                <li>"C" toggles the debug console.</li>
-                <li>"D" toggles Box2D debug draw mode. (See what's going on behind the scenes)</li>
+                <li><kbd>H</kbd> displays this help.</li>
+                <li><kbd>Z</kbd> and <kbd>X</kbd>, as well as click and drag, adjust the angle of the active player's cannon.</li>
+                <li><kbd>W</kbd> changes the cannon's weapon.</li>
+                <li><kbd>P</kbd> toggles the music.</li>
+                <li><kbd>S</kbd> toggles all sounds.</li>
+                <li><kbd>C</kbd> toggles the debug console.</li>
+                <li><kbd>D</kbd> toggles Box2D debug draw mode. (See what's going on behind the scenes!)</li>
             </ul>
 
             <a href="#" class="close">X</a>
         </div>
 
         <div id="fort_save" class="dialog">
-            <p>If you are proud of your fort, copy it and save it somewhere. When you start a new game later, paste it into the fort selection screen to reuse.  Close this dialog and hit Play to use the fort now.</p>
+            <p>If you are proud of your fort, copy it and save it somewhere. When you start a new
+            game later, paste it into the fort selection screen to reuse.  Close this dialog and
+            hit Play to use the fort now.</p>
             <textarea></textarea>
 
             <a href="#" class="close">X</a>
