@@ -51,38 +51,34 @@ $(function () {
             rock: { density: 13.0, restitution: 0.5,  friction: 0.9, minImpactVelocity: 0.65, destroyThreshold: 8.0 }
         };
 
-        // Collision callback.
+        /**
+         * Processes the collision between this fort piece and some other object, which could be
+         * a projectile, fort piece, enemy, etc.
+         */
         FortPiece.contact = function (other, velocity) {
 
-            if (m3.launcher.currentLauncher().pType === "watermelon" && other.type === "projectile") {
-                other.type = "broken";
-                other.body.SetLinearVelocity(new b2Vec2(0,0));
-            	other.sprite.play("ticking");
-            	
-            	setTimeout(function(projectile){
-            		return function () {
-                    	projectile.sprite.play("explode");
-            			m3.world.explode(new b2Vec2(projectile.x, projectile.y));
-            			m3.assets.sfx.splat.play();
-            			
-            			setTimeout(function(projectile){
-            				return function () {
-                    		//	alert("boom");
-                            	projectile.type = "done";
-                            	projectile.alive = false;
-            				};
-            			}(projectile), 1000);
-            	
-            		};
-            	}(other), 1000);
-            }
+            //m3.util.log("FORT PIECE contact (" + this + ") with " + other.type + " (" + other + ")");
+
+//            if (m3.launcher.currentLauncher().pType === "watermelon" && other.type === "projectile") {
+//                other.type = "broken";
+//                other.body.SetLinearVelocity(new b2Vec2(0,0));
+//                other.sprite.play("ticking");
+//
+//                setTimeout(function () {
+//                    other.sprite.play("explode");
+//                    m3.world.explode(new b2Vec2(other.x, other.y));
+//                    m3.assets.sfx.splat.play();
+//
+//                    setTimeout(function () {
+//                        other.type = "done";
+//                        other.alive = false;
+//                    }, 1000);
+//                }, 1000);
+//            }
 
             if (other.type === 'fort_piece') {
                 if (velocity > this.minImpactVelocity) {
-//                    m3.util.log('fort piece hit fort piece at: ' + velocity.toFixed(2) + 'm/s');
                     other.damage += (velocity * this.mass) / m3.config.damage_factor;
-//                    m3.util.log('fort piece damage: ' + this.damage.toFixed(2));
-//                    m3.util.log('fort piece damage: ' + other.damage.toFixed(2));
                 }
 
                 if (other.damage >= other.destroyThreshold / 3 && other.damage < other.destroyThreshold * 2 / 3 && other.sprites.damaged) {
@@ -93,7 +89,6 @@ $(function () {
                 }
                 else if (other.damage > other.destroyThreshold) {
                     other.alive = false;
-//                    m3.util.log('fort piece destroyed');
                     m3.score.playerDestroyed(other);
                 }
             }
