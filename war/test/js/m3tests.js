@@ -28,4 +28,29 @@ $(function() {
             ok(premade[i].fort.enemies.length > 1, "Fort " + i + " has enemies");
         }
     });
+
+    test("Fort Selection", function () {
+        // No tests here yet
+    });
+
+    module("Math and Physics");
+
+    test("Vectors", function () {
+        var Vector = m3.types.Vector,
+            p = Vector.create(3, 4),
+            q = Vector.create(8, -8),
+            r = Vector.create(-6, 10),
+            z = Vector.create();
+        ok(z.x === 0 && z.y === 0, "default constructor creates zero vector");
+        ok(r.x === -6 && r.y === 10, "two-arg constructor works")
+        same(p.toString(), "Vector: (3, 4)", "trivial toString");
+        same(p.lengthSquared, q.lengthSquared, "methods created only once");
+        same(p.lengthSquared(), 25, "length squared");
+        same(r.lengthSquared(), 136, "another length squared");
+        same(z.length(), 0, "zero length okay");
+        same(p.length(), 5, "vector length okay");
+        //
+        // More needed here
+        //
+    });
 });
