@@ -171,11 +171,17 @@ $(function() {
                 $("#high_score_submit").click(function(event) {
                     event.preventDefault();
                 	m3.score.saveHighScore();
+                	m3.input.disabled = false;
                 });
                 
                 $("#high_score_link").click(function(event) {
                     event.preventDefault();
                 	m3.score.getHighScores();
+                });
+                
+                $('#new_high_score .close').click(function(event) {
+                	event.preventDeafult();
+                	m3.input.disabled = false;
                 });
             }
         };

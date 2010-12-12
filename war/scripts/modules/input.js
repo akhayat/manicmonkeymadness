@@ -81,7 +81,11 @@ $(function() {
         input.keys  = {};
         input.mouse = { x: 0, y: 0, down: false, just_pressed: false, just_released: true };
         
+        input.disabled = false;
+        
         input.processKeyDown = function(event) {
+        	if (m3.input.disabled) return;
+        	
             var key = m3.input[event.which];
             
             if (!m3.input.keys[key]) {
@@ -93,6 +97,8 @@ $(function() {
         };
         
         input.processKeyUp = function(event) {
+        	if (m3.input.disabled) return;
+
             var key = m3.input[event.which];
             
             m3.input.keys[key] = false;

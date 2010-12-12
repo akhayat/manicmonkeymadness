@@ -79,6 +79,8 @@ $(function() {
                     if (newHighScore === "true") {
                         $('#new_high_score').fadeIn(200);
                         $('#lighbox').fadeIn(200);
+                        
+                        m3.input.disabled = true;
                     }
                 });
             },
@@ -87,7 +89,7 @@ $(function() {
                 var game_mode = m3.game.state.game_mode,
                     player = $('#high_score_name').val(),
                     score = player_scores[m3.game.state.winner];
-
+                
                 $.get('/m3?cmd=save_high_score&game=' + game_mode + '&name=' + player + '&score=' + score, function(data) {
                     if (data) {
                         $('#new_high_score').hide();
@@ -95,11 +97,6 @@ $(function() {
                         m3.score.populateHighScores(data);
                     }
                 });
-            },
-
-            showNewHighScore: function() {
-                $("#lightbox").fadeIn(180);
-                $('#new_high_score').fadeIn(180);
             }
         };
     }();
