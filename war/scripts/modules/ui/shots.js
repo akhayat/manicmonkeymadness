@@ -21,6 +21,7 @@ $(function() {
                     left    = Math.floor(shots / 2),
                     right   = left,
                     max     = state.max_shots / 2;
+                    infinite_shots = m3.game.state.game_mode === "last_monkey_standing";
                     
                 // Keeps track of who went first and adjusts
                 // their number of shots accordingly
@@ -33,11 +34,11 @@ $(function() {
                 context.strokeStyle = "rgba(0, 25, 0, 0.75)";
                 
                 ui.drawStrokedText("Shots", x, y);
-                ui.drawStrokedText("" + left + "/" + max, x, y + 15);
+                ui.drawStrokedText("" + left + (!infinite_shots ? "/" + max : ""), x, y + 15);
                 
                 context.textAlign = "left";
                 ui.drawStrokedText("Shots", x + 60, y);
-                ui.drawStrokedText("" + right + "/" + max, x + 60, y + 15);
+                ui.drawStrokedText("" + right + (!infinite_shots ? "/" + max : ""), x + 60, y + 15);
             }
         };
     }();
