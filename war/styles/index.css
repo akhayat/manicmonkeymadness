@@ -222,8 +222,10 @@ a:hover {
     margin: auto;
 }
 
+/* changed width from 410px to make buttons
+   all appear on one line for niceness */
 .game_dd {
-    width: 410px;
+    width: 450px;
     margin: auto;
 }
 
