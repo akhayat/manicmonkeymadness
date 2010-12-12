@@ -37,7 +37,7 @@ $(function() {
                 },
 
                 triple: { s: assets.banana_green, h: 25, w: 25, icon: assets.banana_bunch,
-                          density: 1.5, restitution: 0, friction: 1.0, torque: 10, power: 40,
+                          density: 1.5, restitution: 0, friction: 1.0, torque: 10, power: 50,
                           vertices: [[5,-15], [9,-10], [11,-5], [5,7], [-6,10], [-13,5]],
                           spriteOffset: Vector.create(13,15),
                           spawn: function(x, y, angle) {
