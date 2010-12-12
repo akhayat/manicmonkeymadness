@@ -122,10 +122,10 @@ $(function() {
                     mouse_coords.y = event.pageY - m3.game.y + m3.camera.position.y;
 
                     weaponBox = mouse_coords.x >= box_coords.x && mouse_coords.x <= box_coords.x + box_dim.x &&
-                        mouse_coords.y >= box_coords.y && mouse_coords.y <= box_coords.y + box_dim.y;
+                        mouse_coords.y >= box_coords.y && mouse_coords.y <= box_coords.y + box_dim.y && state.active_player === 0;
 
                     weaponBox2 = mouse_coords.x >= box_coords2.x && mouse_coords.x <= box_coords2.x + box_dim.x &&
-                    mouse_coords.y >= box_coords2.y && mouse_coords.y <= box_coords2.y + box_dim.y;
+                    mouse_coords.y >= box_coords2.y && mouse_coords.y <= box_coords2.y + box_dim.y && state.active_player === 1;
                         
                 if (state.game_state === "waiting" && (weaponBox || weaponBox2)) {
                     m3.launcher.changeWeapon(); 

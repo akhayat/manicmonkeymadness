@@ -11,11 +11,11 @@ $(function() {
         
         var context       = m3.game.context,
             monkey_sprite = m3.assets.sprites.monkey,
-            monkey_width  = 47,
+            monkey_width  = 40,
             monkey_height = 53,
             camera        = m3.camera.position,
             width         = m3.game.width,
-            padding       = m3.types.Vector.create(91, 2);
+            padding       = m3.types.Vector.create(80, 2);
         
         monkey_count.update = function() {
             var forts = m3.game.state.level.fortresses;
@@ -25,7 +25,7 @@ $(function() {
                 var x = camera.x + padding.x + i * monkey_width,
                     y = camera.y + padding.y;
                 
-                context.drawImage(monkey_sprite, 0, 0, monkey_width, monkey_height, x, y, monkey_width * .55, monkey_height * .55);
+                context.drawImage(monkey_sprite, 0, 0, monkey_width, monkey_height, x, y, monkey_width * .50, monkey_height * .50);
             }
             
             // Draw right player's monkeys.

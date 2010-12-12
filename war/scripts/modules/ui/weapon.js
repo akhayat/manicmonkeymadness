@@ -60,30 +60,31 @@ $(function() {
                     icon_height   = icon.height * 0.7,
                     icon2         = m3.types.Projectile.icon(cannon2.pType, cannon2.pDetails),
                     icon2_width   = icon2.width * 0.7,
-                    icon2_height  = icon2.height * 0.7;
+                    icon2_height  = icon2.height * 0.7,
+                    left_offset   = 90 + this.box_dimensions.x,
+                    right_offset  = 90;
                 
-                this.box_coords.x  = 580;
-                this.box_coords.y  = 365;
+                this.box_coords.x  = camera.x + game_width / 2 - left_offset;
+                this.box_coords.y  = camera.y + 5;
               
-                this.box_coords2.x  = level_width - 620;
-                this.box_coords2.y  = 365;
+                this.box_coords2.x  = camera.x + game_width / 2 + right_offset;
+                this.box_coords2.y  = camera.y + 5;
 
-                if (m3.game.state.active_player === 0) {
-                    context.fillStyle   = "rgba(220, 245, 255, 0.8)";
-                    context.strokeStyle = "rgba(0, 10, 30, 0.4)";
-                    context.lineWidth   = 2;
-                    context.fillRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
-                    context.strokeRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
-                    context.drawImage(icon, 0, 0, icon.width, icon.height, 575 + (50 - icon_width) / 2, 385 - (icon_height / 2), icon_width, icon_height);
+                context.fillStyle   = "rgba(220, 245, 255, 0.8)";
+                context.strokeStyle = "rgba(0, 10, 30, 0.4)";
+                context.lineWidth   = 2;
+                    
+                //Left box
+                context.fillRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
+                context.strokeRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
+                context.drawImage(icon, 0, 0, icon.width, icon.height, this.box_coords.x + (this.box_dimensions.x - icon_width) / 2, 
+                            		this.box_coords.y + (this.box_dimensions.y - icon_height) / 2, icon_width, icon_height);
 
-                } else {
-                    context.fillStyle   = "rgba(220, 245, 255, 0.8)";
-                    context.strokeStyle = "rgba(0, 10, 30, 0.4)";
-                    context.lineWidth   = 2;
-                    context.fillRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
-                    context.strokeRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
-                    context.drawImage(icon2, 0, 0, icon2.width, icon2.height, level_width - 625 + (50 - icon2_width) / 2, 385 - (icon2_height / 2), icon2_width, icon2_height);
-                }
+                //Right box
+                context.fillRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
+                context.strokeRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
+                context.drawImage(icon2, 0, 0, icon2.width, icon2.height, this.box_coords2.x + (this.box_dimensions.x - icon2_width) / 2, 
+                            		this.box_coords2.y + (this.box_dimensions.y - icon2_height) / 2, icon2_width, icon2_height);
                 
                 if (newWeapon) {
                     context.fillStyle   = "rgba(240, 255, 245, 0.95)";
