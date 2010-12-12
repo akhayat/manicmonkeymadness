@@ -217,16 +217,10 @@ a:hover {
     overflow-y: scroll;
 }
 
-.game_lms {
-    width: 140px;
+.game_lms, .game_dd {
+    width: 100%;
     margin: auto;
-}
-
-/* changed width from 410px to make buttons
-   all appear on one line for niceness */
-.game_dd {
-    width: 450px;
-    margin: auto;
+    text-align: center;
 }
 
 kbd {
