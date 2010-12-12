@@ -26,6 +26,11 @@ $(function () {
                 down: function() {
                     m3.sound.toggleMusic();
                 }
+            },
+            H: {
+                down: function() {
+            		m3.buttons.toggleHelp();
+                }
             }
         };
         

@@ -200,6 +200,11 @@ $(function () {
             	down: function() {
           	        m3.world.toggleDebugDraw();
                 }
+            },
+            H: {
+                down: function() {
+            		m3.buttons.toggleHelp();
+                }
             }
         };
         
