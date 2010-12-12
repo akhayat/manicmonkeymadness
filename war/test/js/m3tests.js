@@ -35,32 +35,30 @@ $(function() {
 
     module("Math and Utilities");
 
-    test("Vectors", function () {
-        var Vector = m3.types.Vector,
-            p = Vector.create(3, 4),
-            q = Vector.create(8, -8),
-            r = Vector.create(-6, 10),
-            z = Vector.create();
-        ok(z.x === 0 && z.y === 0, "default constructor creates zero vector");
-        ok(r.x === -6 && r.y === 10, "two-arg constructor works");
-        same(p.toString(), "Vector: (3, 4)", "trivial toString");
-        same(p.lengthSquared, q.lengthSquared, "methods created only once");
-        same(p.lengthSquared(), 25, "length squared");
-        same(r.lengthSquared(), 136, "another length squared");
-        same(z.length(), 0, "zero vector length okay");
-        same(p.length(), 5, "vector length okay");
-        p.normalize();
-        same(p.x, 3/5, "normalize x");
-        same(p.y, 4/5, "normalize y");
-    });
+//    test("Vectors", function () {
+//        var Vector = m3.types.Vector,
+//            p = Vector.create(3, 4),
+//            q = Vector.create(8, -8),
+//            r = Vector.create(-6, 10),
+//            z = Vector.create();
+//        ok(z.x === 0 && z.y === 0, "default constructor creates zero vector");
+//        ok(r.x === -6 && r.y === 10, "two-arg constructor works");
+//        same(p.toString(), "Vector: (3, 4)", "trivial toString");
+//        same(p.lengthSquared, q.lengthSquared, "methods created only once");
+//        same(p.lengthSquared(), 25, "length squared");
+//        same(r.lengthSquared(), 136, "another length squared");
+//        same(z.length(), 0, "zero vector length okay");
+//        same(p.length(), 5, "vector length okay");
+//        p.normalize();
+//        same(p.x, 3/5, "normalize x");
+//        same(p.y, 4/5, "normalize y");
+//    });
 
     test("Math utilities", function () {
-        var clamp = m3.util.clamp,
-            pixelsToMeters = m3.util.pixelsToMeters;
+        var clamp = m3.math.clamp;
+
         same(clamp(3, 5, 9), 5, "clamps low");
         same(clamp(3, -5, 9), 3, "clamp leaves in-range values alone");
         same(clamp(30, 5, 9), 9, "clamps high");
-
-        // TODO - tests on pixels to meters requires including box2d....
     });
 });

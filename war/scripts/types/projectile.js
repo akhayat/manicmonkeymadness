@@ -47,7 +47,7 @@ $(function() {
             },
             watermelon: {
                 whole: 	{ s: assets.watermelon_explode, h: 52, w: 72, icon: assets.watermelon,
-                              density: 1.2, restitution: 0.1, friction: 0.9, torque: 10, power: 150,
+                              density: 1.2, restitution: 0.1, friction: 0.95, torque: 10, power: 150,
                               vertices: [[8,-16], [23,-5], [23,5], [8,16], [-8,16], [-23,5], [-23,-5], [-8,-16]],
                               spriteOffset: Vector.create(36,26),
                               spawn: function(x, y, angle) {
