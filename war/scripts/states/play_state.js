@@ -197,8 +197,11 @@ $(function() {
 
             // This ensures the world is settled for half a second before transitioning.
             if (m3.world.allSettled(1.5)) {
-                if(this.old_time === null) this.old_time = this.state_time;
-                else if(this.state_time > this.old_time + 0.25) settled = true;
+                if (this.old_time === null) {
+                	this.old_time = this.state_time;
+                } else if (this.state_time > this.old_time + 0.25) {
+                	settled = true;
+                }
             } else {
                 this.old_time = null;
             }
@@ -207,7 +210,8 @@ $(function() {
                              this.state_time > m3.config.max_turn_time ||
                              x < 0 || x > m3.config.level_width ||
                              !this.active_projectile[0]) &&
-                             this.active_projectile[0].type !== "broken";
+                             this.active_projectile[0].type !== "broken" &&
+                             this.active_projectile[0].y > 0;
 
             if (transition) {
 
