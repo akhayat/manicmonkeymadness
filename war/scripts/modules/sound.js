@@ -54,12 +54,17 @@ $(function() {
         	    if (soundOn) {
         	    	soundOn = false;
         	        soundButton.src = noSoundSrc;
+            		musicButton.src = noMusicSrc;
         	        this.pauseMusic();
         	    }
         	    else {
         	    	soundOn = true;
         	    	soundButton.src = soundSrc;
-        	    	if (musicOn) this.playMusic();
+        	    	if (musicOn) {
+        	    		this.playMusic();
+        	    		musicButton.src = musicSrc;
+        	    	}
+        	    	
         	    }
             },
             
