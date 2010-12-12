@@ -59,7 +59,8 @@ $(function() {
             
             H: {
                 down: function() {
-            		m3.buttons.toggleHelp();
+    			    $('#help_screen').fadeIn(200);
+    			    $('#lightbox').fadeIn(200);
                 }
             },
             
