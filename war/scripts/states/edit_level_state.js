@@ -22,8 +22,10 @@ $(function () {
                 
                 m3.game.state = m3.states.PlayState.create();
             }
-            else {
-                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");
+            else if (m3.game.state.fort.enemies.length < 1) {
+            	alert("Invalid fort.  At least one monkey is required.");
+            } else {
+                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");	
             }
         });
         
@@ -33,8 +35,10 @@ $(function () {
                 $("#lightbox").fadeIn(180);
                 $("#fort_save").fadeIn(180);
             }
-            else {
-                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");
+            else if (m3.game.state.fort.enemies.length < 1) {
+            	alert("Invalid fort.  At least one monkey is required.");
+            } else {
+                alert("Invalid fort. Ensure all pieces are within the bounds of the level and try again.");	
             }
         });
         
@@ -279,18 +283,23 @@ $(function () {
             }
             
             // Check to see if any pieces or monkeys are out of bounds.
-            for (var i = 0, n = fort.pieces.length + fort.enemies.length; i < n; i++) {
-                var piece        = (i < fort.pieces.length) ? fort.pieces[i] : fort.enemies[i - fort.pieces.length],
-                    piece_bounds = piece.getBounds(),
-                    level_bounds = this.bounds;
+            if (fort.enemies.length < 1) {
+            	this.fort_valid = false
+            } else {
+            
+               for (var i = 0, n = fort.pieces.length + fort.enemies.length; i < n; i++) {
+                   var piece        = (i < fort.pieces.length) ? fort.pieces[i] : fort.enemies[i - fort.pieces.length],
+                       piece_bounds = piece.getBounds(),
+                        level_bounds = this.bounds;
                 
-                if (piece_bounds.left < level_bounds.left || piece_bounds.right  > level_bounds.right ||
-                    piece_bounds.top  < level_bounds.top  || piece_bounds.bottom > level_bounds.bottom) {
-                    piece.out_of_bounds = true;
-                    this.fort_valid = false;
-                }
-                else {
-                    piece.out_of_bounds = false;
+                    if (piece_bounds.left < level_bounds.left || piece_bounds.right  > level_bounds.right ||
+                        piece_bounds.top  < level_bounds.top  || piece_bounds.bottom > level_bounds.bottom) {
+                       piece.out_of_bounds = true;
+                       this.fort_valid = false;
+                    }
+                    else {
+                        piece.out_of_bounds = false;
+                    }
                 }
             }
             
