@@ -97,13 +97,11 @@ a:hover {
     left: 20%;
     top: 90px;
     width: 60%;
-    height: 70%;
     padding: 10px;
     background: #EEFFEE;
     border: 4px solid #112211;
     z-index: 1050;
     display: none;
-    overflow: auto;
 }
 
 .close {
@@ -120,6 +118,11 @@ a:hover {
 .done {
     font-size: 24px;
     text-align: center;
+}
+
+#help_screen {
+    height: 70%;
+    overflow: auto; 	
 }
 
 #help_screen h2 {
