@@ -112,8 +112,10 @@ $(function() {
             down: function(event) {
                 var state = m3.game.state,
                     box_coords = m3.ui.weapon.box_coords,
+                    box_coords2 = m3.ui.weapon.box_coords2,
                     box_dim = m3.ui.weapon.box_dimensions,
                     weaponBox = false,
+                    weaponBox2 = false;
                     mouse_coords = m3.types.Vector.create(0,0);
 
                     mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
@@ -122,8 +124,11 @@ $(function() {
                     weaponBox = mouse_coords.x >= box_coords.x && mouse_coords.x <= box_coords.x + box_dim.x &&
                         mouse_coords.y >= box_coords.y && mouse_coords.y <= box_coords.y + box_dim.y;
 
-                if (state.game_state === "waiting" && weaponBox) {
-                    m3.launcher.changeWeapon();
+                    weaponBox2 = mouse_coords.x >= box_coords2.x && mouse_coords.x <= box_coords2.x + box_dim.x &&
+                    mouse_coords.y >= box_coords2.y && mouse_coords.y <= box_coords2.y + box_dim.y;
+                        
+                if (state.game_state === "waiting" && (weaponBox || weaponBox2)) {
+                    m3.launcher.changeWeapon(); 
                 } else if (state.game_state === "waiting") {
                     m3.launcher.prepareLaunch(event);
                 }
