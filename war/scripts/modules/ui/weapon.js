@@ -19,6 +19,8 @@ $(function() {
         	 */
         	box_coords: m3.types.Vector.create(0,0),
         	
+        	box_coords2: m3.types.Vector.create(0,0),
+        	
         	box_dimensions: m3.types.Vector.create(41, 45),
         	
         	/*
@@ -50,21 +52,32 @@ $(function() {
             update: function() {
                 var game_width    = m3.game.width,
                     game_height   = m3.game.height,
-                    launcher	  = m3.launcher.currentLauncher(),
-                    active_player = m3.game.state.active_player,
-                    cannon        = m3.game.state.level.fortresses[active_player].weapon,
-                    icon          = m3.types.Projectile.icon(launcher.pType, launcher.pDetails),
+                    cannon        = m3.game.state.level.fortresses[0].weapon,
+                    cannon2       = m3.game.state.level.fortresses[1].weapon,
+                    icon          = m3.types.Projectile.icon(cannon.pType, cannon.pDetails),
                     icon_width    = icon.width * 0.7,
-                    icon_height   = icon.height * 0.7;
-                
-                this.box_coords.x  = camera.x + (game_width - this.box_dimensions.x) / 2,
-                this.box_coords.y  = camera.y + 5;
+                    icon_height   = icon.height * 0.7,
+                    icon2         = m3.types.Projectile.icon(cannon2.pType, cannon2.pDetails),
+                    icon2_width   = icon2.width * 0.7,
+                    icon2_height  = icon2.height * 0.7;
+                         
+              this.box_coords.x  = camera.x + 5
+              this.box_coords.y  = camera.y + 80;
+              
+              this.box_coords2.x  = camera.x + game_width - 46;
+              this.box_coords2.y  = camera.y + 80;
 
                 context.fillStyle   = "rgba(220, 245, 255, 0.8)";
                 context.strokeStyle = "rgba(0, 10, 30, 0.4)";
                 context.lineWidth   = 2;
                 context.fillRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
                 context.strokeRect(this.box_coords.x, this.box_coords.y, this.box_dimensions.x, this.box_dimensions.y);
+                
+                context.fillStyle   = "rgba(220, 245, 255, 0.8)";
+                context.strokeStyle = "rgba(0, 10, 30, 0.4)";
+                context.lineWidth   = 2;
+                context.fillRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
+                context.strokeRect(this.box_coords2.x, this.box_coords2.y, this.box_dimensions.x, this.box_dimensions.y);
                 
                 if (newWeapon) {
                     context.fillStyle   = "rgba(240, 255, 245, 0.95)";
@@ -74,7 +87,8 @@ $(function() {
                     ui.drawStrokedText("Unlocked a new weapon!", camera.x + game_width / 2, camera.y + game_height / 2);
                 }
                 
-                context.drawImage(icon, 0, 0, icon.width, icon.height, camera.x + (game_width - (icon_width)) / 2, camera.y + 26 - (icon_height / 2), icon_width, icon_height);
+                context.drawImage(icon, 0, 0, icon.width, icon.height, camera.x + (50 - icon_width) / 2, camera.y + 102 - (icon_height / 2), icon_width, icon_height);
+                context.drawImage(icon2, 0, 0, icon2.width, icon2.height, camera.x + game_width - 51 + (50 - icon2_width) / 2, camera.y + 102 - (icon2_height / 2), icon2_width, icon2_height);
             }
         };
     }();
