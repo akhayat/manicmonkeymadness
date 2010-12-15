@@ -296,7 +296,7 @@ $(function () {
                for (var i = 0, n = fort.pieces.length + fort.enemies.length; i < n; i++) {
                    var piece        = (i < fort.pieces.length) ? fort.pieces[i] : fort.enemies[i - fort.pieces.length],
                        piece_bounds = piece.getBounds(),
-                        level_bounds = this.bounds;
+                       level_bounds = this.bounds;
 
                     if (piece_bounds.left < level_bounds.left || piece_bounds.right  > level_bounds.right ||
                         piece_bounds.top  < level_bounds.top  || piece_bounds.bottom > level_bounds.bottom) {

@@ -23,7 +23,7 @@ $(function() {
             max_enemies: 8,
             
             // How many points are allowed to be used to make a fortress in the level editor.
-            fort_points: 1000,
+            fort_points: 500,
             
             // The width of each fortress area.
             fort_width: 640,
