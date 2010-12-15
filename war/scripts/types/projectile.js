@@ -19,8 +19,8 @@ $(function() {
 
         var ammunition = {
             rock: {
-                small: { s: assets.rock, h: 38, w: 38, radius: 19,
-                         density: 2.0, restitution: 0.1, friction: 2.5, torque: 10, power: 200,
+                small: { s: assets.rock, h: 29, w: 29, radius: 14,
+                         density: 2.5, restitution: 0.1, friction: 2.5, torque: 10, power: 180,
                          spawn: function(x, y) {
                              return m3.world.createBall(x / scale, y / scale, this.radius / scale, false, this.density, this.restitution, this.friction);
                          }
@@ -51,16 +51,22 @@ $(function() {
                               vertices: [[8,-16], [23,-5], [23,5], [8,16], [-8,16], [-23,5], [-23,-5], [-8,-16]],
                               spriteOffset: Vector.create(36,26),
                               spawn: function(x, y, angle) {
-                               return m3.world.createPoly(x / scale, y / scale, m3.util.pixelsToMeters(this.vertices), angle, false, this.density, this.restitution, this.friction);
-                           }
-                   }
+                                   return m3.world.createPoly(x / scale, y / scale, m3.util.pixelsToMeters(this.vertices), angle, false, this.density, this.restitution, this.friction);
+                              }
+                }
             },
             monkey: {
-                medium: { s: assets.monkey_spike, h: 62, w: 50, icon: assets.proj_monkey,
-                          density: 2.0, restitution: 0.3, friction: 1.0, torque: 10, power: 550,
-                          spawn: function(x, y, angle) {
-                              return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, angle, false, this.density, this.restitution, this.friction);
-                          }
+                medium_left: { s: assets.monkey_projectile_left, h: 26, w: 62, icon: assets.monkey_icon,
+                               density: 2.0, restitution: 0.1, friction: 1.0, torque: 10, power: 410,
+                               spawn: function(x, y, angle) {
+                                   return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, angle, false, this.density, this.restitution, this.friction);
+                               }
+                },
+                medium_right: { s: assets.monkey_projectile_right, h: 26, w: 62, icon: assets.monkey_icon,
+                                density: 2.0, restitution: 0.1, friction: 1.0, torque: 10, power: 410,
+                                spawn: function(x, y, angle) {
+                                    return m3.world.createBox(x / scale, y / scale, this.w / scale, this.h / scale, angle, false, this.density, this.restitution, this.friction);
+                                }
                 }
             }
         };

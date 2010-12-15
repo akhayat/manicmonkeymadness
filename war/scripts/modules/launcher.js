@@ -17,7 +17,7 @@ $(function() {
                           {type:"banana", details:"single"},
                           {type:"banana", details:"triple"},
                           {type:"watermelon", details:"whole"},
-                          {type:"monkey", details:"medium"}],
+                          {type:"monkey", details:"medium_left"}],
 
             /*
              * Returns the launcher of the player whose turn it is
@@ -111,16 +111,12 @@ $(function() {
                     m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y + 20, 0, impulse, pType, pDetails);
                     m3.game.state.active_projectile[1] = m3.types.Projectile.create(launch_point.x, launch_point.y, 0, impulse, pType, pDetails);
                     m3.game.state.active_projectile[2] = m3.types.Projectile.create(launch_point.x, launch_point.y - 20, 0, impulse, pType, pDetails);
-                }
-                else if (pType === "monkey"){
-                    m3.assets.sfx.monkeyScream.play();
-                    var angle = launcher.facing === "left" ? -Math.PI / 2 : Math.PI / 2;
-                    m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, angle, impulse, pType, pDetails);
-                }
-                else {
+                } else {
                     m3.game.state.active_projectile[0] = m3.types.Projectile.create(launch_point.x, launch_point.y, 0, impulse, pType, pDetails);
                 }
 
+                if (pType === "monkey") m3.assets.sfx.monkeyScream.play();
+                
                 // Follow the projectile
                 m3.camera.follow(m3.game.state.active_projectile[0]);
 
@@ -138,6 +134,10 @@ $(function() {
 
                 launcher.pType = this.projectiles[launcher.weapon].type;
                 launcher.pDetails = this.projectiles[launcher.weapon].details;
+                
+                if (launcher.pDetails === "medium_left" && launcher.facing === "left") {
+                	launcher.pDetails = "medium_right";
+                }
             },
 
             /*

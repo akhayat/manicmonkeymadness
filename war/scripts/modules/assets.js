@@ -74,17 +74,19 @@ $(function () {
             },
 
             sprites: {
-                cannon:             imageFromSource("sprites/cannon.png"),
-                rock:               imageFromSource("sprites/rock.png"),
-                banana:             imageFromSource("sprites/banana.png"),
-                watermelon:         imageFromSource("sprites/watermelon.png"),
-                monkey:             imageFromSource("sprites/monkey.png"),
-                proj_monkey:        imageFromSource("sprites/projectile_monkey.png"),
-                monkey_helmet:      imageFromSource("sprites/monkey_helmet.png"),
-                banana_bunch:       imageFromSource("sprites/banana_bunch.png"),
-                banana_green:       imageFromSource("sprites/banana_green.png"),
-                monkey_spike:       imageFromSource("sprites/monkey_spike.png"),
-                watermelon_explode: imageFromSource("sprites/watermelon_explode.png"),
+                cannon:                  imageFromSource("sprites/cannon.png"),
+                rock:                    imageFromSource("sprites/rock.png"),
+                banana:                  imageFromSource("sprites/banana.png"),
+                banana_bunch:            imageFromSource("sprites/banana_bunch.png"),
+                banana_green:            imageFromSource("sprites/banana_green.png"),
+                watermelon:              imageFromSource("sprites/watermelon.png"),
+                watermelon_explode:      imageFromSource("sprites/watermelon_explode.png"),
+                monkey:                  imageFromSource("sprites/monkey.png"),
+                monkey_helmet:           imageFromSource("sprites/monkey_helmet.png"),
+                monkey_spike:            imageFromSource("sprites/monkey_spike.png"),
+                monkey_projectile_left:  imageFromSource("sprites/monkey_projectile_left.png"),
+                monkey_projectile_right: imageFromSource("sprites/monkey_projectile_right.png"),
+                monkey_icon:	         imageFromSource("sprites/monkey_icon.png"),
 
                 fort_pieces: {
                     box_long_wood: {
