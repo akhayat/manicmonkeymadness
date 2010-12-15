@@ -91,35 +91,43 @@ $(function () {
                 fort_pieces: {
                     box_long_wood: {
                         normal:     imageFromSource("sprites/box_long_wood.png"),
-                        damaged:    imageFromSource("sprites/box_long_wood_damaged.png"),
-                        destroyed:  imageFromSource("sprites/box_long_wood_destroyed.png")
+                        damaged:    imageFromSource("sprites/box_long_wood_damaged.png")
                     },
                     box_short_wood: {
-                        normal:     imageFromSource("sprites/box_short_wood.png")
+                        normal:     imageFromSource("sprites/box_short_wood.png"),
+                        damaged:    imageFromSource("sprites/box_short_wood_damaged.png")
                     },
                     box_square_wood: {
-                        normal:     imageFromSource("sprites/box_square_wood.png")
+                        normal:     imageFromSource("sprites/box_square_wood.png"),
+                        damaged:    imageFromSource("sprites/box_square_wood_damaged.png")
                     },
                     box_wide_wood: {
-                        normal:     imageFromSource("sprites/box_wide_wood.png")
+                        normal:     imageFromSource("sprites/box_wide_wood.png"),
+                        damaged:    imageFromSource("sprites/box_wide_wood_damaged.png")
                     },
                     triangle_wood: {
-                        normal:     imageFromSource("sprites/triangle_wood.png")
+                        normal:     imageFromSource("sprites/triangle_wood.png"),
+                        damaged:    imageFromSource("sprites/triangle_wood_damaged.png")
                     },
                     box_long_rock: {
-                        normal:     imageFromSource("sprites/box_long_rock.png")
+                        normal:     imageFromSource("sprites/box_long_rock.png"),
+                        damaged:    imageFromSource("sprites/box_long_rock_damaged.png")
                     },
                     box_short_rock: {
-                        normal:     imageFromSource("sprites/box_short_rock.png")
+                        normal:     imageFromSource("sprites/box_short_rock.png"),
+                        damaged:    imageFromSource("sprites/box_short_rock_damaged.png")
                     },
                     box_square_rock: {
-                        normal:     imageFromSource("sprites/box_square_rock.png")
+                        normal:     imageFromSource("sprites/box_square_rock.png"),
+                        damaged:    imageFromSource("sprites/box_square_rock_damaged.png")
                     },
                     box_wide_rock: {
-                        normal:     imageFromSource("sprites/box_wide_rock.png")
+                        normal:     imageFromSource("sprites/box_wide_rock.png"),
+                        damaged:    imageFromSource("sprites/box_wide_rock_damaged.png")
                     },
                     triangle_rock: {
-                        normal:     imageFromSource("sprites/triangle_rock.png")
+                        normal:     imageFromSource("sprites/triangle_rock.png"),
+                        damaged:    imageFromSource("sprites/triangle_rock_damaged.png")
                     }
                 }
             },

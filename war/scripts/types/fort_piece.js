@@ -84,9 +84,6 @@ $(function () {
                 if (other.damage >= other.destroyThreshold / 3 && other.damage < other.destroyThreshold * 2 / 3 && other.sprites.damaged) {
                     other.sprite = other.sprites.damaged;
                 }
-                else if (other.damage >= other.destroyThreshold * 2 / 3 && other.damage < other.destroyThreshold && other.sprites.destroyed) {
-                    other.sprite = other.sprites.destroyed;
-                }
                 else if (other.damage > other.destroyThreshold) {
                     other.alive = false;
                     m3.score.playerDestroyed(other);
@@ -137,8 +134,7 @@ $(function () {
             piece.body.SetUserData(f);
             f.sprites = {};
             f.sprites.normal    = Sprite.create(t.s.normal, t.h, t.w);
-            f.sprites.damaged   = t.s.damaged   ? Sprite.create(t.s.damaged, t.h, t.w) : null;
-            f.sprites.destroyed = t.s.destroyed ? Sprite.create(t.s.damaged, t.h, t.w) : null;
+            f.sprites.damaged   = t.s.damaged ? Sprite.create(t.s.damaged, t.h, t.w) : null;
             f.destroyThreshold  = m.destroyThreshold;
             f.minImpactVelocity = m.minImpactVelocity;
 
