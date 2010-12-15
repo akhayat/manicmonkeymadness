@@ -8,12 +8,13 @@ html {
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    height: 100%
 }
 
 body {
     font: 15px Helvetica, Arial, sans-serif;
-    color: #002200;
-    background: #CCEECC
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C2E9F6), color-stop(1, #168404));
+	background: -moz-linear-gradient(top, #C2E9F6, #168404);
 }
 
 ul {
@@ -29,12 +30,11 @@ a:hover {
     color: #EE3333;
 }
 
+
 #header {
-    margin: 0px 0px 20px 0px;
-    padding: 20px 0px;
+    margin: 20px 0px 15px 0px;
+    padding: 10px 0px;
     text-align: center;
-    color: #FFFFFF;
-    background: #008822;
 }
 
 #header h1 {
@@ -59,7 +59,7 @@ a:hover {
     border: 3px solid #112211;
     border-top-right-radius: 8px 8px;
     -webkit-border-top-right-radius: 8px 8px;
-    -moz-border-top-right-radius: 8px 8px;
+    -moz-border-radius-topright: 8px 8px;
     z-index: 1004;
     display: none;
 }
