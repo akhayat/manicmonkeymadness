@@ -90,7 +90,7 @@ $(function() {
                             		this.box_coords2.y + (this.box_dimensions.y - icon2_height) / 2, icon2_width, icon2_height);
                 
                 if (newWeapon && m3.game.state.game_state === "waiting") {
-                    context.fillStyle   = "rgba(44, 200, 8, 0.95)";
+                    context.fillStyle   = "rgba(150, 82, 45, 0.95)";
                     context.strokeStyle = "rgba(0, 25, 0, 0.75)";
                     context.font        = "20px Tahoma, Geneva, sans-serif";
                     context.textAlign   = "center";
