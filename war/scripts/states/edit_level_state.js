@@ -34,6 +34,7 @@ $(function () {
                 $("#fort_save textarea").html(JSON.stringify(m3.game.state.output));
                 $("#lightbox").fadeIn(180);
                 $("#fort_save").fadeIn(180);
+                m3.input.disabled = true;
             }
             else if (m3.game.state.fort.enemies.length < 1) {
                 alert("Invalid fort.  At least one monkey is required.");

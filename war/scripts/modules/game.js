@@ -168,6 +168,10 @@ $(function() {
                 	$(this).focus().select();
                 });
                 
+                $("#fort_save .close").click(function() {
+                	m3.input.disabled = false;
+                });
+                
                 $("#high_score_submit").click(function(event) {
                     event.preventDefault();
                 	m3.score.saveHighScore();
