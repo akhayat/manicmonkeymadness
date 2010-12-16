@@ -78,7 +78,9 @@ $(function() {
 
             W: {
                 down: function() {
-                    m3.launcher.changeWeapon();
+                    if(m3.game.state.game_state === "waiting") {
+                    	m3.launcher.changeWeapon();
+                    }
                 }
             },
 
@@ -115,7 +117,7 @@ $(function() {
                     box_coords2 = m3.ui.weapon.box_coords2,
                     box_dim = m3.ui.weapon.box_dimensions,
                     weaponBox = false,
-                    weaponBox2 = false;
+                    weaponBox2 = false,
                     mouse_coords = m3.types.Vector.create(0,0);
 
                     mouse_coords.x = event.pageX - m3.game.x + m3.camera.position.x;
