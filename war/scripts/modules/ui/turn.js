@@ -32,7 +32,7 @@ $(function() {
                 context.closePath();
 
                 if(this.changingTurn) {
-                    context.fillStyle   = "rgba(44, 200, 8, 0.95)";
+                    context.fillStyle   = "rgba(255, 128, 0, 0.95)";
                     context.strokeStyle = "rgba(0, 25, 0, 0.75)";
                     context.font        = "40px Tahoma, Geneva, sans-serif";
                     context.textAlign   = "center";
