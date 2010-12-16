@@ -20,7 +20,7 @@ $(function() {
         var ammunition = {
             rock: {
                 small: { s: assets.rock, h: 29, w: 29, radius: 14,
-                         density: 2.5, restitution: 0.1, friction: 2.5, torque: 10, power: 180,
+                         density: 3.5, restitution: 0.1, friction: 2.5, torque: 10, power: 250,
                          spawn: function(x, y) {
                              return m3.world.createBall(x / scale, y / scale, this.radius / scale, false, this.density, this.restitution, this.friction);
                          }
@@ -28,7 +28,7 @@ $(function() {
             },
             banana: {
                 single: { s: assets.banana, h: 27, w: 34,
-                          density: 1.5, restitution: 0, friction: 1.0, torque: 10, power: 75,
+                          density: 1.75, restitution: 0, friction: 1.0, torque: 10, power: 100,
                           vertices: [[8,-16], [13,-10], [14,-5], [8,5], [-2,10], [-13,10], [-20,5]],
                           spriteOffset: Vector.create(20,16),
                           spawn: function(x, y, angle) {
@@ -37,7 +37,7 @@ $(function() {
                 },
 
                 triple: { s: assets.banana_green, h: 25, w: 25, icon: assets.banana_bunch,
-                          density: 1.5, restitution: 0, friction: 1.0, torque: 10, power: 50,
+                          density: 1.6, restitution: 0, friction: 1.0, torque: 10, power: 60,
                           vertices: [[5,-15], [9,-10], [11,-5], [5,7], [-6,10], [-13,5]],
                           spriteOffset: Vector.create(13,15),
                           spawn: function(x, y, angle) {
