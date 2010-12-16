@@ -177,7 +177,10 @@ $(function() {
 
         // This is the update function for the waiting state.
         PlayState.updateWaiting = function() {
-            // Nothing yet.
+            if(this.state_time > 1.5) {
+            	m3.ui.turn.changingTurn = false;
+            	m3.ui.weapon.newWeaponDisplayOff();
+            }
         };
 
         // This is the update function for the projectiles array that removes the projectiles from the field.
@@ -243,6 +246,7 @@ $(function() {
 
         // This is the update function for the transitioning state.
         PlayState.updateTransitioning = function() {
+        	m3.ui.turn.changingTurn = true;
             // We're done transitioning when the camera is done sliding.
             if (!m3.camera.sliding) {
                 this.setState("waiting");
