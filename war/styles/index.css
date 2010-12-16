@@ -104,6 +104,9 @@ a:hover {
     max-height: 100%;
     overflow-y: auto;
     display: none;
+    border-radius: 5px 5px;
+    -webkit-border-radius: 5px 5px;
+    -moz-border-radius: 5px 5px;
 }
 
 .close {

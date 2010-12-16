@@ -180,7 +180,7 @@ $(function() {
                 });
                 
                 $('#new_high_score .close').click(function(event) {
-                	event.preventDeafult();
+                	event.preventDefault();
                 	m3.input.disabled = false;
                 });
             }
