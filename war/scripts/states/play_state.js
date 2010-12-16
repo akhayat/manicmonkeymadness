@@ -196,6 +196,7 @@ $(function() {
         // This is the update function for the attacking state.
         PlayState.updateAttacking = function() {
             var score = m3.score;
+        	m3.ui.turn.changingTurn = false;
 
             // Check if the projectile is offscreen.
             for (var i = 0, j = this.active_projectile.length; i < j; i+=1) {

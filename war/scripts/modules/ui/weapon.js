@@ -36,7 +36,8 @@ $(function() {
                         m3.launcher.unlock("banana", "triple"); 
                         break;
                     case 3: 
-                        m3.launcher.unlock("monkey", "medium");
+                        m3.launcher.unlock("monkey", "medium_left");
+                        m3.launcher.unlock("monkey", "medium_right");
                         break;
                     case 4:
                         m3.launcher.unlock("watermelon", "whole");

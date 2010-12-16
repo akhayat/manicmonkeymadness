@@ -31,7 +31,6 @@ $(function() {
                 context.fill();
                 context.closePath();
 
-//            	console.log(this.changingTurn);
                 if(this.changingTurn) {
                     context.fillStyle   = "rgba(44, 200, 8, 0.95)";
                     context.strokeStyle = "rgba(0, 25, 0, 0.75)";
