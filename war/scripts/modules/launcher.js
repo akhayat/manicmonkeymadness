@@ -16,8 +16,8 @@ $(function() {
             projectiles: [{type:"rock", details:"small"},
                           {type:"banana", details:"single"},
                           {type:"banana", details:"triple"},
-                          {type:"watermelon", details:"whole"},
-                          {type:"monkey", details:"medium_left"}],
+                          {type:"monkey", details:"medium_left"},
+                          {type:"watermelon", details:"whole"}],
 
             /*
              * Returns the launcher of the player whose turn it is

@@ -7,14 +7,18 @@
 
 $(function() {
     m3.score = function () {
-        var player_scores    = [0, 0];
-            fort_piece_value = 500; // For now all fort pieces are worth the same...this will probably change.
+        var player_scores    = [0, 0],
+            fort_piece_value = 500, // For now all fort pieces are worth the same...this will probably change.
             enemy_value      = 1000;
 
         var otherPlayer = function (p) {
             return (p + 1) % 2;
         };
 
+        var htmlEncode = function (s) {
+        	return s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+        };
+        
         return {
             getScore: function (player) {
                 return player_scores[player];
@@ -49,7 +53,7 @@ $(function() {
                         header = $('<tr><th>' + key + '</th></tr>').appendTo(table);
 
                     $.each(value, function() {
-                        var row = $('<tr><td>' + this.name + '</td><td>' + this.score + '</td></tr>');
+                        var row = $('<tr><td>' + htmlEncode(this.name + "") + '</td><td>' + htmlEncode(this.score + "") + '</td></tr>');
                         row.appendTo(table);
                     });
 
