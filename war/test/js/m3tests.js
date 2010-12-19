@@ -25,8 +25,9 @@ $(function () {
         var choices = m3.fort_choices,
             premade = m3.fort_choices.premade;
         ok(premade.length >= 2, "Premade forts exist");
-        same(premade[0].id.toLowerCase(), "original", "First fort is original");
-        same(premade[1].id.toLowerCase(), "alternate", "Second fort is alternate");
+        same(premade[0].id.toLowerCase(), "beginner", "First fort is beginner");
+        same(premade[1].id.toLowerCase(), "novice", "Second fort is novice");
+        same(premade[2].id.toLowerCase(), "manic", "Third fort is manic");
         for (var i = 0; i < premade.length; i += 1) {
             ok(premade[i].fort.pieces.length > 1, "Fort " + i + " has pieces");
             ok(premade[i].fort.enemies.length > 1, "Fort " + i + " has enemies");
@@ -64,5 +65,12 @@ $(function () {
         same(clamp(3, 5, 9), 5, "clamps low");
         same(clamp(3, -5, 9), 3, "clamp leaves in-range values alone");
         same(clamp(30, 5, 9), 9, "clamps high");
+    });
+
+    module("Scores");
+
+    test("Scores", function () {
+        same(m3.score.getScore(0), 0, "player 1 score initialized");
+        same(m3.score.getScore(1), 0, "player 2 score initialized");
     });
 });
