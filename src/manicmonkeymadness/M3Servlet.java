@@ -190,17 +190,21 @@ public class M3Servlet extends HttpServlet {
     private void writeResponse(HttpServletResponse resp, String response)
             throws IOException {
         resp.setContentType("text/plain");
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().write(response);
     }
+
     private void writeJsonResponse(HttpServletResponse resp, Object jsonObject)
               throws IOException {
         resp.setContentType("application/json");
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().println(jsonObject);
     }
 
     private void writeEmptyResponse(HttpServletResponse resp)
             throws IOException {
         resp.setContentType("text/plain");
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().write("");
     }
 }
