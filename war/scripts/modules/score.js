@@ -16,9 +16,9 @@ $(function() {
         };
 
         var htmlEncode = function (s) {
-        	return s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+            return s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
         };
-        
+
         return {
             getScore: function (player) {
                 return player_scores[player];
@@ -68,7 +68,7 @@ $(function() {
             },
 
             getHighScores: function () {
-                $.get('/m3?cmd=high_scores', function(data) {
+                $.get(m3.util.uri('/m3', {cmd: "high_scores"}), function(data) {
                     if (data) {
                         m3.score.populateHighScores(data);
                     }
@@ -79,11 +79,11 @@ $(function() {
                 var game_mode = m3.game.state.game_mode,
                     score = player_scores[m3.game.state.winner];
 
-                $.get('/m3?cmd=check_high_score&game=' + game_mode + '&score=' + score, function(newHighScore) {
+                $.get(m3.util.uri('/m3', {cmd: "check_high_score", game: game_mode, score: score}), function(newHighScore) {
                     if (newHighScore === "true") {
                         $('#new_high_score').fadeIn(200);
                         $('#lighbox').fadeIn(200);
-                        
+
                         m3.input.disabled = true;
                     }
                 });
@@ -93,8 +93,8 @@ $(function() {
                 var game_mode = m3.game.state.game_mode,
                     player = $('#high_score_name').val(),
                     score = player_scores[m3.game.state.winner];
-                
-                $.get('/m3?cmd=save_high_score&game=' + game_mode + '&name=' + player + '&score=' + score, function(data) {
+
+                $.get(m3.util.uri('/m3', {cmd: "save_high_score", game: game_mode, name: player, score: score}), function(data) {
                     if (data) {
                         $('#new_high_score').hide();
                         $('#high_score_name').val('');

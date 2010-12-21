@@ -13,7 +13,7 @@ $(function() {
             b2Vec2 = Box2D.Common.Math.b2Vec2;
 
         return {
-            log: function(text) {
+            log: function (text) {
                 if (log_enabled) {
                     $("#console_items").prepend("<p>" + text + "</p>");
                     log_count++;
@@ -24,7 +24,17 @@ $(function() {
                 }
             },
 
-            toggleLog: function() {
+            uri: function (path, params) {
+                var result = path;
+                var separator = '?';
+                for (var key in params) {
+                    result += (separator + key + '=' + encodeURIComponent(params[key]));
+                    separator = '&';
+                }
+                return result;
+            },
+
+            toggleLog: function () {
                 log_enabled = !log_enabled;
                 $('#console').toggle();
             },
@@ -32,7 +42,7 @@ $(function() {
             /*
              * Converts an array of vertices in pixels to an array of box2d b2Vec vertices in meters
              */
-            pixelsToMeters: function(vertices) {
+            pixelsToMeters: function (vertices) {
                 var scale = m3.config.scaling_factor,
                     verticesInMeters = [];
 
